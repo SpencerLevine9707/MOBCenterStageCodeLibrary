@@ -23,39 +23,10 @@ import java.util.ArrayList;
 
 public class CenterStageConceptVisionForSim extends OpenCvPipeline {
     Telemetry telemetry;
-    public static int pipelineStage = 0;
-    public static double BLUR_RADIUS = 7;
-    public static double HUE_MIN = 0;
-    public static double HUE_MAX = 90;
-    public static double SATURATION_MIN = 150;
-    public static double SATURATION_MAX = 255;
-    public static double VALUE_MIN = 150;
-    public static double VALUE_MAX = 255;
-    public static double MIN_CONTOUR_AREA = 2500;
-    public static String BLUR = "Box Blur";
-    private boolean enableDashboard;
-//    private FtcDashboard dashboard;
-
-    private Mat blurInput = new Mat();
-    private Mat blurOutput = new Mat();
-    private Mat hsvThresholdOutput = new Mat();
-    private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<>();
-    private Mat findContoursOutputMat = new Mat();
-    private Mat finalContourOutputMat = new Mat();
-
-    private int largestX, largestY;
-    private double largestArea;
+    public int zone = -1;
 
     public CenterStageConceptVisionForSim(Telemetry telemetry) {
-//        this.enableDashboard = enableDashboard;
-
         this.telemetry = telemetry;
-
-//        dashboard = FtcDashboard.getInstance();
-
-        largestX = -1;
-        largestY = -1;
-        largestArea = -1;
     }
 
     @Override
@@ -112,23 +83,21 @@ public class CenterStageConceptVisionForSim extends OpenCvPipeline {
 
         if (hsvDist2 < hsvDist1 && hsvDist2 < hsvDist3) {
             telemetry.addLine("box1 is big boy");
+            zone = 1;
             Imgproc.rectangle(input, box1Rect, new Scalar(0, 0, 255), 2);
         } else if (hsvDist1 < hsvDist2 && hsvDist1 < hsvDist3) {
             telemetry.addLine("box2 is big boy");
+            zone = 2;
             Imgproc.rectangle(input, box2Rect, new Scalar(0, 0, 255), 2);
         } else {
             telemetry.addLine("box3 is big boy");
+            zone = 3;
             Imgproc.rectangle(input, box3Rect, new Scalar(0, 0, 255), 2);
         }
         telemetry.update();
 
         return input;
     }
-
-    public int[] getPosition() {
-        return new int[]{largestX, largestY};
-    }
-
     private static Scalar calculateAverageHSV(Mat roi) {
         Mat hsvImage = new Mat();
         Imgproc.cvtColor(roi, hsvImage, Imgproc.COLOR_BGR2HSV);

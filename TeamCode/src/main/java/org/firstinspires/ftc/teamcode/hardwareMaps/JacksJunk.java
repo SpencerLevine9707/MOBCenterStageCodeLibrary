@@ -9,7 +9,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.arcrobotics.ftclib.command.Command;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
+//import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -33,7 +33,7 @@ public class JacksJunk {
 
     public VoltageSensor batteryVoltageSensor;
 
-    public DistanceSensor jacksTip, jacksAsshole;
+//    public DistanceSensor jacksTip, jacksAsshole;
     
     //Arm servo positions
 
@@ -197,8 +197,8 @@ public class JacksJunk {
         spencerLikesKids = myOpMode.hardwareMap.get(Servo.class, "spencerLikesKids");
         
         //Init distance sensors
-        jacksTip = myOpMode.hardwareMap.get(DistanceSensor.class, "jacksTip");
-        jacksAsshole = myOpMode.hardwareMap.get(DistanceSensor.class, "jacksAsshole");
+//        jacksTip = myOpMode.hardwareMap.get(DistanceSensor.class, "jacksTip");
+//        jacksAsshole = myOpMode.hardwareMap.get(DistanceSensor.class, "jacksAsshole");
 
         //Init voltage sensor
         batteryVoltageSensor = myOpMode.hardwareMap.voltageSensor.iterator().next();
