@@ -15,7 +15,7 @@ public class MonkeyMap {
     private LinearOpMode myOpMode;
 
     //Define all hardware
-    public DcMotor frontLeft, frontRight, backLeft, backRight, armMotor1, armMotor2;
+    public DcMotor frontLeft, frontRight, backLeft, backRight;
 
     public Servo spencerLikesKids, grabberServo, rotatorServo, conveyerServoLeft, conveyerServoRight;
 
@@ -38,14 +38,15 @@ public class MonkeyMap {
 
     public void init(){
         conveyerServoLeft = myOpMode.hardwareMap.get(Servo.class, "conveyerServoLeft");
+        conveyerServoRight = myOpMode.hardwareMap.get(Servo.class, "conveyerServoRight");
 
         frontLeft = myOpMode.hardwareMap.get(DcMotor.class, ("frontLeft")); //port 3
         frontRight = myOpMode.hardwareMap.get(DcMotor.class, ("frontRight")); //port 2
         backLeft = myOpMode.hardwareMap.get(DcMotor.class, ("backLeft")); //port 1
         backRight = myOpMode.hardwareMap.get(DcMotor.class, ("backRight"));  //port 0
 
-        armMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        armMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        armMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+//        armMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
@@ -57,6 +58,8 @@ public class MonkeyMap {
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
+
+
 
 
 

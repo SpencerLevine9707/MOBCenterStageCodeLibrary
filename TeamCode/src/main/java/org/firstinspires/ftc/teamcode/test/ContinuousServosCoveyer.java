@@ -13,6 +13,7 @@ public class ContinuousServosCoveyer extends LinearOpMode {
     MonkeyMap wBot = new MonkeyMap(this);
 
     public static double servoPower = 0.5;
+    public static double servoPowerStop = 0.5;
 
 
     @Override
@@ -27,8 +28,10 @@ public class ContinuousServosCoveyer extends LinearOpMode {
                 wBot.conveyerServoLeft.setPosition(lt);
             }
             else{
-                wBot.conveyerServoLeft.setPosition(0);
+                wBot.conveyerServoLeft.setPosition(servoPowerStop);
             }
+
+
 //            wBot.conveyerServoLeft.setPosition(servoPower);
         }
     }
