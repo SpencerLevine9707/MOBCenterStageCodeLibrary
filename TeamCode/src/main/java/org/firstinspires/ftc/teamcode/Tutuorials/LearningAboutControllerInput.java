@@ -24,6 +24,10 @@ public class LearningAboutControllerInput extends LinearOpMode {
 
         boolean aPressable = true;
 
+        boolean bPressable = true;
+
+        boolean isOn = true;
+
         servo1.setPosition(0);
 
         waitForStart();
@@ -56,6 +60,19 @@ public class LearningAboutControllerInput extends LinearOpMode {
                 }
             }
             aPressable = !a;
+
+            boolean b = gamepad1.b;
+
+            if(b && bPressable){
+                if(isOn){
+
+                }
+                else{
+
+                }
+                isOn = !isOn;
+            }
+            bPressable = !b;
 
 
         }

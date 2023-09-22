@@ -108,8 +108,8 @@ public class OdoWheelSetUp {
 //        telemetry.update();
 
 
-        double ADPower = speedMultiplier * Math.sqrt(2) * 0.5 * (Math.sin(theta) + Math.cos(theta));
-        double BCPower = speedMultiplier * Math.sqrt(2) * 0.5 * (Math.sin(theta) - Math.cos(theta));
+        double ADPower = speedMultiplier * /*Math.sqrt(2) * 0.5 */ (Math.sin(theta) + Math.cos(theta));
+        double BCPower = speedMultiplier * /*Math.sqrt(2) * 0.5 */ (Math.sin(theta) - Math.cos(theta));
 
         double turnPower = MathsAndStuff.AngleWrap(totAngDist);
         double turningScale = Math.max(Math.abs(ADPower + turnPower), Math.abs(ADPower - turnPower));

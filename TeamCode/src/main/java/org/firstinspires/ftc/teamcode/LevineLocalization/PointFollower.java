@@ -28,12 +28,15 @@ public class PointFollower {
     public ElapsedTime velTime = new ElapsedTime();
     public static double isBuggingRuntimeToStop;
     public static double isBuggingRuntimeToStopError = 0.5;
+    public static double minMotorPow = 0.05;
+    public static double notPowPow = 0;
 
     public static double slowSpeed = 0.5;
     public static double almostDoneSpeed = 0.45;
     public static double evenSlowerSpeed = 0.4;
     public static double offCourseSpeed = 1.5;
     public static double offCourseError = 1;
+    public static double motorStuckPow = 1;
     public static int finalCounter = 0;
     public static int endCounter = 0;
     public static int almostDoneCounter = 0;
@@ -44,15 +47,18 @@ public class PointFollower {
     ArrayList<PointType> pointTypesInBetween = new ArrayList<>();
     public boolean xDone = false;
     boolean yDone = false;
+    double currVelocityLessCount = 0;
+    public static double velLessZeroMax = 10;
     boolean angDone = false;
     int donePointCounter = 0;
     Pose2d startOfNewGo = new Pose2d();
+    public static double noVelVel = 1.5;
     Pose2d prevPoseForVel = new Pose2d();
     double currVelocity = 0;
     public static double targetVelocity = 50;
     public static double maxVel = 50;
-    public static double almostDoneVel = maxVel;
-    public static double slowVel = 20;
+    public static double almostDoneVel = 20;
+    public static double slowVel = almostDoneVel;
     public static double evenSlowerVel = 2;
     public static double currPower = 0.5;
     public static double accelerationConst = 200;
@@ -158,6 +164,7 @@ public class PointFollower {
 
 //        inBetweenPoints.remove(0);
 
+
         telemetry.addLine("Poses to go to " + this.posesToGoTo);
         telemetry.addLine("Poses in between " + inBetweenPoints);
         telemetry.addLine("PointTypes in between: " + pointTypesInBetween);
@@ -191,6 +198,32 @@ public class PointFollower {
             isBuggingRuntimeToStop = distToTarg / isBuggingRuntimeToStop + isBuggingRuntimeToStopError;
 
             if (!inBetweenPoints.isEmpty()) {
+//                if(currVelocity < noVelVel){
+//                    currVelocityLessCount += 1;
+//                }
+//                else{
+//                    currVelocityLessCount = 0;
+//                }
+//
+//                if(currVelocityLessCount > velLessZeroMax){
+//                    wMap.frontLeft.setPower(motorStuckPow);
+//                    wMap.frontRight.setPower(motorStuckPow);
+//                    wMap.backLeft.setPower(motorStuckPow);
+//                    wMap.backRight.setPower(motorStuckPow);
+//                    currVelocityLessCount =  0;
+//                }
+//                if(Math.abs(wMap.backRight.getPower()) < minMotorPow){
+//                    wMap.backRight.setPower(notPowPow);
+//                }
+//                if(Math.abs(wMap.backLeft.getPower()) < minMotorPow){
+//                    wMap.backLeft.setPower(notPowPow);
+//                }
+//                if(Math.abs(wMap.frontRight.getPower()) < minMotorPow){
+//                    wMap.frontRight.setPower(notPowPow);
+//                }
+//                if(Math.abs(wMap.frontLeft.getPower()) < minMotorPow){
+//                    wMap.frontLeft.setPower(notPowPow);
+//                }
                 double isBuggingChecker = runtime.seconds();
                 Pose2d targetPose = inBetweenPoints.get(0);
                 double roomForPoseError;
@@ -281,7 +314,7 @@ public class PointFollower {
                 telemetry.addLine("Target Pose: " + targetPose);
                 telemetry.addLine("isBuggingChecker: " + isBuggingChecker);
 //                telemetry.addLine("relDistX: " + relDistX + "relDistY: " + relDistY);
-//                telemetry.addLine("Motor powers: " + wMap.odos.getPowers(currPose, targetPose));
+                telemetry.addLine("Motor powers: " + wMap.odos.getPowers(currPose, targetPose));
 //                telemetry.addLine("Ang Done? " + angDone);
 //                telemetry.addLine("X Done " + xDone);
 //                telemetry.addLine("Y Done " + yDone);
