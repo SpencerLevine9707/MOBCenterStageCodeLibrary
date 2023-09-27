@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -7,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+@Config
 public class MonkeyMap {
     //Define runtime
     public ElapsedTime runtime = new ElapsedTime();
@@ -22,7 +24,7 @@ public class MonkeyMap {
     public VoltageSensor batteryVoltageSensor;
 
     //Servo Positions
-    public static double grabberClosed = 1, grabberOpen = 0;
+    public static double grabberClosed = 0.02, grabberOpen = 0.5;
 
     public static double rotatorDown = 0, rotatorUp = 0.5, rotatorTrasfer = 1, rotatorPixel1 = 0, rotatorPixel2 = 0.05, rotatorPixel3 = 0.1, rotatorPixel4 = 0.15, rotatorPixel5 = 0.2;
 
@@ -37,8 +39,9 @@ public class MonkeyMap {
     }
 
     public void init(){
-        conveyerServoLeft = myOpMode.hardwareMap.get(Servo.class, "conveyerServoLeft");
-        conveyerServoRight = myOpMode.hardwareMap.get(Servo.class, "conveyerServoRight");
+//        conveyerServoLeft = myOpMode.hardwareMap.get(Servo.class, "conveyerServoLeft");
+//        conveyerServoRight = myOpMode.hardwareMap.get(Servo.class, "conveyerServoRight");
+        grabberServo = myOpMode.hardwareMap.get(Servo.class, "grabberServo");
 
         frontLeft = myOpMode.hardwareMap.get(DcMotor.class, ("frontLeft")); //port 3
         frontRight = myOpMode.hardwareMap.get(DcMotor.class, ("frontRight")); //port 2
@@ -57,6 +60,22 @@ public class MonkeyMap {
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+
+    public void openGrabber(){
+        grabberServo.setPosition(grabberOpen);
+    }
+    public void closeGrabber(){
+        grabberServo.setPosition(grabberClosed);
+    }
+
+    public void toggleGrabber(){
+        if(grabberServo.getPosition() >= grabberClosed - 0.1 && grabberServo.getPosition() <= grabberClosed + 0.1){
+            openGrabber();
+        }
+        else{
+            closeGrabber();
+        }
     }
 
 

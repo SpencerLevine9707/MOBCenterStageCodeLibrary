@@ -26,6 +26,8 @@ public class DriveBotFirstIteration extends LinearOpMode {
         MecanumDrive drive = new MecanumDrive(wBot.frontLeft, wBot.frontRight, wBot.backLeft, wBot.backRight);
 
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
+
+        boolean a1Pressable = true;
         waitForStart();
 
         while(opModeIsActive()){
@@ -39,6 +41,14 @@ public class DriveBotFirstIteration extends LinearOpMode {
             double powerFromTriggers = Math.abs(lx1) + Math.abs(ly1) + Math.abs(rx1);
 
             drive.moveInTeleop(lx1, ly1, rx1, powerFromTriggers);
+
+            boolean a1 = gamepad1.a;
+
+            if(a1 && a1Pressable){
+                wBot.toggleGrabber();
+            }
+
+            a1Pressable = !a1;
 
         }
     }
