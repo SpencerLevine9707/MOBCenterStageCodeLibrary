@@ -24,7 +24,7 @@ public class MonkeyMap {
     public VoltageSensor batteryVoltageSensor;
 
     //Servo Positions
-    public static double grabberClosed = 0.02, grabberOpen = 0.5;
+    public static double grabberClosed = 0.18, grabberOpen = 0.3;
 
     public static double rotatorDown = 0, rotatorUp = 0.5, rotatorTrasfer = 1, rotatorPixel1 = 0, rotatorPixel2 = 0.05, rotatorPixel3 = 0.1, rotatorPixel4 = 0.15, rotatorPixel5 = 0.2;
 
@@ -33,6 +33,7 @@ public class MonkeyMap {
     public static double spencerLikesKidsPosUp = 0.4, spencerLikesKidsPosDown = 0.9;
 
     public Pose2d startingPosition, beacon1BeforeTrussRed, beacon2BeforeTrussRed, beacon3BeforeTrussRed, beacon1AfterTrussRed, beacon2AfterTrussRed, beacon3AfterTrussRed, beacon1BeforeTrussBlue, beacon2BeforeTrussBlue, beacon3BeforeTrussBlue, beacon1AfterTrussBlue, beacon2AfterTrussBlue, beacon3AfterTrussBlue, pickUpSpotRed, pickUpSpotBlue, placementRed, placementBlue;
+    public boolean grabberIsOpen = true;
 
     public MonkeyMap (LinearOpMode opmode) {
         myOpMode = opmode;
@@ -70,11 +71,13 @@ public class MonkeyMap {
     }
 
     public void toggleGrabber(){
-        if(grabberServo.getPosition() >= grabberClosed - 0.1 && grabberServo.getPosition() <= grabberClosed + 0.1){
-            openGrabber();
+        if(grabberIsOpen){
+            closeGrabber();
+            grabberIsOpen = false;
         }
         else{
-            closeGrabber();
+            openGrabber();
+            grabberIsOpen = true;
         }
     }
 

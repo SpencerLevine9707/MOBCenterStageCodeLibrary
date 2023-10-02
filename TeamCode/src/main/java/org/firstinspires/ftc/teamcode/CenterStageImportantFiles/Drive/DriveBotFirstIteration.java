@@ -36,7 +36,6 @@ public class DriveBotFirstIteration extends LinearOpMode {
             double rx1 = gamepad1.right_stick_x;
 
             telemetry.addLine("lx1: " + lx1 + " ly1: " + ly1 + " rx1 " + rx1);
-            telemetry.update();
 
             double powerFromTriggers = Math.abs(lx1) + Math.abs(ly1) + Math.abs(rx1);
 
@@ -46,9 +45,12 @@ public class DriveBotFirstIteration extends LinearOpMode {
 
             if(a1 && a1Pressable){
                 wBot.toggleGrabber();
+                telemetry.addLine("Grabber Servo Pos " + wBot.grabberServo.getPosition() + "\n is open? " + wBot.grabberIsOpen);
             }
 
             a1Pressable = !a1;
+
+            telemetry.update();
 
         }
     }
