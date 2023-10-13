@@ -85,7 +85,7 @@ public class PointTypeTesterLevineLocalizationTest extends LinearOpMode {
 
             double distToTarget = totDistToTarget / iterationsForPoses;
 
-            theoreticalTheta = MathsAndStuff.AngleWrap(Math.atan2(yDist, xDist) + wMap.odos.startingPose.getHeading());
+            theoreticalTheta = MathsAndStuff.AngleWrap(Math.atan2(yDist, xDist) + wMap.startingPose.getHeading());
 
             for (int j = 0; j < iterationsForPoses; j++) {
 //                theoreticalAngle += angleForMrGeorge;
@@ -159,7 +159,7 @@ public class PointTypeTesterLevineLocalizationTest extends LinearOpMode {
                 double angDist = targetPose.getHeading() - currPose.getHeading();
 
                 double distToTarget = Math.hypot(xDist, yDist);
-                double theta = MathsAndStuff.AngleWrap(Math.atan2(xDist, yDist) + wMap.odos.startingPose.getHeading());
+                double theta = MathsAndStuff.AngleWrap(Math.atan2(xDist, yDist) + wMap.startingPose.getHeading());
 
                 //Error X
                 double relDistX = Math.cos(theta) * distToTarget;
@@ -205,7 +205,7 @@ public class PointTypeTesterLevineLocalizationTest extends LinearOpMode {
                 telemetry.addLine("Target Pose: " + targetPose);
                 telemetry.addLine("isBuggingChecker: " + isBuggingChecker);
                 telemetry.addLine("relDistX: " + relDistX + "relDistY: " + relDistY);
-                telemetry.addLine("Motor powers: " + wMap.odos.getPowers(currPose, targetPose));
+                telemetry.addLine("Motor powers: " + wMap.getPowers(currPose, targetPose));
                 telemetry.addLine("Ang Done? " + angDone);
                 telemetry.addLine("X Done " + xDone);
                 telemetry.addLine("Y Done " + yDone);

@@ -50,7 +50,7 @@ public class LevineLocalizationTest extends LinearOpMode {
             double angDist = targetPose.getHeading() - currPose.getHeading();
 
             double distToTarget = Math.hypot(xDist, yDist);
-            double theta = MathsAndStuff.AngleWrap(Math.atan2(xDist, yDist) + wMap.odos.startingPose.getHeading());
+            double theta = MathsAndStuff.AngleWrap(Math.atan2(xDist, yDist) + wMap.startingPose.getHeading());
 
             //Error X
             double relDistX = Math.cos(theta) * distToTarget;
@@ -79,7 +79,7 @@ public class LevineLocalizationTest extends LinearOpMode {
 //            telemetry.addLine("CurrRightE: " + wMap.rightEncoder.getCurrentPosition());
 //            telemetry.addLine("CurrCenterE: " + wMap.centerEncoder.getCurrentPosition());
 //            telemetry.addLine("Ticks between: " + wMap.odos.getTicksBetween(wMap.odos.currPose, targetPose));
-            telemetry.addLine("Motor powers: " + wMap.odos.getPowers(currPose, targetPose));
+            telemetry.addLine("Motor powers: " + wMap.getPowers(currPose, targetPose));
             telemetry.addLine("Error X: " + relErrorX + " Error Y: " + relErrorY);
             telemetry.addLine("X done? " + xDone + " Y done? " + yDone);
             telemetry.addLine("relDistX " + relDistX + " relDistY " + relDistY);

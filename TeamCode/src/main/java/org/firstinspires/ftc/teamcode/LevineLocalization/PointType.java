@@ -8,10 +8,6 @@ public class PointType {
         type = type.toLowerCase();
         this.type = type;
         switch (type) {
-            case "start":
-            case "in":
-                followRadius = LevineLocalizationMap.poseError;
-                break;
             case "mid":
                 followRadius = LevineLocalizationMap.followRadius;
                 break;
@@ -23,9 +19,6 @@ public class PointType {
                 break;
             case "almostdone":
                 followRadius = LevineLocalizationMap.poseError*10;
-                break;
-            case "final":
-                followRadius = LevineLocalizationMap.poseError;
                 break;
             default:
                 followRadius = LevineLocalizationMap.poseError;

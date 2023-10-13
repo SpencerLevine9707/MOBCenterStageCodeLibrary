@@ -4,16 +4,11 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
-import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.LevineLocalization.LevineLocalizationMap;
-import org.firstinspires.ftc.teamcode.LevineLocalization.MathsAndStuff;
-import org.firstinspires.ftc.teamcode.LevineLocalization.PointType;
 import org.firstinspires.ftc.teamcode.RoadrunnerStuff.drive.SampleMecanumDrive;
 
 import java.util.ArrayList;
@@ -28,35 +23,23 @@ public class PointFollower {
     public ElapsedTime velTime = new ElapsedTime();
     public static double isBuggingRuntimeToStop;
     public static double isBuggingRuntimeToStopError = 0.5;
-    public static double minMotorPow = 0.05;
-    public static double notPowPow = 0;
-
-    public static double slowSpeed = 0.5;
-    public static double almostDoneSpeed = 0.45;
-    public static double evenSlowerSpeed = 0.4;
-    public static double offCourseSpeed = 1.5;
-    public static double offCourseError = 1;
-    public static double motorStuckPow = 1;
     public static int finalCounter = 0;
     public static int endCounter = 0;
     public static int almostDoneCounter = 0;
-    ArrayList<Pose2d> posesToGoTo = new ArrayList<Pose2d>();
+    ArrayList<Pose2d> posesToGoTo = new ArrayList<>();
     ArrayList<String> trajTypes = new ArrayList<>();
     ArrayList<PointType> pointTypes = new ArrayList<>();
     ArrayList<Pose2d> inBetweenPoints = new ArrayList<>();
     ArrayList<PointType> pointTypesInBetween = new ArrayList<>();
     public boolean xDone = false;
     boolean yDone = false;
-    double currVelocityLessCount = 0;
-    public static double velLessZeroMax = 10;
     boolean angDone = false;
     int donePointCounter = 0;
     Pose2d startOfNewGo = new Pose2d();
-    public static double noVelVel = 1.5;
     Pose2d prevPoseForVel = new Pose2d();
     double currVelocity = 0;
-    public static double targetVelocity = 50;
     public static double maxVel = 50;
+    public static double targetVelocity = maxVel;
     public static double almostDoneVel = 20;
     public static double slowVel = almostDoneVel;
     public static double evenSlowerVel = 2;
@@ -87,10 +70,8 @@ public class PointFollower {
 
         for (int i = 1; i < this.posesToGoTo.size(); i++) {
             trajTypes.add("");
-//                pointTypes.add(new PointType("mid"));
         }
         for (int i = 0; i < this.posesToGoTo.size(); i++) {
-//                trajTypes.add("");
             pointTypes.add(new PointType("mid"));
         }
         pointTypes.set(pointTypes.size() - 1, new PointType("end"));
@@ -117,7 +98,6 @@ public class PointFollower {
             theoreticalTheta = MathsAndStuff.AngleWrap(Math.atan2(yDist, xDist));
 
             for (int j = 0; j < iterationsForPoses; j++) {
-//                theoreticalAngle += angleForMrGeorge;
                 double relDistX = Math.cos(theoreticalTheta) * (distToTarget * j);
                 double relDistY = Math.sin(theoreticalTheta) * (distToTarget * j);
                 inBetweenPoints.add(new Pose2d(startingPos.getX() + relDistX, startingPos.getY() + relDistY, targetPos.getHeading()));
@@ -162,9 +142,6 @@ public class PointFollower {
         inBetweenPoints.add(new Pose2d(this.posesToGoTo.get(this.posesToGoTo.size() - 1).getX(), this.posesToGoTo.get(this.posesToGoTo.size() - 1).getY(), this.posesToGoTo.get(this.posesToGoTo.size() - 1).getHeading()));
         pointTypesInBetween.add(new PointType("final"));
 
-//        inBetweenPoints.remove(0);
-
-
         telemetry.addLine("Poses to go to " + this.posesToGoTo);
         telemetry.addLine("Poses in between " + inBetweenPoints);
         telemetry.addLine("PointTypes in between: " + pointTypesInBetween);
@@ -198,32 +175,6 @@ public class PointFollower {
             isBuggingRuntimeToStop = distToTarg / isBuggingRuntimeToStop + isBuggingRuntimeToStopError;
 
             if (!inBetweenPoints.isEmpty()) {
-//                if(currVelocity < noVelVel){
-//                    currVelocityLessCount += 1;
-//                }
-//                else{
-//                    currVelocityLessCount = 0;
-//                }
-//
-//                if(currVelocityLessCount > velLessZeroMax){
-//                    wMap.frontLeft.setPower(motorStuckPow);
-//                    wMap.frontRight.setPower(motorStuckPow);
-//                    wMap.backLeft.setPower(motorStuckPow);
-//                    wMap.backRight.setPower(motorStuckPow);
-//                    currVelocityLessCount =  0;
-//                }
-//                if(Math.abs(wMap.backRight.getPower()) < minMotorPow){
-//                    wMap.backRight.setPower(notPowPow);
-//                }
-//                if(Math.abs(wMap.backLeft.getPower()) < minMotorPow){
-//                    wMap.backLeft.setPower(notPowPow);
-//                }
-//                if(Math.abs(wMap.frontRight.getPower()) < minMotorPow){
-//                    wMap.frontRight.setPower(notPowPow);
-//                }
-//                if(Math.abs(wMap.frontLeft.getPower()) < minMotorPow){
-//                    wMap.frontLeft.setPower(notPowPow);
-//                }
                 double isBuggingChecker = runtime.seconds();
                 Pose2d targetPose = inBetweenPoints.get(0);
                 double roomForPoseError;
@@ -235,15 +186,13 @@ public class PointFollower {
                 }
 
                 angDone = !pointTypesInBetween.get(0).type.equals("final") && !pointTypesInBetween.get(0).type.equals("end");
-                double fastestXDist = targetPose.getX() - startOfNewGo.getX();
-                double fastestYDist = targetPose.getY() - startOfNewGo.getY();
 
                 double xDist = targetPose.getX() - currPose.getX();
                 double yDist = targetPose.getY() - currPose.getY();
                 double angDist = targetPose.getHeading() - currPose.getHeading();
 
                 double distToTarget = Math.hypot(xDist, yDist);
-                double theta = MathsAndStuff.AngleWrap(Math.atan2(xDist, yDist) + wMap.odos.startingPose.getHeading());
+                double theta = MathsAndStuff.AngleWrap(Math.atan2(xDist, yDist) + wMap.startingPose.getHeading());
 
                 //Error X
                 double relDistX = Math.cos(theta) * distToTarget;
@@ -297,8 +246,6 @@ public class PointFollower {
                     xDone = true;
                     yDone = true;
                     angDone = true;
-//                } else if (!(pointTypesInBetween.get(0).type.equals("mid")) && (Math.abs(relDistX) > Math.abs(fastestXDist + offCourseError) || Math.abs(relDistY) > Math.abs(fastestYDist + offCourseError))) {
-//                    wMap.setMotorPowers(currPose, targetPose, offCourseSpeed);
                 }
                 if (Math.abs(angDist) < Math.abs(LevineLocalizationMap.angError)) {
                     angDone = true;
@@ -314,7 +261,7 @@ public class PointFollower {
                 telemetry.addLine("Target Pose: " + targetPose);
                 telemetry.addLine("isBuggingChecker: " + isBuggingChecker);
 //                telemetry.addLine("relDistX: " + relDistX + "relDistY: " + relDistY);
-                telemetry.addLine("Motor powers: " + wMap.odos.getPowers(currPose, targetPose));
+                telemetry.addLine("Motor powers: " + wMap.getPowers(currPose, targetPose));
 //                telemetry.addLine("Ang Done? " + angDone);
 //                telemetry.addLine("X Done " + xDone);
 //                telemetry.addLine("Y Done " + yDone);
@@ -332,13 +279,11 @@ public class PointFollower {
                     runtime.reset();
                     inBetweenPoints.remove(0);
                     pointTypesInBetween.remove(0);
-//                    currPower = 0.5;
 
                     donePointCounter++;
                     xDone = false;
                     yDone = false;
                     startOfNewGo = new Pose2d(targetPose.getX(), targetPose.getY(), targetPose.getHeading());
-//                    angDone = false;
                 }
             } else if(stopAfter) {
                 wMap.stopMotors();
