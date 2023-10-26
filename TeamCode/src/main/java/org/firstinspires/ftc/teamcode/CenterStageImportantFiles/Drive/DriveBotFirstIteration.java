@@ -20,25 +20,32 @@ public class DriveBotFirstIteration extends LinearOpMode {
     MonkeyMap wBot = new MonkeyMap(this);
     public ElapsedTime planeTime = new ElapsedTime();
     public static double timeForPlaneWait = 0.25;
+    public static double divisorForSlidePowersUp = 1.25;
+    public static double divisorForSlidePowersDown = 3;
+
 
 
     @Override
     public void runOpMode() throws InterruptedException {
         wBot.init();
 
-        MecanumDrive drive = new MecanumDrive(wBot.frontLeft, wBot.frontRight, wBot.backLeft, wBot.backRight);
-
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
+
+        MecanumDrive drive = new MecanumDrive(wBot.frontLeft, wBot.frontRight, wBot.backLeft, wBot.backRight);
 
         boolean a2Pressable = true;
         boolean b2Pressable = true;
         boolean x2Pressable = true;
         boolean y2Pressable = true;
+        boolean dpu2Pressable = true;
 //        boolean lb2Pressable = true;
 //        boolean rb2Pressable = true;
 //        boolean dpd2Pressable = true;
 
         planeTime.reset();
+        wBot.toggleRotator();
+        wBot.toggleFlipper();
+        wBot.openGrabber();
 
         waitForStart();
 
@@ -63,8 +70,8 @@ public class DriveBotFirstIteration extends LinearOpMode {
             boolean dpd2 = gamepad2.dpad_down;
             boolean dpl2 = gamepad2.dpad_left;
             boolean dpr2 = gamepad2.dpad_right;
-
-            double ly2 = (gamepad2.left_stick_y/2) + MonkeyMap.servoStopPow;
+            double ly2 = gamepad2.left_stick_y;
+            double ry2 = gamepad2.right_stick_y;
 
             if(a2 && a2Pressable){
                 wBot.toggleGrabber();
@@ -97,10 +104,29 @@ public class DriveBotFirstIteration extends LinearOpMode {
                 planeTime.reset();
             }
 
-            telemetry.addLine("Conveyer motor pow: " + wBot.conveyerMotor.getPower());
+            if(ly2 < 0){
+                wBot.setSlidePowers(ly2/divisorForSlidePowersUp);
+            }
+            else if(ly2 > 0){
+                wBot.setSlidePowers(ly2/divisorForSlidePowersDown);
+            }
+            else{
+                wBot.setSlidePowers(MonkeyMap.holdPowerForSlides);
+            }
+            telemetry.addLine("ry2 is " + ry2);
+            telemetry.addLine("armMotorLeftPow: " + wBot.armMotorLeft.getPower() + " armMotorRightPow: " + wBot.armMotorRight.getPower());
+
+            if(dpu2 && dpu2Pressable){
+                wBot.toggleRotator();
+            }
+
+            dpu2Pressable = !dpu2;
+
+            telemetry.addLine("Rotator Pos: " + wBot.rotatorServo.getPosition());
+            telemetry.addLine("Conveyor motor pow: " + wBot.conveyerMotor.getPower());
             telemetry.addLine("Flipper Servo Left Pos: " + wBot.flipperServoLeft.getPosition() + " Flipper Servo Right Pos: " + wBot.flipperServoRight.getPosition());
 
-            wBot.intakeNoodleServo.setPosition(ly2);
+//            wBot.intakeNoodleServo.setPosition(ly2);
 
             telemetry.addLine("ly2 is: " + ly2);
 

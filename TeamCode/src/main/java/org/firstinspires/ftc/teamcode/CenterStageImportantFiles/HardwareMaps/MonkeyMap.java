@@ -25,25 +25,23 @@ public class MonkeyMap {
     public VoltageSensor batteryVoltageSensor;
 
     //Servo Positions
-    public static double grabberServoScalerDown = 0, grabberServoScalerUp = 0.12;
-    public static double grabberClosed = 0, grabberOpen = 1;
+    public static double grabberServoScalerDown = 0, grabberServoScalerUp = 1;
+    public static double grabberClosed = 0.01, grabberOpen = 0.085;
     public static double wheelServoPow = 1, servoStopPow = 0.5;
-    public static double flipperScalarDown = 0, flipperScalarUp = 1, flipperScalarOffset = 0, flipperPosDown = 0, flipperPosAcross = 1, rotatorTrasfer = 1, rotatorPixel1 = 0, rotatorPixel2 = 0.05, rotatorPixel3 = 0.1, rotatorPixel4 = 0.15, rotatorPixel5 = 0.2;
-    public static double airplaneServoLoadedPos = 0.38, airplaneServoGoPos = 0.5;
+    public static double flipperScalarDown = 0.1, flipperScalarUp = 0.9, flipperScalarOffset = 0.05, flipperPosDown = 0.19, flipperPosAcross = 0.96, rotatorPickUp = 0.1075, rotatorPlace = 0.774, rotatorPixel1 = 0, rotatorPixel2 = 0.05, rotatorPixel3 = 0.1, rotatorPixel4 = 0.15, rotatorPixel5 = 0.2;
+    public static double airplaneServoLoadedPos = 0.16, airplaneServoGoPos = 0.28;
 
     //Motor powers and pos
-    public static double conveyerPower = 1;
+    public static double conveyerPower = -1;
+
+    public static double holdPowerForSlides = -0.1;
 
     public static int[] pixelHeightsForRotator;
 
     public static double spencerLikesKidsPosUp = 0.4, spencerLikesKidsPosDown = 0.9;
 
     public Pose2d startingPosition, beacon1BeforeTrussRed, beacon2BeforeTrussRed, beacon3BeforeTrussRed, beacon1AfterTrussRed, beacon2AfterTrussRed, beacon3AfterTrussRed, beacon1BeforeTrussBlue, beacon2BeforeTrussBlue, beacon3BeforeTrussBlue, beacon1AfterTrussBlue, beacon2AfterTrussBlue, beacon3AfterTrussBlue, pickUpSpotRed, pickUpSpotBlue, placementRed, placementBlue;
-    public boolean grabberIsOpen = true;
-    public boolean wheelOn = false;
-    public boolean conveyerOn = false;
-    public boolean rotatorDown = true;
-    public boolean airplaneLoaded = true;
+    public boolean grabberIsOpen = true, wheelOn = false, conveyerOn = false, flipperDown = true, airplaneLoaded = true, rotatorDown;
 
     public MonkeyMap (LinearOpMode opmode) {
         myOpMode = opmode;
@@ -79,7 +77,13 @@ public class MonkeyMap {
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         backLeft.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.FORWARD);
-        armMotorRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        armMotorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        armMotorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armMotorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        armMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armMotorRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -94,19 +98,19 @@ public class MonkeyMap {
 
     public void openGrabber(){
         grabberServo.setPosition(grabberOpen);
+        grabberIsOpen = true;
     }
     public void closeGrabber(){
         grabberServo.setPosition(grabberClosed);
+        grabberIsOpen = false;
     }
 
     public void toggleGrabber(){
         if(grabberIsOpen){
             closeGrabber();
-            grabberIsOpen = false;
         }
         else{
             openGrabber();
-            grabberIsOpen = true;
         }
     }
     public void toggleIntakeWheels(){
@@ -139,12 +143,12 @@ public class MonkeyMap {
     }
 
     public void toggleFlipper() {
-        if (rotatorDown) {
+        if (flipperDown) {
             setFlipperPos(flipperPosAcross);
-            rotatorDown = false;
+            flipperDown = false;
         } else {
             setFlipperPos(flipperPosDown);
-            rotatorDown = true;
+            flipperDown = true;
         }
     }
     public void shootPlane(){
@@ -160,6 +164,32 @@ public class MonkeyMap {
         } else {
             loadPlane();
             airplaneLoaded = true;
+        }
+    }
+    public void encodedSlipperySlides(int pos, double power) {
+        armMotorLeft.setTargetPosition(pos);
+        armMotorRight.setTargetPosition(pos);
+        armMotorLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armMotorRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        setSlidePowers(power);
+    }
+    public void setSlidePowers(double power){
+        armMotorLeft.setPower(power);
+        armMotorRight.setPower(power);
+    }
+    public void rotateDown(){
+        rotatorServo.setPosition(rotatorPickUp);
+    }
+    public void rotateUp(){
+        rotatorServo.setPosition(rotatorPlace);
+    }
+    public void toggleRotator() {
+        if (rotatorDown) {
+            rotateUp();
+            rotatorDown = false;
+        } else {
+            rotateDown();
+            rotatorDown = true;
         }
     }
 
