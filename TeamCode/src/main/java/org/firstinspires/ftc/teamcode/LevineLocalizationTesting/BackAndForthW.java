@@ -8,7 +8,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.Auton.ActionRunnerFirstIterationCenterStageBlueBottem;
+import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMap;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PointFollower;
+import org.firstinspires.ftc.teamcode.LevineLocalization.PosesAndActions;
 import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVGreatestColorTest;
 import org.openftc.easyopencv.OpenCvCamera;
 
@@ -17,22 +20,19 @@ import java.util.ArrayList;
 @Config
 @Autonomous(group = "Levine Local")
 public class BackAndForthW extends LinearOpMode {
-    OpenCvCamera webcam;
-    static OpenCVGreatestColorTest pipeline;
-    public static int webcamWidth = 320;
-    public static int webcamHeight = 240;
-    public static double lineDist = 1;
-    public static double poseErrorGoToBlock = 0.75;
-    PointFollower follower = new PointFollower(this);
+    public static double xDist = 50;
+    MonkeyMap wBot = new MonkeyMap(this);
+    ActionRunnerFirstIterationCenterStageBlueBottem actionRunner = new ActionRunnerFirstIterationCenterStageBlueBottem(this, wBot);
+    PointFollower follower = new PointFollower(this, actionRunner);
     @Override
     public void runOpMode() throws InterruptedException {
-        ArrayList<Pose2d> posesToGoTo = new ArrayList<>();
+        ArrayList<PosesAndActions> posesToGoTo = new ArrayList<>();
         Pose2d firstPose = new Pose2d(0, 0, Math.toRadians(0));
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
-        posesToGoTo.add(firstPose);
-        posesToGoTo.add(new Pose2d(50, 0, Math.toRadians(0)));
-        posesToGoTo.add(new Pose2d(0, 0, Math.toRadians(0)));
+        posesToGoTo.add(new PosesAndActions(firstPose, ""));
+        posesToGoTo.add(new PosesAndActions(new Pose2d(xDist, 0, Math.toRadians(0)), ""));
+        posesToGoTo.add(new PosesAndActions(new Pose2d(0, 0, Math.toRadians(0)), ""));
 //        posesToGoTo.add(new Pose2d(20, 0, Math.toRadians(90)));
 //        posesToGoTo.add(new Pose2d(35, 20, Math.toRadians(180)));
 //        posesToGoTo.add(new Pose2d(-10, 4, Math.toRadians(0)));
@@ -43,17 +43,14 @@ public class BackAndForthW extends LinearOpMode {
 //        posesToGoTo.add(new Pose2d(1, -10, -100));
 //        posesToGoTo.add(new Pose2d(20, 0, Math.toRadians(0)));
 
-        follower.init(posesToGoTo);
+        follower.init(posesToGoTo, false);
         waitForStart();
         follower.goToPoints(true);
-        Pose2d endingPose = posesToGoTo.get(posesToGoTo.size()-1);
 
         while(opModeIsActive()){
             posesToGoTo.clear();
-            posesToGoTo.add(endingPose);
-            posesToGoTo.add(new Pose2d(50, 0, Math.toRadians(0)));
-            posesToGoTo.add(new Pose2d(0, 0, Math.toRadians(0)));
-            endingPose = posesToGoTo.get(posesToGoTo.size()-1);
+            posesToGoTo.add(new PosesAndActions(new Pose2d(xDist, 0, Math.toRadians(0)), ""));
+            posesToGoTo.add(new PosesAndActions(new Pose2d(0, 0, Math.toRadians(0)), ""));
             follower.reinit(posesToGoTo);
             telemetry.addLine("newPoses " + posesToGoTo);
             telemetry.update();

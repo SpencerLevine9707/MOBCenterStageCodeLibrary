@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.LevineLocalizationTesting;
+package org.firstinspires.ftc.teamcode.CenterStageImportantFiles.Test;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -8,57 +8,53 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.Auton.ActionRunnerFirstIterationCenterStageBlueBottem;
+import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.AprilTagReader;
 import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMap;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PointFollower;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PosesAndActions;
-import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVGreatestColorTest;
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Config
 @Autonomous(group = "Levine Local")
-public class PIDTuner extends LinearOpMode {
-    public static double xDist = 50;
-    public static double yDist = 0;
+public class TestingActionsNew extends LinearOpMode {
     MonkeyMap wBot = new MonkeyMap(this);
     ActionRunnerFirstIterationCenterStageBlueBottem actionRunner = new ActionRunnerFirstIterationCenterStageBlueBottem(this, wBot);
     PointFollower follower = new PointFollower(this, actionRunner);
+    public static boolean isTest = true;
+    public static double xDist = 20;
+    public static double yDist = 0;
+    public static double xDist2 = 10;
+    public static double yDist2 = 0;
+    public static String action = "closeGrabber";
     @Override
     public void runOpMode() throws InterruptedException {
-        ArrayList<PosesAndActions   > posesToGoTo = new ArrayList<>();
+        wBot.init();
+        wBot.initPoses();
+        wBot.toggleRotator();
+        wBot.toggleFlipper();
+        wBot.openGrabber();
+        ArrayList<PosesAndActions> posesToGoTo = new ArrayList<>();
         PosesAndActions firstPose = new PosesAndActions(new Pose2d(0, 0, Math.toRadians(0)), "");
+        PosesAndActions secondPose = new PosesAndActions(new Pose2d(xDist2, yDist2, Math.toRadians(0)), action);
         PosesAndActions acrossPose = new PosesAndActions(new Pose2d(xDist, yDist, Math.toRadians(0)), "");
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
         posesToGoTo.add(firstPose);
+        posesToGoTo.add(secondPose);
         posesToGoTo.add(acrossPose);
 
-        follower.init(posesToGoTo, false);
+        follower.init(posesToGoTo, isTest);
         waitForStart();
         follower.goToPoints(true);
 
-        PosesAndActions endingPose = posesToGoTo.get(posesToGoTo.size()-1);
-
+        requestOpModeStop();
         while(opModeIsActive()){
-            posesToGoTo.clear();
-            if(endingPose.equals(firstPose)){
-                posesToGoTo.add(firstPose);
-                posesToGoTo.add(acrossPose);
-            }
-            else{
-                posesToGoTo.add(acrossPose);
-                posesToGoTo.add(firstPose);
-            }
-            endingPose = posesToGoTo.get(posesToGoTo.size()-1);
-            follower.reinit(posesToGoTo);
-            telemetry.addLine("newPoses " + posesToGoTo);
-            telemetry.update();
-            follower.goToPoints(true);
+//            sleep(10000);
+            requestOpModeStop();
         }
     }
 }

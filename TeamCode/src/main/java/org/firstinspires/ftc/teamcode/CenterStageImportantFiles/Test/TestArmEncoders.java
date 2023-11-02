@@ -22,6 +22,7 @@ public class TestArmEncoders extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        wBot.init();
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
         wBot.armMotorLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         wBot.armMotorRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -37,6 +38,9 @@ public class TestArmEncoders extends LinearOpMode {
             }
 
             dpu2Pressable = !dpu2;
+            telemetry.addData("leftArmPos: ", wBot.armMotorLeft.getCurrentPosition());
+            telemetry.addData("rightArmPos: ", wBot.armMotorRight.getCurrentPosition());
+            telemetry.update();
         }
     }
 }

@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,13 +11,15 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 @Config
 public class MonkeyMap {
     //Define runtime
     public ElapsedTime runtime = new ElapsedTime();
 
     //Define opMode
-    private LinearOpMode myOpMode;
+    public LinearOpMode myOpMode;
 
     //Define all hardware
     public DcMotor frontLeft, frontRight, backLeft, backRight, conveyerMotor, armMotorLeft, armMotorRight;
@@ -32,16 +36,29 @@ public class MonkeyMap {
     public static double airplaneServoLoadedPos = 0.16, airplaneServoGoPos = 0.28;
 
     //Motor powers and pos
-    public static double conveyerPower = -1;
+    public static double conveyerPower = -1, unloadPower = 0.5, stopLoadPower = 0;
+    public static int resetSlidesPos = 0, placementSlidesPos = -450, slidePosFirstPlace = -150;
 
-    public static double holdPowerForSlides = -0.1;
+    public static double holdPowerForSlides = -0.1, slidePowerDown = 0.3, slidePowerUp = 0.6;
 
     public static int[] pixelHeightsForRotator;
 
     public static double spencerLikesKidsPosUp = 0.4, spencerLikesKidsPosDown = 0.9;
 
-    public Pose2d startingPosition, beacon1BeforeTrussRed, beacon2BeforeTrussRed, beacon3BeforeTrussRed, beacon1AfterTrussRed, beacon2AfterTrussRed, beacon3AfterTrussRed, beacon1BeforeTrussBlue, beacon2BeforeTrussBlue, beacon3BeforeTrussBlue, beacon1AfterTrussBlue, beacon2AfterTrussBlue, beacon3AfterTrussBlue, pickUpSpotRed, pickUpSpotBlue, placementRed, placementBlue;
+    public Pose2d startingPositionBeforeTrussRed, startingPositionAfterTrussRed, startingPositionBeforeTrussBlue, startingPositionAfterTrussBlue,  beacon1BeforeTrussRed, beacon2BeforeTrussRed, beacon3BeforeTrussRed, beacon1AfterTrussRed, beacon2AfterTrussRed, beacon3AfterTrussRed, beacon1BeforeTrussBlue, beacon2BeforeTrussBlue, beacon3BeforeTrussBlue, beacon1AfterTrussBlue, beacon2AfterTrussBlue, beacon3AfterTrussBlue, pickUpSpotRed, pickUpSpotBlue, placementRed, placementBlue, placementRedBeacon1, placementRedBeacon2, placementRedBeacon3, placementBlueBeacon1, placementBlueBeacon2, placementBlueBeacon3, underTrussRed, underTrussBlue, slidesDownAfterPlace;
+    public static double xPosStartingPositionBeforeTrussRed, xPosStartingPositionAfterTrussRed, xPosStartingPositionBeforeTrussBlue = -36, xPosStartingPositionAfterTrussBlue;
+    public static double yPosStartingPositionBeforeTrussRed, yPosStartingPositionAfterTrussRed, yPosStartingPositionBeforeTrussBlue = 63, yPosStartingPositionAfterTrussBlue;
+    public static double xPosBeacon1BeforeTrussBlue = -33, xPosBeacon1BeforeTrussRed, xPosBeacon2BeforeTrussRed, xPosBeacon3BeforeTrussRed, xPosBeacon1AfterTrussRed, xPosBeacon2AfterTrussRed, xPosBeacon3AfterTrussRed,  xPosBeacon2BeforeTrussBlue = -35, xPosBeacon3BeforeTrussBlue = -42, xPosBeacon1AfterTrussBlue, xPosBeacon2AfterTrussBlue, xPosBeacon3AfterTrussBlue;
+    public static double yPosBeacon1BeforeTrussBlue = 39, yPosBeacon1BeforeTrussRed, yPosBeacon2BeforeTrussRed, yPosBeacon3BeforeTrussRed, yPosBeacon1AfterTrussRed, yPosBeacon2AfterTrussRed, yPosBeacon3AfterTrussRed, yPosBeacon2BeforeTrussBlue = 39, yPosBeacon3BeforeTrussBlue = 39, yPosBeacon1AfterTrussBlue, yPosBeacon2AfterTrussBlue, yPosBeacon3AfterTrussBlue;
+    public static double xPosPickUpSpotRed, xPosPickUpSpotBlue = -62, xPosPlacementRed, xPosPlacementBlue = 35, xPosPlacementRedBeacon1 = 50, xPosPlacementRedBeacon2 = 50, xPosPlacementRedBeacon3 = 50, xPosPlacementBlueBeacon1 = 35, xPosPlacementBlueBeacon2 = 35, xPosPlacementBlueBeacon3 = 35, xPosUnderTrussRed, xPosUnderTrussBlue = 20, xPosSlidesDownAfterPlace = 30;
+    public static double yPosPickUpSpotRed, yPosPickUpSpotBlue = 37, yPosPlacementRed, yPosPlacementBlue = 31.75, yPosPlacementRedBeacon1, yPosPlacementRedBeacon2, yPosPlacementRedBeacon3, yPosPlacementBlueBeacon1 = 39, yPosPlacementBlueBeacon2 = 35, yPosPlacementBlueBeacon3 = 28, yPosUnderTrussRed, yPosUnderTrussBlue = 34, yPosSlidesDownAfterPlace = 34;
+    public static double headingStartingPositionBeforeTrussRed, headingStartingPositionAfterTrussRed, headingStartingPositionBeforeTrussBlue = Math.toRadians(90), headingStartingPositionAfterTrussBlue, headingBeacon1BeforeTrussBlue = Math.toRadians(90), headingBeacon1BeforeTrussRed = Math.toRadians(90), headingBeacon2BeforeTrussRed, headingBeacon3BeforeTrussRed, headingBeacon1AfterTrussRed, headingBeacon2AfterTrussRed, headingBeacon3AfterTrussRed, headingBeacon2BeforeTrussBlue = Math.toRadians(90), headingBeacon3BeforeTrussBlue = Math.toRadians(90), headingBeacon1AfterTrussBlue, headingBeacon2AfterTrussBlue, headingBeacon3AfterTrussBlue, headingPickUpSpotRed, headingPickUpSpotBlue = Math.toRadians(0), headingPlacementRed, headingPlacementBlue = Math.toRadians(0), headingUnderTrussRed, headingUnderTrussBlue = Math.toRadians(0);
+    public static int sleepTimePlacePreloadBeacon = 1500, sleepTimePickUpPixel = 1500, sleepTimePlacePixels = 1500;
     public boolean grabberIsOpen = true, wheelOn = false, conveyerOn = false, flipperDown = true, airplaneLoaded = true, rotatorDown;
+    //Times to not break bot
+    public static double timeToWaitForFlipAfterSlidesUp = 1;
+    //Goofy noises
+    public int matchStart, wIntro, endgameStart, yabbaDabbaDo, driversPickUp, funnyFunny, teleStart;
 
     public MonkeyMap (LinearOpMode opmode) {
         myOpMode = opmode;
@@ -94,6 +111,42 @@ public class MonkeyMap {
         armMotorRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         loadPlane();
+
+        //Init telementry and webcam for dashboard use
+        Telemetry telemetry = new MultipleTelemetry(this.myOpMode.telemetry, FtcDashboard.getInstance().getTelemetry());
+
+        //Init voltage sensor
+        batteryVoltageSensor = myOpMode.hardwareMap.voltageSensor.iterator().next();
+
+        //Goofy noises
+        matchStart = myOpMode.hardwareMap.appContext.getResources().getIdentifier("match_start", "raw", myOpMode.hardwareMap.appContext.getPackageName());
+        endgameStart = myOpMode.hardwareMap.appContext.getResources().getIdentifier("endgamestart", "raw", myOpMode.hardwareMap.appContext.getPackageName());
+        wIntro   = myOpMode.hardwareMap.appContext.getResources().getIdentifier("phubintro",   "raw", myOpMode.hardwareMap.appContext.getPackageName());
+        yabbaDabbaDo = myOpMode.hardwareMap.appContext.getResources().getIdentifier("yabbadabbadoodle", "raw", myOpMode.hardwareMap.appContext.getPackageName());
+        driversPickUp   = myOpMode.hardwareMap.appContext.getResources().getIdentifier("drivers_controllers",   "raw", myOpMode.hardwareMap.appContext.getPackageName());
+        funnyFunny = myOpMode.hardwareMap.appContext.getResources().getIdentifier("badtothebone", "raw", myOpMode.hardwareMap.appContext.getPackageName());
+        teleStart = myOpMode.hardwareMap.appContext.getResources().getIdentifier("teleop_start", "raw", myOpMode.hardwareMap.appContext.getPackageName());
+
+
+
+        telemetry.addData(">", "Jackson Harrison Shapiro is ready to start yelling and get frusturated");
+        telemetry.addData("Battery Voltage: ", batteryVoltageSensor.getVoltage());
+        telemetry.update();
+    }
+
+    public void initPoses(){
+        startingPositionBeforeTrussBlue = new Pose2d(xPosStartingPositionBeforeTrussBlue, yPosStartingPositionBeforeTrussBlue, headingStartingPositionBeforeTrussBlue);
+        beacon1BeforeTrussBlue = new Pose2d(xPosBeacon1BeforeTrussBlue, yPosBeacon1BeforeTrussBlue, headingBeacon1BeforeTrussBlue);
+        beacon2BeforeTrussBlue = new Pose2d(xPosBeacon2BeforeTrussBlue, yPosBeacon2BeforeTrussBlue, headingBeacon2BeforeTrussBlue);
+        beacon3BeforeTrussBlue = new Pose2d(xPosBeacon3BeforeTrussBlue, yPosBeacon3BeforeTrussBlue, headingBeacon3BeforeTrussBlue);
+
+        pickUpSpotBlue = new Pose2d(xPosPickUpSpotBlue, yPosPickUpSpotBlue, headingPickUpSpotBlue);
+        underTrussBlue = new Pose2d(xPosUnderTrussBlue, yPosUnderTrussBlue, headingUnderTrussBlue);
+        placementBlue = new Pose2d(xPosPlacementBlue, yPosPlacementBlue, headingPlacementBlue);
+        placementBlueBeacon1 = new Pose2d(xPosPlacementBlueBeacon1, yPosPlacementBlueBeacon1, headingPlacementBlue);
+        placementBlueBeacon2 = new Pose2d(xPosPlacementBlueBeacon2, yPosPlacementBlueBeacon2, headingPlacementBlue);
+        placementBlueBeacon3 = new Pose2d(xPosPlacementBlueBeacon3, yPosPlacementBlueBeacon3, headingPlacementBlue);
+        slidesDownAfterPlace = new Pose2d(xPosSlidesDownAfterPlace, yPosSlidesDownAfterPlace, headingPlacementBlue);
     }
 
     public void openGrabber(){
@@ -141,14 +194,20 @@ public class MonkeyMap {
         flipperServoLeft.setPosition(pos);
         flipperServoRight.setPosition(pos);
     }
+    public void flipDown(){
+        setFlipperPos(flipperPosDown);
+        flipperDown = true;
+    }
+    public void flipUp(){
+        setFlipperPos(flipperPosAcross);
+        flipperDown = false;
+    }
 
     public void toggleFlipper() {
         if (flipperDown) {
-            setFlipperPos(flipperPosAcross);
-            flipperDown = false;
+            flipUp();
         } else {
-            setFlipperPos(flipperPosDown);
-            flipperDown = true;
+            flipDown();
         }
     }
     public void shootPlane(){
@@ -192,11 +251,38 @@ public class MonkeyMap {
             rotatorDown = true;
         }
     }
-
-
-
-
-
-
+    public void unloadPixel(){
+        conveyerMotor.setPower(unloadPower);
+    }
+    public void stopLoadingPixels(){
+        conveyerMotor.setPower(stopLoadPower);
+    }
+    public void loadPixels(){
+        conveyerMotor.setPower(conveyerPower);
+    }
+    public void resetSlides(){
+        encodedSlipperySlides(resetSlidesPos, slidePowerDown);
+    }
+    public void placeSlides(){
+        encodedSlipperySlides(placementSlidesPos, slidePowerUp);
+    }
+    public void placeSlidesFirstTime(){
+        encodedSlipperySlides(slidePosFirstPlace, slidePowerUp);
+    }
+    public void getReadyPlaceAuton(){
+        placeSlides();
+        flipDown();
+        closeGrabber();
+    }
+    public void readyPickUpAuton(){
+        resetSlides();
+        openGrabber();
+        flipUp();
+    }
+    public void getReadyFirstPlaceAuton(){
+        encodedSlipperySlides(slidePosFirstPlace, slidePowerUp);
+        flipDown();
+        closeGrabber();
+    }
 
 }

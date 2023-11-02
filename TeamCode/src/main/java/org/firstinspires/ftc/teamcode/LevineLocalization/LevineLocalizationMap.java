@@ -4,20 +4,17 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.arcrobotics.ftclib.drivebase.MecanumDrive;
-import com.arcrobotics.ftclib.hardware.motors.MotorEx;
-//import com.arcrobotics.ftclib.trajectory.TrajectoryConfig;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
-
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @Config
 public class LevineLocalizationMap {
+    //Define all variable - public static doubles because FTC dashboard allows you to change them
     public static double poseError = 0.75;
     public static double angError = Math.toRadians(0.5);
-    public static double followRadius = 10;
+    public static double followRadius = 30;
     public static double poseFollowCoef = 1;
     public static double speedMultiplier = 1;
     public Pose2d startingPose;
@@ -25,13 +22,17 @@ public class LevineLocalizationMap {
     public DcMotor frontLeft, frontRight, backLeft, backRight;
     public VoltageSensor batteryVoltageSensor;
 
+    //Constructor for class - define opmode to allow motors to be run from this file
     public LevineLocalizationMap(LinearOpMode opmode){
         myOpMode = opmode;
     }
 
+    //Init code - uses init with default start of (0 - x, 0 - y, 90 degrees - heading)
     public void init() {
         init(new Pose2d(0, 0, Math.toRadians(90)));
     }
+
+    //Init function - defines all devices and directions
     public void init(Pose2d startingPose) {
         frontLeft = myOpMode.hardwareMap.get(DcMotor.class, ("frontLeft")); //port 3
         frontRight = myOpMode.hardwareMap.get(DcMotor.class, ("frontRight")); //port 2
@@ -52,8 +53,10 @@ public class LevineLocalizationMap {
 
         this.startingPose = startingPose;
 
+        //Displays all telemetry data on FTC dashboard
         Telemetry telemetry = new MultipleTelemetry(this.myOpMode.telemetry, FtcDashboard.getInstance().getTelemetry());
 
+        //Displays current battery voltage on FTC dashboard
         telemetry.addData("Battery Voltage: ", batteryVoltageSensor.getVoltage());
         telemetry.update();
     }
