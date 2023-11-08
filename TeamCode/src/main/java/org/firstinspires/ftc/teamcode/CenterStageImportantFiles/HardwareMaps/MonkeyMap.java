@@ -24,20 +24,21 @@ public class MonkeyMap {
     //Define all hardware
     public DcMotor frontLeft, frontRight, backLeft, backRight, conveyerMotor, armMotorLeft, armMotorRight;
 
-    public Servo spencerLikesKids, grabberServo, rotatorServo, intakeNoodleServo, flipperServoLeft, flipperServoRight, wheelServoLeft, wheelServoRight, airplaneServo;
+    public Servo spencerLikesKids, grabberServo, rotatorServo, intakeNoodleServo, flipperServoLeft, flipperServoRight, wheelServoLeft, wheelServoRight, airplaneServo, stackKnocker;
 
     public VoltageSensor batteryVoltageSensor;
 
     //Servo Positions
     public static double grabberServoScalerDown = 0, grabberServoScalerUp = 1;
-    public static double grabberClosed = 0.01, grabberOpen = 0.085;
+    public static double grabberClosed = 0.01, grabberOpen = 0.12;
     public static double wheelServoPow = 1, servoStopPow = 0.5;
-    public static double flipperScalarDown = 0.1, flipperScalarUp = 0.9, flipperScalarOffset = 0.05, flipperPosDown = 0.19, flipperPosAcross = 0.96, rotatorPickUp = 0.1075, rotatorPlace = 0.774, rotatorPixel1 = 0, rotatorPixel2 = 0.05, rotatorPixel3 = 0.1, rotatorPixel4 = 0.15, rotatorPixel5 = 0.2;
-    public static double airplaneServoLoadedPos = 0.16, airplaneServoGoPos = 0.28;
+    public static double flipperScalarDown = 0.1, flipperScalarUp = 0.9, flipperScalarOffset = 0.05, flipperPosDown = 0.19, flipperPosAcross = 0.98, rotatorPickUp = 0.1075, rotatorPlace = 0.774, rotatorPixel1 = 0, rotatorPixel2 = 0.05, rotatorPixel3 = 0.1, rotatorPixel4 = 0.15, rotatorPixel5 = 0.2;
+    public static double airplaneServoLoadedPos = 0.13, airplaneServoGoPos = 0.25;
+    public static double stackKnockerKnockedPos = 0.35, stackKnockerResetPos = 0.67;
 
     //Motor powers and pos
-    public static double conveyerPower = -1, unloadPower = 0.5, stopLoadPower = 0;
-    public static int resetSlidesPos = 0, placementSlidesPos = -450, slidePosFirstPlace = -150;
+    public static double conveyerPower = -1, unloadPower = 1, stopLoadPower = 0;
+    public static int resetSlidesPos = 0, placementSlidesPos = -150, slidePosFirstPlace = -150;
 
     public static double holdPowerForSlides = -0.1, slidePowerDown = 0.3, slidePowerUp = 0.6;
 
@@ -45,18 +46,20 @@ public class MonkeyMap {
 
     public static double spencerLikesKidsPosUp = 0.4, spencerLikesKidsPosDown = 0.9;
 
-    public Pose2d startingPositionBeforeTrussRed, startingPositionAfterTrussRed, startingPositionBeforeTrussBlue, startingPositionAfterTrussBlue,  beacon1BeforeTrussRed, beacon2BeforeTrussRed, beacon3BeforeTrussRed, beacon1AfterTrussRed, beacon2AfterTrussRed, beacon3AfterTrussRed, beacon1BeforeTrussBlue, beacon2BeforeTrussBlue, beacon3BeforeTrussBlue, beacon1AfterTrussBlue, beacon2AfterTrussBlue, beacon3AfterTrussBlue, pickUpSpotRed, pickUpSpotBlue, placementRed, placementBlue, placementRedBeacon1, placementRedBeacon2, placementRedBeacon3, placementBlueBeacon1, placementBlueBeacon2, placementBlueBeacon3, underTrussRed, underTrussBlue, slidesDownAfterPlace;
+    public Pose2d startingPositionBeforeTrussRed, startingPositionAfterTrussRed, startingPositionBeforeTrussBlue, startingPositionAfterTrussBlue,  beacon1BeforeTrussRed, beacon2BeforeTrussRed, beacon3BeforeTrussRed, beacon1AfterTrussRed, beacon2AfterTrussRed, beacon3AfterTrussRed, beacon1BeforeTrussBlue, beacon2BeforeTrussBlue, beacon3BeforeTrussBlue, beacon1AfterTrussBlue, beacon2AfterTrussBlue, beacon3AfterTrussBlue, pickUpSpotRed, pickUpSpotBlue, placementRed, placementBlue, placementRedBeacon1, placementRedBeacon2, placementRedBeacon3, placementBlueBeacon1, placementBlueBeacon2, placementBlueBeacon3, underTrussRed, underTrussBlue, slidesDownAfterPlaceBlue, slidesDownAfterPlaceRed, underTrussGoingBackBlue, underTrussGoingBackRed, stackKnockerPosBlue, pickUpPosAfterKnockedBlue, beforePickUpAfterKnockedBlue, afterPlacePosForNoCrashBlue;
     public static double xPosStartingPositionBeforeTrussRed, xPosStartingPositionAfterTrussRed, xPosStartingPositionBeforeTrussBlue = -36, xPosStartingPositionAfterTrussBlue;
     public static double yPosStartingPositionBeforeTrussRed, yPosStartingPositionAfterTrussRed, yPosStartingPositionBeforeTrussBlue = 63, yPosStartingPositionAfterTrussBlue;
     public static double xPosBeacon1BeforeTrussBlue = -33, xPosBeacon1BeforeTrussRed, xPosBeacon2BeforeTrussRed, xPosBeacon3BeforeTrussRed, xPosBeacon1AfterTrussRed, xPosBeacon2AfterTrussRed, xPosBeacon3AfterTrussRed,  xPosBeacon2BeforeTrussBlue = -35, xPosBeacon3BeforeTrussBlue = -42, xPosBeacon1AfterTrussBlue, xPosBeacon2AfterTrussBlue, xPosBeacon3AfterTrussBlue;
-    public static double yPosBeacon1BeforeTrussBlue = 39, yPosBeacon1BeforeTrussRed, yPosBeacon2BeforeTrussRed, yPosBeacon3BeforeTrussRed, yPosBeacon1AfterTrussRed, yPosBeacon2AfterTrussRed, yPosBeacon3AfterTrussRed, yPosBeacon2BeforeTrussBlue = 39, yPosBeacon3BeforeTrussBlue = 39, yPosBeacon1AfterTrussBlue, yPosBeacon2AfterTrussBlue, yPosBeacon3AfterTrussBlue;
-    public static double xPosPickUpSpotRed, xPosPickUpSpotBlue = -62, xPosPlacementRed, xPosPlacementBlue = 35, xPosPlacementRedBeacon1 = 50, xPosPlacementRedBeacon2 = 50, xPosPlacementRedBeacon3 = 50, xPosPlacementBlueBeacon1 = 35, xPosPlacementBlueBeacon2 = 35, xPosPlacementBlueBeacon3 = 35, xPosUnderTrussRed, xPosUnderTrussBlue = 20, xPosSlidesDownAfterPlace = 30;
-    public static double yPosPickUpSpotRed, yPosPickUpSpotBlue = 37, yPosPlacementRed, yPosPlacementBlue = 31.75, yPosPlacementRedBeacon1, yPosPlacementRedBeacon2, yPosPlacementRedBeacon3, yPosPlacementBlueBeacon1 = 39, yPosPlacementBlueBeacon2 = 35, yPosPlacementBlueBeacon3 = 28, yPosUnderTrussRed, yPosUnderTrussBlue = 34, yPosSlidesDownAfterPlace = 34;
-    public static double headingStartingPositionBeforeTrussRed, headingStartingPositionAfterTrussRed, headingStartingPositionBeforeTrussBlue = Math.toRadians(90), headingStartingPositionAfterTrussBlue, headingBeacon1BeforeTrussBlue = Math.toRadians(90), headingBeacon1BeforeTrussRed = Math.toRadians(90), headingBeacon2BeforeTrussRed, headingBeacon3BeforeTrussRed, headingBeacon1AfterTrussRed, headingBeacon2AfterTrussRed, headingBeacon3AfterTrussRed, headingBeacon2BeforeTrussBlue = Math.toRadians(90), headingBeacon3BeforeTrussBlue = Math.toRadians(90), headingBeacon1AfterTrussBlue, headingBeacon2AfterTrussBlue, headingBeacon3AfterTrussBlue, headingPickUpSpotRed, headingPickUpSpotBlue = Math.toRadians(0), headingPlacementRed, headingPlacementBlue = Math.toRadians(0), headingUnderTrussRed, headingUnderTrussBlue = Math.toRadians(0);
-    public static int sleepTimePlacePreloadBeacon = 1500, sleepTimePickUpPixel = 1500, sleepTimePlacePixels = 1500;
-    public boolean grabberIsOpen = true, wheelOn = false, conveyerOn = false, flipperDown = true, airplaneLoaded = true, rotatorDown;
-    //Times to not break bot
-    public static double timeToWaitForFlipAfterSlidesUp = 1;
+    public static double yPosBeacon1BeforeTrussBlue = 35, yPosBeacon1BeforeTrussRed, yPosBeacon2BeforeTrussRed, yPosBeacon3BeforeTrussRed, yPosBeacon1AfterTrussRed, yPosBeacon2AfterTrussRed, yPosBeacon3AfterTrussRed, yPosBeacon2BeforeTrussBlue = 39, yPosBeacon3BeforeTrussBlue = 39, yPosBeacon1AfterTrussBlue, yPosBeacon2AfterTrussBlue, yPosBeacon3AfterTrussBlue;
+    public static double xPosPickUpSpotRed, xPosPickUpSpotBlue = -64, xPosStackKnockerPosBlue = -53, xPosPickUpPosAfterKnockedBlue = -64, xPosBeforePickUpAfterKnockedBlue = -60;
+    public static double xPosPlacementRed, xPosPlacementBlue = 48, xPosPlacementRedBeacon1 = 50, xPosPlacementRedBeacon2 = 50, xPosPlacementRedBeacon3 = 50, xPosPlacementBlueBeacon1 = 48, xPosPlacementBlueBeacon2 = 48, xPosPlacementBlueBeacon3 = 48, xPosUnderTrussRed, xPosUnderTrussBlue = 20, xPosSlidesDownAfterPlaceBlue = 30, xPosSlidesDownAfterPlaceRed = 30, xPosUnderTrussGoingBackBlue = 0, xPosUnderTrussGoingBackRed, xPosAfterPlacePosForNoCrashBlue = 40;
+
+    public static double yPosPickUpSpotRed, yPosPickUpSpotBlue = 37, yPosStackKnockerPosBlue = 32, yPosPickUpPosAfterKnockedBlue = 45, yPosBeforePickUpAfterKnockedBlue = 36;
+    public static double yPosPlacementRed, yPosPlacementBlue = 35, yPosPlacementRedBeacon1, yPosPlacementRedBeacon2, yPosPlacementRedBeacon3, yPosPlacementBlueBeacon1 = 41, yPosPlacementBlueBeacon2 = 35, yPosPlacementBlueBeacon3 = 33, yPosUnderTrussRed, yPosUnderTrussBlue = 36, yPosSlidesDownAfterPlaceBlue = 36, yPosSlidesDownAfterPlaceRed = 34, yPosUnderTrussGoingBackBlue = 36, yPosUnderTrussGoingBackRed, yPosAfterPlacePosForNoCrashBlue = 34;
+    public static double headingStartingPositionBeforeTrussRed, headingStartingPositionAfterTrussRed, headingStartingPositionBeforeTrussBlue = Math.toRadians(90), headingStartingPositionAfterTrussBlue, headingBeacon1BeforeTrussBlue = Math.toRadians(90), headingBeacon1BeforeTrussRed = Math.toRadians(90), headingBeacon2BeforeTrussRed, headingBeacon3BeforeTrussRed, headingBeacon1AfterTrussRed, headingBeacon2AfterTrussRed, headingBeacon3AfterTrussRed, headingBeacon2BeforeTrussBlue = Math.toRadians(90), headingBeacon3BeforeTrussBlue = Math.toRadians(90), headingBeacon1AfterTrussBlue, headingBeacon2AfterTrussBlue, headingBeacon3AfterTrussBlue, headingPickUpSpotRed, headingPickUpSpotBlue = Math.toRadians(0), headingPlacementRed, headingPlacementBlue = Math.toRadians(0), headingUnderTrussRed, headingUnderTrussBlue = Math.toRadians(0), headingPickUpPosAfterKnockedBlue = Math.toRadians(0);
+    public static int sleepTimePlacePreloadBeacon = 500, sleepTimePickUpPixel = 500, sleepTimePlacePixels = 500, sleepTimeKnockStack = 400;
+    public boolean grabberIsOpen = true, wheelOn = false, conveyerOn = false, flipperDown = true, airplaneLoaded = true, rotatorDown = false, isKnocked = false;
+    public static double timesToRunAuton = 2;
     //Goofy noises
     public int matchStart, wIntro, endgameStart, yabbaDabbaDo, driversPickUp, funnyFunny, teleStart;
 
@@ -73,6 +76,7 @@ public class MonkeyMap {
         wheelServoLeft = myOpMode.hardwareMap.get(Servo.class, "wheelServoLeft");
         wheelServoRight = myOpMode.hardwareMap.get(Servo.class, "wheelServoRight");
         airplaneServo = myOpMode.hardwareMap.get(Servo.class, "airplaneServo");
+        stackKnocker = myOpMode.hardwareMap.get(Servo.class, "stackKnocker");
 
         flipperServoLeft.setDirection(Servo.Direction.REVERSE);
         wheelServoRight.setDirection(Servo.Direction.REVERSE);
@@ -141,12 +145,19 @@ public class MonkeyMap {
         beacon3BeforeTrussBlue = new Pose2d(xPosBeacon3BeforeTrussBlue, yPosBeacon3BeforeTrussBlue, headingBeacon3BeforeTrussBlue);
 
         pickUpSpotBlue = new Pose2d(xPosPickUpSpotBlue, yPosPickUpSpotBlue, headingPickUpSpotBlue);
+        stackKnockerPosBlue = new Pose2d(xPosStackKnockerPosBlue, yPosStackKnockerPosBlue, headingPickUpSpotBlue);
+        pickUpPosAfterKnockedBlue = new Pose2d(xPosPickUpPosAfterKnockedBlue, yPosPickUpPosAfterKnockedBlue, headingPickUpPosAfterKnockedBlue);
+        beforePickUpAfterKnockedBlue = new Pose2d(xPosBeforePickUpAfterKnockedBlue, yPosBeforePickUpAfterKnockedBlue, headingPickUpSpotBlue);
+
+
         underTrussBlue = new Pose2d(xPosUnderTrussBlue, yPosUnderTrussBlue, headingUnderTrussBlue);
         placementBlue = new Pose2d(xPosPlacementBlue, yPosPlacementBlue, headingPlacementBlue);
         placementBlueBeacon1 = new Pose2d(xPosPlacementBlueBeacon1, yPosPlacementBlueBeacon1, headingPlacementBlue);
         placementBlueBeacon2 = new Pose2d(xPosPlacementBlueBeacon2, yPosPlacementBlueBeacon2, headingPlacementBlue);
         placementBlueBeacon3 = new Pose2d(xPosPlacementBlueBeacon3, yPosPlacementBlueBeacon3, headingPlacementBlue);
-        slidesDownAfterPlace = new Pose2d(xPosSlidesDownAfterPlace, yPosSlidesDownAfterPlace, headingPlacementBlue);
+        slidesDownAfterPlaceBlue = new Pose2d(xPosSlidesDownAfterPlaceBlue, yPosSlidesDownAfterPlaceBlue, headingPlacementBlue);
+        underTrussGoingBackBlue = new Pose2d(xPosUnderTrussGoingBackBlue, yPosUnderTrussGoingBackBlue, headingPlacementBlue);
+        afterPlacePosForNoCrashBlue = new Pose2d(xPosAfterPlacePosForNoCrashBlue, yPosAfterPlacePosForNoCrashBlue, headingPlacementBlue);
     }
 
     public void openGrabber(){
@@ -212,17 +223,32 @@ public class MonkeyMap {
     }
     public void shootPlane(){
         airplaneServo.setPosition(airplaneServoGoPos);
+        airplaneLoaded = false;
     }
     public void loadPlane(){
         airplaneServo.setPosition(airplaneServoLoadedPos);
+        airplaneLoaded = true;
     }
     public void toggleAirplane() {
         if (airplaneLoaded) {
             shootPlane();
-            airplaneLoaded = false;
         } else {
             loadPlane();
-            airplaneLoaded = true;
+        }
+    }
+    public void knockStack(){
+        stackKnocker.setPosition(stackKnockerKnockedPos);
+        isKnocked = true;
+    }
+    public void resetKnocker(){
+        stackKnocker.setPosition(stackKnockerResetPos);
+        isKnocked = false;
+    }
+    public void toggleKnocker() {
+        if (isKnocked) {
+            resetKnocker();
+        } else {
+            knockStack();
         }
     }
     public void encodedSlipperySlides(int pos, double power) {
@@ -238,17 +264,17 @@ public class MonkeyMap {
     }
     public void rotateDown(){
         rotatorServo.setPosition(rotatorPickUp);
+        rotatorDown = true;
     }
     public void rotateUp(){
         rotatorServo.setPosition(rotatorPlace);
+        rotatorDown = false;
     }
     public void toggleRotator() {
         if (rotatorDown) {
             rotateUp();
-            rotatorDown = false;
         } else {
             rotateDown();
-            rotatorDown = true;
         }
     }
     public void unloadPixel(){

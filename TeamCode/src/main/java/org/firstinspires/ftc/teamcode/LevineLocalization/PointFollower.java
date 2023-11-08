@@ -41,8 +41,8 @@ public class PointFollower {
     double currVelocity = 0;
     public double currPower;
     public double distToTarg;
-    public static double maxVel = 35, almostDoneVel = 20, slowVel = almostDoneVel, evenSlowerVel = 2, testVel = 20, slowestVel = 2;
-    public static double decceleration = 35;
+    public static double maxVel = 50, almostDoneVel = 20, slowVel = almostDoneVel, evenSlowerVel = 2, testVel = 20, slowestVel = 5;
+    public static double decceleration = 100;
     public double targetVelocity = maxVel;
     public static double accelerationConst = 200;
     public static PIDCoefficients PIDVals = new PIDCoefficients(0.25, 0, 0.5);
@@ -160,7 +160,7 @@ public class PointFollower {
         telemetry.addLine("poses to go to 1 is " + posesToGoTo.get(0));
     }
 
-    public Pose2d goToPoints(boolean stopAfter) {
+    public void goToPoints(boolean stopAfter) {
         posesToGoTo.remove(0);
         startOfNewGo = drive.getPoseEstimate();
         prevPoseForVel = drive.getPoseEstimate();
@@ -192,7 +192,7 @@ public class PointFollower {
                     roomForPoseError = new PointType("mid").followRadius / 2;
                 }
 
-                angDone = !pointTypesInBetween.get(0).type.equals("final") && !pointTypesInBetween.get(0).type.equals("end");
+                angDone = !pointTypesInBetween.get(0).type.equals("final");
 
                 double xDist = targetPose.getX() - currPose.getX();
                 double yDist = targetPose.getY() - currPose.getY();
@@ -200,6 +200,12 @@ public class PointFollower {
 
                 double distToTarget = Math.hypot(xDist, yDist);
                 double theta = MathsAndStuff.AngleWrap(Math.atan2(xDist, yDist) + wMap.startingPose.getHeading());
+
+                double totXDist = posesToGoTo.get(posesToGoTo.size()-1).pose.getX() - currPose.getX();
+                double totYDist = posesToGoTo.get(posesToGoTo.size()-1).pose.getY() - currPose.getY();
+                double totDistToTarget = Math.hypot(totXDist, totYDist);
+
+                double distNeededToStartDecel = ((Math.pow(slowestVel, 2) + Math.pow(maxVel, 2))/(2*decceleration));
 
                 //Error X
                 double relDistX = Math.cos(theta) * distToTarget;
@@ -216,30 +222,17 @@ public class PointFollower {
                 }
 
                 if (stopAfter){
-//                    switch (pointTypesInBetween.get(0).type) {
-//                        case "final":
-//                            targetVelocity = evenSlowerVel;
-//                            finalCounter++;
-//                            break;
-//                        case "end":
-//                            targetVelocity = slowVel;
-//                            endCounter++;
-//                            break;
-//                        case "almostdone":
-//                            targetVelocity = almostDoneVel;
-//                            almostDoneCounter++;
-//                            break;
-//                        default:
-//                            targetVelocity = maxVel;
-//                            break;
+//                    if(pointTypesInBetween.get(0).type.equals("almostdone") || pointTypesInBetween.get(0).type.equals("final") || pointTypesInBetween.get(0).type.equals("end")){
+//                        targetVelocity = targetVelocity - (decceleration*timeForVel);
 //                    }
-                    if(pointTypesInBetween.get(0).type.equals("almostdone") || pointTypesInBetween.get(0).type.equals("final") || pointTypesInBetween.get(0).type.equals("end")){
+                    if(Math.abs(totDistToTarget) < Math.abs(distNeededToStartDecel)){
                         targetVelocity = targetVelocity - (decceleration*timeForVel);
                     }
                     else{
                         targetVelocity = maxVel;
                     }
-                } else{
+                }
+                else{
                     targetVelocity = maxVel;
                 }
                 if(targetVelocity < slowestVel){
@@ -286,6 +279,8 @@ public class PointFollower {
                 }
 
                 telemetry.addData("Velocity ", currVelocity);
+                telemetry.addData("Tot dist to target ", totDistToTarget);
+                telemetry.addData("Dist needed for decel ", distNeededToStartDecel);
                 telemetry.addData("posesToGoTo ", posesToGoTo);
                 telemetry.addData("Curr Targ Vel: ", targetVelocity);
                 telemetry.addData("Curr Pose Error: ", roomForPoseError);
@@ -313,6 +308,5 @@ public class PointFollower {
         if(stopAfter) {
             wMap.stopMotors();
         }
-        return currPose;
     }
 }

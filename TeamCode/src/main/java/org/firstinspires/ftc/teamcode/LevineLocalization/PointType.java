@@ -18,13 +18,18 @@ public class PointType {
                 followRadius = LevineLocalizationMap.poseError*20;
                 break;
             case "end":
-                followRadius = LevineLocalizationMap.poseError*5;
+//                followRadius = LevineLocalizationMap.poseError*5;
+                followRadius = LevineLocalizationMap.followRadius;
                 break;
             case "almostdone":
-                followRadius = LevineLocalizationMap.poseError*10;
+//                followRadius = LevineLocalizationMap.poseError*10;
+                followRadius = LevineLocalizationMap.followRadius;
+                break;
+            case "final":
+                followRadius = LevineLocalizationMap.poseError;
                 break;
             default:
-                followRadius = LevineLocalizationMap.poseError;
+                followRadius = LevineLocalizationMap.followRadius;
                 break;
         }
     }

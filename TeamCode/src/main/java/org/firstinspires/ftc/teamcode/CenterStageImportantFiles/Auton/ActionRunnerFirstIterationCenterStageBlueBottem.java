@@ -3,11 +3,9 @@ package org.firstinspires.ftc.teamcode.CenterStageImportantFiles.Auton;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMap;
-import org.firstinspires.ftc.teamcode.LevineLocalization.PosesAndActions;
 
 import java.util.ArrayList;
 
@@ -48,8 +46,13 @@ public class ActionRunnerFirstIterationCenterStageBlueBottem {
             case "openGrabber":
                 wBot.openGrabber();
                 break;
-//            default:
-//                wBot.conveyerMotor.setPower(1);
+            case "stopLoadingPixels":
+                wBot.stopLoadingPixels();
+                break;
+            case "stopLoadingPixels and closeGrabber":
+                wBot.stopLoadingPixels();
+                wBot.closeGrabber();
+                break;
         }
         telemetry.update();
     }

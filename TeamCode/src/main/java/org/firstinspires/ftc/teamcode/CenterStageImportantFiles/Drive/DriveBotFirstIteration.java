@@ -20,8 +20,8 @@ public class DriveBotFirstIteration extends LinearOpMode {
     MonkeyMap wBot = new MonkeyMap(this);
     public ElapsedTime planeTime = new ElapsedTime();
     public static double timeForPlaneWait = 0.25;
-    public static double divisorForSlidePowersUp = 1.25;
-    public static double divisorForSlidePowersDown = 3;
+    public static double divisorForSlidePowersUp = 1;
+    public static double divisorForSlidePowersDown = 2;
 
 
 
@@ -38,6 +38,8 @@ public class DriveBotFirstIteration extends LinearOpMode {
         boolean x2Pressable = true;
         boolean y2Pressable = true;
         boolean dpu2Pressable = true;
+        boolean dpl2Pressable = true;
+        boolean dpr2Pressable = true;
 //        boolean lb2Pressable = true;
 //        boolean rb2Pressable = true;
 //        boolean dpd2Pressable = true;
@@ -46,6 +48,7 @@ public class DriveBotFirstIteration extends LinearOpMode {
         wBot.toggleRotator();
         wBot.toggleFlipper();
         wBot.openGrabber();
+        wBot.resetKnocker();
 
         waitForStart();
 
@@ -58,7 +61,7 @@ public class DriveBotFirstIteration extends LinearOpMode {
 
             double powerFromTriggers = Math.abs(lx1) + Math.abs(ly1) + Math.abs(rx1);
 
-            drive.moveInTeleop(lx1, ly1, rx1, powerFromTriggers);
+            drive.moveInTeleop(-lx1, -ly1, rx1, powerFromTriggers);
 
             boolean a2 = gamepad2.a;
             boolean b2 = gamepad2.b;
@@ -83,14 +86,17 @@ public class DriveBotFirstIteration extends LinearOpMode {
             if(b2 && b2Pressable){
                 wBot.toggleConveyer();
             }
-
-            b2Pressable = !b2;
-
-            if(x2 && x2Pressable){
-                wBot.toggleIntakeWheels();
+            else if(x2){
+                wBot.conveyerMotor.setPower(MonkeyMap.unloadPower);
+                wBot.conveyerOn = false;
+            }
+            else if(!wBot.conveyerOn){
+                wBot.conveyerMotor.setPower(MonkeyMap.stopLoadPower);
             }
 
             x2Pressable = !x2;
+
+            b2Pressable = !b2;
 
             if(y2 && y2Pressable){
                 wBot.toggleFlipper();
@@ -121,6 +127,11 @@ public class DriveBotFirstIteration extends LinearOpMode {
             }
 
             dpu2Pressable = !dpu2;
+
+            if(dpl2 && dpl2Pressable){
+                wBot.toggleKnocker();
+            }
+            dpl2Pressable = !dpl2;
 
             telemetry.addLine("Rotator Pos: " + wBot.rotatorServo.getPosition());
             telemetry.addLine("Conveyor motor pow: " + wBot.conveyerMotor.getPower());

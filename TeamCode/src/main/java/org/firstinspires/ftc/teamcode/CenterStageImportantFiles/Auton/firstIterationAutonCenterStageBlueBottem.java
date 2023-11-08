@@ -6,6 +6,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.AprilTagReader;
@@ -24,12 +25,14 @@ public class firstIterationAutonCenterStageBlueBottem extends LinearOpMode {
     ActionRunnerFirstIterationCenterStageBlueBottem actionRunner = new ActionRunnerFirstIterationCenterStageBlueBottem(this, wBot);
     PointFollower follower = new PointFollower(this, actionRunner);
     public static boolean isTest = false;
+    public static boolean isParkFinal = false;
+    public ElapsedTime timeForAuton = new ElapsedTime();
     @Override
     public void runOpMode() throws InterruptedException {
         wBot.init();
         wBot.initPoses();
         wBot.toggleRotator();
-        wBot.toggleFlipper();
+        wBot.flipUp();
         wBot.openGrabber();
         ArrayList<PosesAndActions> posesToGoTo = new ArrayList<>();
         Pose2d firstPose = wBot.startingPositionBeforeTrussBlue;
@@ -88,43 +91,76 @@ public class firstIterationAutonCenterStageBlueBottem extends LinearOpMode {
 
         follower.init(posesToGoTo, isTest);
         waitForStart();
+
+        timeForAuton.reset();
         follower.goToPoints(true);
         wBot.unloadPixel();
         sleep(MonkeyMap.sleepTimePlacePreloadBeacon);
         wBot.stopLoadingPixels();
 
         posesToGoTo.clear();
-        posesToGoTo.add(new PosesAndActions(wBot.pickUpSpotBlue, ""));
+        posesToGoTo.add(new PosesAndActions(wBot.stackKnockerPosBlue, ""));
         follower.reinit(posesToGoTo);
-        wBot.loadPixels();
         follower.goToPoints(true);
-        sleep(MonkeyMap.sleepTimePickUpPixel);
-        wBot.stopLoadingPixels();
-        wBot.closeGrabber();
+        wBot.knockStack();
+        sleep(MonkeyMap.sleepTimeKnockStack);
+        wBot.resetKnocker();
 
         posesToGoTo.clear();
+        posesToGoTo.add(new PosesAndActions(wBot.pickUpSpotBlue, "resetSlides"));
+        wBot.loadPixels();
+        follower.reinit(posesToGoTo);
+        follower.goToPoints(true);
+        sleep(MonkeyMap.sleepTimePickUpPixel);
+
+        posesToGoTo.clear();
+        posesToGoTo.add(new PosesAndActions(wBot.underTrussGoingBackBlue, "stopLoadingPixels and closeGrabber"));
         posesToGoTo.add(new PosesAndActions(wBot.underTrussBlue, "placeSlidesFirstTime"));
-        posesToGoTo.add(new PosesAndActions(wBot.slidesDownAfterPlace, "flipDown"));
+        posesToGoTo.add(new PosesAndActions(wBot.slidesDownAfterPlaceBlue, "flipDown"));
         posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
         follower.reinit(posesToGoTo);
         follower.goToPoints(true);
         wBot.openGrabber();
         sleep(MonkeyMap.sleepTimePlacePixels);
+        wBot.flipUp();
+        wBot.resetKnocker();
 
+        for (int i = 0; i < MonkeyMap.timesToRunAuton; i++) {
+            posesToGoTo.clear();
+            posesToGoTo.add(new PosesAndActions(wBot.afterPlacePosForNoCrashBlue, ""));
+            posesToGoTo.add(new PosesAndActions(wBot.underTrussBlue, "resetSlides"));
+            posesToGoTo.add(new PosesAndActions(wBot.beforePickUpAfterKnockedBlue, ""));
+            posesToGoTo.add(new PosesAndActions(wBot.pickUpPosAfterKnockedBlue, ""));
+            follower.reinit(posesToGoTo);
+            wBot.loadPixels();
+            follower.goToPoints(true);
+            sleep(MonkeyMap.sleepTimePickUpPixel);
 
+            posesToGoTo.clear();
+            posesToGoTo.add(new PosesAndActions(wBot.underTrussGoingBackBlue, "stopLoadingPixels and closeGrabber"));
+            posesToGoTo.add(new PosesAndActions(wBot.underTrussBlue, "placeSlides"));
+            posesToGoTo.add(new PosesAndActions(wBot.slidesDownAfterPlaceBlue, "flipDown"));
+            posesToGoTo.add(new PosesAndActions(wBot.placementBlue, ""));
+            follower.reinit(posesToGoTo);
+            follower.goToPoints(true);
+            wBot.openGrabber();
+            sleep(MonkeyMap.sleepTimePlacePixels);
+            wBot.flipUp();
+        }
 
-        posesToGoTo.clear();
-        posesToGoTo.add(new PosesAndActions(wBot.slidesDownAfterPlace, "flipUp"));
-        posesToGoTo.add(new PosesAndActions(wBot.underTrussBlue, "resetSlides"));
-        posesToGoTo.add(new PosesAndActions(wBot.pickUpSpotBlue, ""));
-
-        follower.reinit(posesToGoTo);
-        follower.goToPoints(true);
+        if(!isParkFinal){
+            posesToGoTo.clear();
+            posesToGoTo.add(new PosesAndActions(wBot.underTrussBlue, "resetSlides"));
+            posesToGoTo.add(new PosesAndActions(wBot.pickUpSpotBlue, ""));
+            follower.reinit(posesToGoTo);
+            follower.goToPoints(true);
+        }
 
 
         requestOpModeStop();
         while(opModeIsActive()){
-//            sleep(10000);
+            telemetry.addData("Time Auton Took, ", timeForAuton);
+            telemetry.update();
             requestOpModeStop();
         }
     }

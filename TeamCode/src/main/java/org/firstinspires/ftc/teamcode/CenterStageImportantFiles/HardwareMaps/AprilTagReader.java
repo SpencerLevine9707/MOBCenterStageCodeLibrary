@@ -75,6 +75,7 @@ public class AprilTagReader {
         visionPortal = VisionPortal.easyCreateWithDefaults(
                 myOpMode.hardwareMap.get(WebcamName.class, "Webcam 1"), aprilTag);
 
+
     }   // end method initAprilTag()
 
     /**
