@@ -10,19 +10,16 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.Auton.ActionRunnerFirstIterationCenterStageBlueBottem;
-import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.AprilTagReader;
+import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.Auton.ActionRunnerCenterStageAuton;
 import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMap;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PointFollower;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PosesAndActions;
 import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVGreatestColorTest;
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Config
 @Autonomous(group = "Center Stage")
@@ -34,7 +31,7 @@ public class goToClosestPixelTest extends LinearOpMode {
     public static double offsetForPickUp = 8;
     static OpenCVGreatestColorTest pipeline;
     MonkeyMap wBot = new MonkeyMap(this);
-    ActionRunnerFirstIterationCenterStageBlueBottem actionRunner = new ActionRunnerFirstIterationCenterStageBlueBottem(this, wBot);
+    ActionRunnerCenterStageAuton actionRunner = new ActionRunnerCenterStageAuton(this, wBot);
     PointFollower follower = new PointFollower(this, actionRunner);
     public static boolean isTest = false;
     public static boolean isParkFinal = false;

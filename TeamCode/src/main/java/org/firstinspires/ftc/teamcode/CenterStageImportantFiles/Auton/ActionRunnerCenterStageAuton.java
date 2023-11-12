@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.CenterStageImportantFiles.Auton;
 
-import android.graphics.Path;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -12,20 +10,15 @@ import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.Mon
 
 import java.util.ArrayList;
 
-public class ActionRunnerFirstIterationCenterStageBlueBottem {
+public class ActionRunnerCenterStageAuton {
     public LinearOpMode myOpMode;
     public OpMode myOperatorMode;
     ArrayList<String> actionsToRun;
     MonkeyMap wBot;
     Telemetry telemetry;
 
-    public ActionRunnerFirstIterationCenterStageBlueBottem(LinearOpMode opMode, MonkeyMap wBot){
+    public ActionRunnerCenterStageAuton(LinearOpMode opMode, MonkeyMap wBot){
         myOpMode = opMode;
-        this.wBot = wBot;
-        telemetry = new MultipleTelemetry(this.myOpMode.telemetry, FtcDashboard.getInstance().getTelemetry());
-    }
-    public ActionRunnerFirstIterationCenterStageBlueBottem(OpMode opMode, MonkeyMap wBot){
-        myOperatorMode = opMode;
         this.wBot = wBot;
         telemetry = new MultipleTelemetry(this.myOpMode.telemetry, FtcDashboard.getInstance().getTelemetry());
     }

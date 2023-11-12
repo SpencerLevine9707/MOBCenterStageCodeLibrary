@@ -8,12 +8,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.Auton.ActionRunnerFirstIterationCenterStageBlueBottem;
+import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.Auton.ActionRunnerCenterStageAuton;
 import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMap;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PointFollower;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PosesAndActions;
-import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVGreatestColorTest;
-import org.openftc.easyopencv.OpenCvCamera;
 
 import java.util.ArrayList;
 
@@ -22,7 +20,7 @@ import java.util.ArrayList;
 public class BackAndForthW extends LinearOpMode {
     public static double xDist = 50;
     MonkeyMap wBot = new MonkeyMap(this);
-    ActionRunnerFirstIterationCenterStageBlueBottem actionRunner = new ActionRunnerFirstIterationCenterStageBlueBottem(this, wBot);
+    ActionRunnerCenterStageAuton actionRunner = new ActionRunnerCenterStageAuton(this, wBot);
     PointFollower follower = new PointFollower(this, actionRunner);
     @Override
     public void runOpMode() throws InterruptedException {

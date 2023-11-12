@@ -343,8 +343,7 @@ import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.Auton.ActionRunnerFirstIterationCenterStageBlueBottem;
-import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMap;
+import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.Auton.ActionRunnerCenterStageAuton;
 import org.firstinspires.ftc.teamcode.RoadrunnerStuff.drive.SampleMecanumDrive;
 
 import java.util.ArrayList;
@@ -355,7 +354,7 @@ public class PointFollower {
     LevineLocalizationMap wMap;
     Telemetry telemetry;
     SampleMecanumDrive drive;
-    ActionRunnerFirstIterationCenterStageBlueBottem actionRunner;
+    ActionRunnerCenterStageAuton actionRunner;
     public ElapsedTime runtime = new ElapsedTime();
     public ElapsedTime velTime = new ElapsedTime();
     public static double isBuggingRuntimeToStop;
@@ -375,14 +374,15 @@ public class PointFollower {
     double currVelocity = 0;
     public double currPower;
     public double distToTarg;
-    public static double maxVel = 50, almostDoneVel = 20, slowVel = almostDoneVel, evenSlowerVel = 2, testVel = 20, slowestVel = 10;
+    public static double maxVel = 50, almostDoneVel = 20, slowVel = almostDoneVel, evenSlowerVel = 2, testVel = 20, slowestVel = 5;
     public static double roomForErrorStartDecel = 0;
     public static double decceleration = 40;
     public double targetVelocity = maxVel;
     public static double accelerationConst = 200;
     public static PIDCoefficients PIDVals = new PIDCoefficients(0.25, 0, 0.5);
+    public int isBuggingCounter = 0;
 
-    public PointFollower(LinearOpMode opmode, ActionRunnerFirstIterationCenterStageBlueBottem actionRunner) {
+    public PointFollower(LinearOpMode opmode, ActionRunnerCenterStageAuton actionRunner) {
         myOpMode = opmode;
         wMap = new LevineLocalizationMap(this.myOpMode);
         telemetry = new MultipleTelemetry(this.myOpMode.telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -500,7 +500,6 @@ public class PointFollower {
     }
 
     public void goToPoints(boolean stopAfter, double newMaxVel) {
-        posesToGoTo.remove(0);
         startOfNewGo = drive.getPoseEstimate();
         prevPoseForVel = drive.getPoseEstimate();
         currPower = 0;
@@ -514,15 +513,16 @@ public class PointFollower {
         double totXDist = 0;
         double totYDist = 0;
         for (int i = 1; i < posesToGoTo.size(); i++) {
-            totXDist += posesToGoTo.get(i).pose.getX() - posesToGoTo.get(i-1).pose.getX();
-            totYDist += posesToGoTo.get(i).pose.getY() - posesToGoTo.get(i-1).pose.getY();
+            totXDist += Math.abs(posesToGoTo.get(i).pose.getX() - posesToGoTo.get(i-1).pose.getX());
+            totYDist += Math.abs(posesToGoTo.get(i).pose.getY() - posesToGoTo.get(i-1).pose.getY());
         }
         double totDistToTarget = Math.hypot(totXDist, totYDist);
 
         if(distNeededToStartDecel > totDistToTarget){
 //            totDistToTarget = ((Math.pow(slowestVel, 2) - Math.pow(newNEWMaxVel, 2))/(-2*decceleration))
-            targetVelocity = Math.sqrt(Math.abs(Math.pow(slowestVel, 2) - (-2*decceleration*totDistToTarget)));
+            targetVelocity = Math.sqrt(Math.abs(Math.pow(slowestVel, 2) + (2*decceleration*totDistToTarget)));
         }
+        posesToGoTo.remove(0);
 
         while (!(inBetweenPoints.isEmpty())) {
             getVel.changeTarget(targetVelocity);
@@ -556,8 +556,12 @@ public class PointFollower {
                 double distToTarget = Math.hypot(xDist, yDist);
                 double theta = MathsAndStuff.AngleWrap(Math.atan2(xDist, yDist) + wMap.startingPose.getHeading());
 
-                totXDist = posesToGoTo.get(posesToGoTo.size()-1).pose.getX() - currPose.getX();
-                totYDist = posesToGoTo.get(posesToGoTo.size()-1).pose.getY() - currPose.getY();
+//                for (int i = 1; i < posesToGoTo.size(); i++) {
+//                    totXDist += Math.abs(posesToGoTo.get(i).pose.getX() - posesToGoTo.get(i-1).pose.getX());
+//                    totYDist += Math.abs(posesToGoTo.get(i).pose.getY() - posesToGoTo.get(i-1).pose.getY());
+//                }
+                totXDist = Math.abs(posesToGoTo.get(posesToGoTo.size()-1).pose.getX() - currPose.getX());
+                totYDist = Math.abs(posesToGoTo.get(posesToGoTo.size()-1).pose.getY() - currPose.getY());
                 totDistToTarget = Math.hypot(totXDist, totYDist);
 
                 //Error X
@@ -604,6 +608,7 @@ public class PointFollower {
                     xDone = true;
                     yDone = true;
                     angDone = true;
+                    isBuggingCounter++;
                 }
                 if (Math.abs(angDist) < Math.abs(LevineLocalizationMap.angError)) {
                     angDone = true;
@@ -633,8 +638,8 @@ public class PointFollower {
                 telemetry.addData("New Max Vel ", newMaxVel);
                 telemetry.addData("Tot dist to target ", totDistToTarget);
                 telemetry.addData("Dist needed for decel ", distNeededToStartDecel);
-                telemetry.addData("posesToGoTo ", posesToGoTo);
-                telemetry.addData("Curr Pose Error: ", roomForPoseError);
+//                telemetry.addData("posesToGoTo ", posesToGoTo);
+//                telemetry.addData("Curr Pose Error: ", roomForPoseError);
 //                telemetry.addLine("Poses to go to " + posesToGoTo);
 //                telemetry.addLine("Poses in between " + inBetweenPoints);
                 telemetry.addLine("Target Pose: " + targetPose);
@@ -646,9 +651,10 @@ public class PointFollower {
 //                telemetry.addLine("Y Done " + yDone);
 //                telemetry.addLine("Done Points Counter: " + donePointCounter);
                 telemetry.addLine("CurrSpeed: " + currPower);
-                telemetry.addLine("distToTarg " + distToTarg);
-                telemetry.addLine("is bugging time to stop is " + isBuggingRuntimeToStop);
-                telemetry.addLine("endofpoint counter " + endOfPointCounter);
+//                telemetry.addLine("distToTarg " + distToTarg);
+//                telemetry.addLine("is bugging time to stop is " + isBuggingRuntimeToStop);
+//                telemetry.addLine("endofpoint counter " + endOfPointCounter);
+                telemetry.addData("Is Bugging Counter: ", isBuggingCounter);
 
 //                telemetry.addLine("finalCounter: " + finalCounter);
 //                telemetry.addLine("endCounter: " + endCounter);
