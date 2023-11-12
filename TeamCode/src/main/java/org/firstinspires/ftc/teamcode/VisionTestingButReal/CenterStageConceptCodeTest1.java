@@ -21,6 +21,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Config
 @Autonomous
+@Disabled
 public class CenterStageConceptCodeTest1 extends LinearOpMode {
     OpenCvCamera webcam;
 

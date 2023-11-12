@@ -7,6 +7,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.arcrobotics.ftclib.command.Command;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 //import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -19,6 +20,7 @@ import org.firstinspires.ftc.teamcode.RoadrunnerStuff.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.RoadrunnerStuff.drive.SampleMecanumDrive;
 
 @Config
+@Disabled
 public class JacksJunk {
     //Define runtime
     public ElapsedTime runtime = new ElapsedTime();

@@ -48,7 +48,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
  */
 @TeleOp(name = "Sensor: IR bea break", group = "Sensor")
-//@Disabled
+@Disabled
 public class IRButton extends LinearOpMode {
     /**
      * The REV Robotics Touch Sensor

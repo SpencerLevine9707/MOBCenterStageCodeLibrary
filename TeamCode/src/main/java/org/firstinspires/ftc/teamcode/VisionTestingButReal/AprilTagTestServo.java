@@ -57,7 +57,7 @@ import java.util.List;
  */
 @Config
 @TeleOp
-//@Disabled
+@Disabled
 public class AprilTagTestServo extends LinearOpMode {
 
     OpenCvCamera webcam;

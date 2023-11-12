@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -54,12 +55,17 @@ public class AprilTagReader {
     public AprilTagProcessor aprilTag;
     public VisionPortal visionPortal;
     public LinearOpMode myOpMode;
+    public OpMode myOperatorMode;
     Telemetry telemetry;
     public static double beacon1XPos = 0, beacon2XPos = 320, beacon3XPos = 640;
     public static int myTag = 18;
 
     public AprilTagReader(LinearOpMode opmode, Telemetry telemetry){
         myOpMode = opmode;
+        this.telemetry = telemetry;
+    }
+    public AprilTagReader(OpMode opmode, Telemetry telemetry){
+        myOperatorMode = opmode;
         this.telemetry = telemetry;
     }
 
