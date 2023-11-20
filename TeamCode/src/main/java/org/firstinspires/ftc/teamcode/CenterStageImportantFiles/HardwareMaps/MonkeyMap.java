@@ -16,6 +16,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PointFollower;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PosesAndActions;
+import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVDetectTeamProp;
 import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVGreatestColorTest;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class MonkeyMap {
     public static double wheelServoPow = 1, servoStopPow = 0.5;
     public static double flipperScalarDown = 0.1, flipperScalarUp = 0.9, flipperScalarOffset = 0.05, flipperPosDown = 0.15, flipperPosAcross = 0.98, rotatorPickUp = 0.1075, rotatorPlace = 0.774, rotatorPixel1 = 0, rotatorPixel2 = 0.05, rotatorPixel3 = 0.1, rotatorPixel4 = 0.15, rotatorPixel5 = 0.2;
     public static double airplaneServoLoadedPos = 0.13, airplaneServoGoPos = 0.25;
-    public static double stackKnockerKnockedPos = 0.35, stackKnockerResetPos = 0.67;
+    public static double stackKnockerKnockedPos = 0, stackKnockerResetPos = 0.34;
 
     //Motor powers and pos
     public static double conveyerPower = -1, unloadPower = 1, stopLoadPower = 0;
@@ -57,41 +58,41 @@ public class MonkeyMap {
 
 
     //Blue Poses
-    public Pose2d startingPositionBeforeTrussBlue, startingPositionAfterTrussBlue, beacon1BeforeTrussBlue, beacon2BeforeTrussBlue, beacon3BeforeTrussBlue, beacon1AfterTrussBlue, beacon2AfterTrussBlue, beacon3AfterTrussBlue, pickUpSpotBlue, placementBlue, placementBlueBeacon1, placementBlueBeacon2, placementBlueBeacon3, underTrussBlue, slidesDownAfterPlaceBlue,  underTrussGoingBackBlue, stackKnockerPosBlue, pickUpPosAfterKnockedBlue, beforePickUpAfterKnockedBlue, afterPlacePosForNoCrashBlue, lineUpForTrussBlue, beacon1LineUpBeforeTrussBlue, afterPickUpNoPixelCrashBlue, beacon1KnockingLineUpBeforeTrussBlue, lineUpPlacementBlue, beacon3LineUpAfterTrussBlue, lineUpForFirstPlacementAfterTrussBlue;
+    public Pose2d startingPositionBeforeTrussBlue, startingPositionAfterTrussBlue, beacon1BeforeTrussBlue, beacon2BeforeTrussBlue, beacon3BeforeTrussBlue, beacon1AfterTrussBlue, beacon2AfterTrussBlue, beacon3AfterTrussBlue, pickUpSpotBlue, placementBlue, placementBlueBeacon1, placementBlueBeacon2, placementBlueBeacon3, underTrussBlue, slidesDownAfterPlaceBlue,  underTrussGoingBackBlue, stackKnockerPosBlue, beforePickUpAfterKnockedBlue, afterPlacePosForNoCrashBlue, lineUpForTrussBlue, beacon1LineUpBeforeTrussBlue, afterPickUpNoPixelCrashBlue, beacon1KnockingLineUpBeforeTrussBlue, lineUpPlacementBlue, beacon3LineUpAfterTrussBlue, lineUpForFirstPlacementAfterTrussBlue, putSlidesBackDownBeforePlaceBlue;
 
     //X Poses
-    public static double xPosStartingPositionBeforeTrussBlue = -36, xPosStartingPositionAfterTrussBlue = 10;
-    public static double xPosBeacon1BeforeTrussBlue = -35/*-27*/, xPosBeacon2BeforeTrussBlue = -35, xPosBeacon3BeforeTrussBlue = -42, xPosBeacon1AfterTrussBlue = 24, xPosBeacon2AfterTrussBlue = 14, xPosBeacon3AfterTrussBlue = 0, xPosBeacon1LineUpBeforeTrussBlue = -40/*xPosBeacon1LineUpBlue = -37*/, xPosBeacon1KnockingLineUpBeforeTrussBlue = -50, xPosBeacon3LineUpAfterTrussBlue = 13;
-    public static double xPosPickUpSpotBlue = -60, xPosStackKnockerPosBlue = -51, xPosPickUpPosAfterKnockedBlue = -60, xPosBeforePickUpAfterKnockedBlue = -50;
-    public static double xPosPlacementBlue = 51, xPosUnderTrussBlue = 20, xPosSlidesDownAfterPlaceBlue = 30, xPosUnderTrussGoingBackBlue = 0, xPosAfterPlacePosForNoCrashBlue = 42, xPosLineUpForTrussBlue = -42, xPosAfterPickUpNoPixelCrashBlue = -40, xPosLineUpPlacementBlue = 36, xPosLineUpForFirstPlacementAfterTrussBlue = 20;
+    public static double xPosStartingPositionBeforeTrussBlue = -35, xPosStartingPositionAfterTrussBlue = 12.5;
+    public static double xPosBeacon1BeforeTrussBlue = -26, xPosBeacon2BeforeTrussBlue = -36, xPosBeacon3BeforeTrussBlue = -46, xPosBeacon1AfterTrussBlue = 24, xPosBeacon2AfterTrussBlue = 14, xPosBeacon3AfterTrussBlue = 3, xPosBeacon1LineUpBeforeTrussBlue = -37, xPosBeacon1KnockingLineUpBeforeTrussBlue = -50, xPosBeacon3LineUpAfterTrussBlue = 13;
+    public static double xPosPickUpSpotBlue = -60, xPosStackKnockerPosBlue = -51, xPosPickUpPosAfterKnockedBlue = -60, xPosBeforePickUpAfterKnockedBlue = -45;
+    public static double xPosPlacementBlue = 51, xPosUnderTrussBlue = 20, xPosSlidesDownAfterPlaceBlue = 30, xPosUnderTrussGoingBackBlue = 0, xPosAfterPlacePosForNoCrashBlue = 42, xPosLineUpForTrussBlue = -42, xPosAfterPickUpNoPixelCrashBlue = -40, xPosLineUpPlacementBlue = 36, xPosLineUpForFirstPlacementAfterTrussBlue = 20, xPosPutSlidesBackDownBeforePlaceBlue = 45;
     public static double xPosPlacementBlueBeacon1 = 51, xPosPlacementBlueBeacon2 = 51, xPosPlacementBlueBeacon3 = 51;
 
     //Y Poses
-    public static double yPosStartingPositionBeforeTrussBlue = 63, yPosStartingPositionAfterTrussBlue = 63;
-    public static double yPosBeacon1BeforeTrussBlue = 35, yPosBeacon2BeforeTrussBlue = 39, yPosBeacon3BeforeTrussBlue = 39, yPosBeacon1AfterTrussBlue = 36, yPosBeacon2AfterTrussBlue = 36, yPosBeacon3AfterTrussBlue = 36, yPosBeacon1LineUpBeforeTrussBlue = 36, yPosBeacon1KnockingLineUpBeforeTrussBlue = 36, yPosBeacon3LineUpAfterTrussBlue = 36;
-    public static double yPosPickUpSpotBlue = 40, yPosStackKnockerPosBlue = 35, yPosPickUpPosAfterKnockedBlue = 45, yPosBeforePickUpAfterKnockedBlue = 42;
-    public static double yPosPlacementBlue = 35, yPosUnderTrussBlue = 60.5, yPosSlidesDownAfterPlaceBlue = 60.5, yPosUnderTrussGoingBackBlue = 60.5, yPosAfterPlacePosForNoCrashBlue = 62, yPosLineUpForTrussBlue = 60.5, yPosAfterPickUpNoPixelCrashBlue = 48, yPosLineUpPlacementBlue = 25, yPosLineUpForFirstPlacementAfterTrussBlue = 20;
-    public static double yPosPlacementBlueBeacon1 = 42, yPosPlacementBlueBeacon2 = 35, yPosPlacementBlueBeacon3 = 33;
+    public static double yPosStartingPositionBeforeTrussBlue = 59, yPosStartingPositionAfterTrussBlue = 63;
+    public static double yPosBeacon1BeforeTrussBlue = 36, yPosBeacon2BeforeTrussBlue = 36, yPosBeacon3BeforeTrussBlue = 36, yPosBeacon1AfterTrussBlue = 36, yPosBeacon2AfterTrussBlue = 36, yPosBeacon3AfterTrussBlue = 36, yPosBeacon1LineUpBeforeTrussBlue = 36, yPosBeacon1KnockingLineUpBeforeTrussBlue = 36, yPosBeacon3LineUpAfterTrussBlue = 36;
+    public static double yPosPickUpSpotBlue = 42, yPosStackKnockerPosBlue = 35, yPosBeforePickUpAfterKnockedBlue = 42;
+    public static double yPosPlacementBlue = 33, yPosUnderTrussBlue = 60.5, yPosSlidesDownAfterPlaceBlue = 60.5, yPosUnderTrussGoingBackBlue = 60.5, yPosAfterPlacePosForNoCrashBlue = 62, yPosLineUpForTrussBlue = 60.5, yPosAfterPickUpNoPixelCrashBlue = 48, yPosLineUpPlacementBlue = 25, yPosLineUpForFirstPlacementAfterTrussBlue = 20, yPosPutSlidesBackDownBeforePlaceBlue = 36;
+    public static double yPosPlacementBlueBeacon1 = 42, yPosPlacementBlueBeacon2 = 33, yPosPlacementBlueBeacon3 = 30;
     //Headings
 
     public static double headingStartingPositionBlue = Math.toRadians(90), headingBeacon1Blue = Math.toRadians(90), headingBeacon2Blue = Math.toRadians(90), headingBeacon3Blue = Math.toRadians(90), headingBeacon1LineUpBeforeTrussBlue = Math.toRadians(90);
 
     //Red Poses
-    public Pose2d startingPositionBeforeTrussRed, startingPositionAfterTrussRed, beacon1BeforeTrussRed, beacon2BeforeTrussRed, beacon3BeforeTrussRed, beacon1AfterTrussRed, beacon2AfterTrussRed, beacon3AfterTrussRed, pickUpSpotRed, placementRed, placementRedBeacon1, placementRedBeacon2, placementRedBeacon3, underTrussRed, slidesDownAfterPlaceRed,  underTrussGoingBackRed, stackKnockerPosRed, pickUpPosAfterKnockedRed, beforePickUpAfterKnockedRed, afterPlacePosForNoCrashRed, lineUpForTrussRed, beacon1LineUpBeforeTrussRed, afterPickUpNoPixelCrashRed, beacon1KnockingLineUpBeforeTrussRed, lineUpPlacementRed, beacon3LineUpAfterTrussRed, lineUpForFirstPlacementAfterTrussRed;
+    public Pose2d startingPositionBeforeTrussRed, startingPositionAfterTrussRed, beacon1BeforeTrussRed, beacon2BeforeTrussRed, beacon3BeforeTrussRed, beacon1AfterTrussRed, beacon2AfterTrussRed, beacon3AfterTrussRed, pickUpSpotRed, placementRed, placementRedBeacon1, placementRedBeacon2, placementRedBeacon3, underTrussRed, slidesDownAfterPlaceRed,  underTrussGoingBackRed, stackKnockerPosRed, beforePickUpAfterKnockedRed, afterPlacePosForNoCrashRed, lineUpForTrussRed, beacon1LineUpBeforeTrussRed, afterPickUpNoPixelCrashRed, beacon1KnockingLineUpBeforeTrussRed, lineUpPlacementRed, beacon3LineUpAfterTrussRed, lineUpForFirstPlacementAfterTrussRed, putSlidesBackDownBeforePlaceRed;
 
     //X Poses
-    public static double xPosStartingPositionBeforeTrussRed = -36, xPosStartingPositionAfterTrussRed = 10;
-    public static double xPosBeacon1BeforeTrussRed = -35/*-27*/, xPosBeacon2BeforeTrussRed = -35, xPosBeacon3BeforeTrussRed = -42, xPosBeacon1AfterTrussRed = 24, xPosBeacon2AfterTrussRed = 14, xPosBeacon3AfterTrussRed = 0, xPosBeacon1LineUpBeforeTrussRed = -40/*xPosBeacon1LineUpRed = -37*/, xPosBeacon1KnockingLineUpBeforeTrussRed = -50, xPosBeacon3LineUpAfterTrussRed = 13;
+    public static double xPosStartingPositionBeforeTrussRed = -33, xPosStartingPositionAfterTrussRed = 11;
+    public static double xPosBeacon1BeforeTrussRed = -27, xPosBeacon2BeforeTrussRed = -35, xPosBeacon3BeforeTrussRed = -42, xPosBeacon1AfterTrussRed = 24, xPosBeacon2AfterTrussRed = 14, xPosBeacon3AfterTrussRed = 2, xPosBeacon1LineUpBeforeTrussRed = -37, xPosBeacon1KnockingLineUpBeforeTrussRed = -50, xPosBeacon3LineUpAfterTrussRed = 13;
     public static double xPosPickUpSpotRed = -60, xPosStackKnockerPosRed = -51, xPosPickUpPosAfterKnockedRed = -60, xPosBeforePickUpAfterKnockedRed = -50;
-    public static double xPosPlacementRed = 51, xPosUnderTrussRed = 20, xPosSlidesDownAfterPlaceRed = 30, xPosUnderTrussGoingBackRed = 0, xPosAfterPlacePosForNoCrashRed = 42, xPosLineUpForTrussRed = -42, xPosAfterPickUpNoPixelCrashRed = -40, xPosLineUpPlacementRed = 36, xPosLineUpForFirstPlacementAfterTrussRed = 20;
-    public static double xPosPlacementRedBeacon1 = 51, xPosPlacementRedBeacon2 = 51, xPosPlacementRedBeacon3 = 51;
+    public static double xPosPlacementRed = 50.5, xPosUnderTrussRed = 20, xPosSlidesDownAfterPlaceRed = 30, xPosUnderTrussGoingBackRed = 0, xPosAfterPlacePosForNoCrashRed = 42, xPosLineUpForTrussRed = -42, xPosAfterPickUpNoPixelCrashRed = -40, xPosLineUpPlacementRed = 36, xPosLineUpForFirstPlacementAfterTrussRed = 20, xPosPutSlidesBackDownBeforePlaceRed = 45;
+    public static double xPosPlacementRedBeacon1 = 50.5, xPosPlacementRedBeacon2 = 50.5, xPosPlacementRedBeacon3 = 50.5;
 
     //Y Poses
-    public static double yPosStartingPositionBeforeTrussRed = -63, yPosStartingPositionAfterTrussRed = -63;
+    public static double yPosStartingPositionBeforeTrussRed = -58, yPosStartingPositionAfterTrussRed = -63;
     public static double yPosBeacon1BeforeTrussRed = -35, yPosBeacon2BeforeTrussRed = -39, yPosBeacon3BeforeTrussRed = -39, yPosBeacon1AfterTrussRed = -36, yPosBeacon2AfterTrussRed = -36, yPosBeacon3AfterTrussRed = -36, yPosBeacon1LineUpBeforeTrussRed = -36, yPosBeacon1KnockingLineUpBeforeTrussRed = -36, yPosBeacon3LineUpAfterTrussRed = -36;
-    public static double yPosPickUpSpotRed = -40, yPosStackKnockerPosRed = -35, yPosPickUpPosAfterKnockedRed = -45, yPosBeforePickUpAfterKnockedRed = -42;
-    public static double yPosPlacementRed = -35, yPosUnderTrussRed = -60.5, yPosSlidesDownAfterPlaceRed = -60.5, yPosUnderTrussGoingBackRed = -60.5, yPosAfterPlacePosForNoCrashRed = -62, yPosLineUpForTrussRed = -60.5, yPosAfterPickUpNoPixelCrashRed = -48, yPosLineUpPlacementRed = -25, yPosLineUpForFirstPlacementAfterTrussRed = -20;
-    public static double yPosPlacementRedBeacon1 = -42, yPosPlacementRedBeacon2 = -35, yPosPlacementRedBeacon3 = -33;
+    public static double yPosPickUpSpotRed = -26.5, yPosStackKnockerPosRed = -29, yPosBeforePickUpAfterKnockedRed = -22;
+    public static double yPosPlacementRed = -35, yPosUnderTrussRed = -54, yPosSlidesDownAfterPlaceRed = -54, yPosUnderTrussGoingBackRed = -54, yPosAfterPlacePosForNoCrashRed = -62, yPosLineUpForTrussRed = -54, yPosAfterPickUpNoPixelCrashRed = -48, yPosLineUpPlacementRed = -25, yPosLineUpForFirstPlacementAfterTrussRed = -20, yPosPutSlidesBackDownBeforePlaceRed = -36;
+    public static double yPosPlacementRedBeacon1 = -28, yPosPlacementRedBeacon2 = -35, yPosPlacementRedBeacon3 = -42;
     //Headings
 
     public static double headingStartingPositionRed = -Math.toRadians(90), headingBeacon1Red = -Math.toRadians(90), headingBeacon2Red = -Math.toRadians(90), headingBeacon3Red = -Math.toRadians(90), headingBeacon1LineUpBeforeTrussRed = -Math.toRadians(90);
@@ -101,12 +102,12 @@ public class MonkeyMap {
     //All Poses
     public static double headingPlaceAndPickUp = Math.toRadians(0);
 
-    public static int sleepTimePlacePreloadBeacon = 400, sleepTimePickUpPixel = 0, sleepTimePlacePixels = 400, sleepTimeKnockStack = 300, sleepTimeAfterFlip = 500, sleepTimeFlipForFirstPlaceAfterTruss = 600;
+    public static int sleepTimePlacePreloadBeacon = 400, sleepTimePickUpPixel = 0, sleepTimePlacePixels = 400, sleepTimeKnockStack = 300, sleepTimeAfterFlip = 500, sleepTimeFlipForFirstPlaceAfterTruss = 200, sleepTimePutSlidesUpNoBreakFlipper = 300;
     public boolean grabberIsOpen = true, wheelOn = false, conveyerOn = false, flipperDown = true, airplaneLoaded = true, rotatorDown = false, isKnocked = false;
-    public static double timesToRunAuton = 2;
+    public static double timesToRunAuton = 1;
     public static double correctWallDist = 24, roomForWallDistError = 0.25;
-    public static double lineDist = 20, offsetForPickUp = 8;
-    public static double velForTurn = 30;
+    public static double lineDist = 20, offsetForPickUp = 0.5;
+    public static double velForTurn = 25;
     //Goofy noises
     public int matchStart, wIntro, endgameStart, yabbaDabbaDo, driversPickUp, funnyFunny, teleStart;
 
@@ -199,6 +200,7 @@ public class MonkeyMap {
         beacon3BeforeTrussBlue = new Pose2d(xPosBeacon3BeforeTrussBlue, yPosBeacon3BeforeTrussBlue, headingBeacon3Blue);
         beacon1LineUpBeforeTrussBlue = new Pose2d(xPosBeacon1LineUpBeforeTrussBlue, yPosBeacon1LineUpBeforeTrussBlue, headingBeacon1LineUpBeforeTrussBlue);
         beacon1KnockingLineUpBeforeTrussBlue = new Pose2d(xPosBeacon1KnockingLineUpBeforeTrussBlue, yPosBeacon1KnockingLineUpBeforeTrussBlue, headingBeacon1Blue);
+        beacon3LineUpAfterTrussBlue = new Pose2d(xPosBeacon3LineUpAfterTrussBlue, yPosBeacon3LineUpAfterTrussBlue, headingBeacon3Blue);
 
         beacon1AfterTrussBlue = new Pose2d(xPosBeacon1AfterTrussBlue, yPosBeacon1AfterTrussBlue, headingBeacon1Blue);
         beacon2AfterTrussBlue = new Pose2d(xPosBeacon2AfterTrussBlue, yPosBeacon2AfterTrussBlue, headingBeacon2Blue);
@@ -206,13 +208,13 @@ public class MonkeyMap {
 
         pickUpSpotBlue = new Pose2d(xPosPickUpSpotBlue, yPosPickUpSpotBlue, headingPlaceAndPickUp);
         stackKnockerPosBlue = new Pose2d(xPosStackKnockerPosBlue, yPosStackKnockerPosBlue, headingPlaceAndPickUp);
-        pickUpPosAfterKnockedBlue = new Pose2d(xPosPickUpPosAfterKnockedBlue, yPosPickUpPosAfterKnockedBlue, headingPlaceAndPickUp);
         beforePickUpAfterKnockedBlue = new Pose2d(xPosBeforePickUpAfterKnockedBlue, yPosBeforePickUpAfterKnockedBlue, headingPlaceAndPickUp);
 
         lineUpForTrussBlue = new Pose2d(xPosLineUpForTrussBlue, yPosLineUpForTrussBlue, headingPlaceAndPickUp);
         afterPickUpNoPixelCrashBlue = new Pose2d(xPosAfterPickUpNoPixelCrashBlue, yPosAfterPickUpNoPixelCrashBlue, headingPlaceAndPickUp);
         lineUpPlacementBlue = new Pose2d(xPosLineUpPlacementBlue, yPosLineUpPlacementBlue, headingPlaceAndPickUp);
         lineUpForFirstPlacementAfterTrussBlue = new Pose2d(xPosLineUpForFirstPlacementAfterTrussBlue, yPosLineUpForFirstPlacementAfterTrussBlue, headingPlaceAndPickUp);
+        putSlidesBackDownBeforePlaceBlue = new Pose2d(xPosPutSlidesBackDownBeforePlaceBlue, yPosPutSlidesBackDownBeforePlaceBlue, headingPlaceAndPickUp);
 
         underTrussBlue = new Pose2d(xPosUnderTrussBlue, yPosUnderTrussBlue, headingPlaceAndPickUp);
         placementBlue = new Pose2d(xPosPlacementBlue, yPosPlacementBlue, headingPlaceAndPickUp);
@@ -231,6 +233,7 @@ public class MonkeyMap {
         beacon3BeforeTrussRed = new Pose2d(xPosBeacon3BeforeTrussRed, yPosBeacon3BeforeTrussRed, headingBeacon3Red);
         beacon1LineUpBeforeTrussRed = new Pose2d(xPosBeacon1LineUpBeforeTrussRed, yPosBeacon1LineUpBeforeTrussRed, headingBeacon1LineUpBeforeTrussRed);
         beacon1KnockingLineUpBeforeTrussRed = new Pose2d(xPosBeacon1KnockingLineUpBeforeTrussRed, yPosBeacon1KnockingLineUpBeforeTrussRed, headingBeacon1Red);
+        beacon3LineUpAfterTrussRed = new Pose2d(xPosBeacon3LineUpAfterTrussRed, yPosBeacon3LineUpAfterTrussRed, headingBeacon3Red);
 
         beacon1AfterTrussRed = new Pose2d(xPosBeacon1AfterTrussRed, yPosBeacon1AfterTrussRed, headingBeacon1Red);
         beacon2AfterTrussRed = new Pose2d(xPosBeacon2AfterTrussRed, yPosBeacon2AfterTrussRed, headingBeacon2Red);
@@ -238,13 +241,13 @@ public class MonkeyMap {
 
         pickUpSpotRed = new Pose2d(xPosPickUpSpotRed, yPosPickUpSpotRed, headingPlaceAndPickUp);
         stackKnockerPosRed = new Pose2d(xPosStackKnockerPosRed, yPosStackKnockerPosRed, headingPlaceAndPickUp);
-        pickUpPosAfterKnockedRed = new Pose2d(xPosPickUpPosAfterKnockedRed, yPosPickUpPosAfterKnockedRed, headingPlaceAndPickUp);
         beforePickUpAfterKnockedRed = new Pose2d(xPosBeforePickUpAfterKnockedRed, yPosBeforePickUpAfterKnockedRed, headingPlaceAndPickUp);
 
         lineUpForTrussRed = new Pose2d(xPosLineUpForTrussRed, yPosLineUpForTrussRed, headingPlaceAndPickUp);
         afterPickUpNoPixelCrashRed = new Pose2d(xPosAfterPickUpNoPixelCrashRed, yPosAfterPickUpNoPixelCrashRed, headingPlaceAndPickUp);
         lineUpPlacementRed = new Pose2d(xPosLineUpPlacementRed, yPosLineUpPlacementRed, headingPlaceAndPickUp);
         lineUpForFirstPlacementAfterTrussRed = new Pose2d(xPosLineUpForFirstPlacementAfterTrussRed, yPosLineUpForFirstPlacementAfterTrussRed, headingPlaceAndPickUp);
+        putSlidesBackDownBeforePlaceRed = new Pose2d(xPosPutSlidesBackDownBeforePlaceRed, yPosPutSlidesBackDownBeforePlaceRed, headingPlaceAndPickUp);
 
         underTrussRed = new Pose2d(xPosUnderTrussRed, yPosUnderTrussRed, headingPlaceAndPickUp);
         placementRed = new Pose2d(xPosPlacementRed, yPosPlacementRed, headingPlaceAndPickUp);
@@ -406,104 +409,130 @@ public class MonkeyMap {
         flipDown();
         closeGrabber();
     }
-    public void blueAutonLoop(PointFollower follower, ArrayList<PosesAndActions> posesToGoTo){
+    public void placeInAuton(PointFollower follower, ArrayList<PosesAndActions> posesToGoTo, boolean isBlue, Pose2d finalPose, boolean isFirstTime){
         posesToGoTo.clear();
-        posesToGoTo.add(new PosesAndActions(afterPlacePosForNoCrashBlue, ""));
-        posesToGoTo.add(new PosesAndActions(underTrussBlue, "resetSlides"));
-        posesToGoTo.add(new PosesAndActions(lineUpForTrussBlue, ""));
-        posesToGoTo.add(new PosesAndActions(beforePickUpAfterKnockedBlue, ""));
-        follower.reinit(posesToGoTo);
-        loadPixels();
-        follower.goToPoints(true);
-
-        double yPosAfterSeeing = ((lineDist * Math.sin(Math.toRadians(OpenCVGreatestColorTest.thetaX))))+MonkeyMap.yPosBeforePickUpAfterKnockedBlue + offsetForPickUp;
-
-        posesToGoTo.clear();
-        posesToGoTo.add(new PosesAndActions(new Pose2d(MonkeyMap.xPosPickUpPosAfterKnockedBlue, yPosAfterSeeing,MonkeyMap.headingPlaceAndPickUp), ""));
-        follower.reinit(posesToGoTo);
-        follower.goToPoints(true);
-
-        posesToGoTo.clear();
-        posesToGoTo.add(new PosesAndActions(beforePickUpAfterKnockedBlue, ""));
-        follower.reinit(posesToGoTo);
-        loadPixels();
-        follower.goToPoints(true);
-
-        yPosAfterSeeing = ((lineDist * Math.sin(Math.toRadians(OpenCVGreatestColorTest.thetaX))))+MonkeyMap.yPosBeforePickUpAfterKnockedBlue + offsetForPickUp;
-
-        posesToGoTo.clear();
-        posesToGoTo.add(new PosesAndActions(new Pose2d(MonkeyMap.xPosPickUpPosAfterKnockedBlue, yPosAfterSeeing,MonkeyMap.headingPlaceAndPickUp), ""));
-        follower.reinit(posesToGoTo);
-        follower.goToPoints(true);
-
-        myOpMode.sleep(MonkeyMap.sleepTimePickUpPixel);
-
-        posesToGoTo.clear();
-        posesToGoTo.add(new PosesAndActions(afterPickUpNoPixelCrashBlue, ""));
-        posesToGoTo.add(new PosesAndActions(lineUpForTrussBlue, ""));
-        posesToGoTo.add(new PosesAndActions(underTrussGoingBackBlue, "stopLoadingPixels and closeGrabber"));
-        posesToGoTo.add(new PosesAndActions(underTrussBlue, "placeSlides"));
-        posesToGoTo.add(new PosesAndActions(slidesDownAfterPlaceBlue, "flipDown"));
-        posesToGoTo.add(new PosesAndActions(lineUpPlacementBlue, ""));
-        posesToGoTo.add(new PosesAndActions(placementBlue, ""));
+        if(isBlue){
+            posesToGoTo.add(new PosesAndActions(afterPickUpNoPixelCrashBlue, ""));
+            posesToGoTo.add(new PosesAndActions(lineUpForTrussBlue, ""));
+            posesToGoTo.add(new PosesAndActions(underTrussGoingBackBlue, "stopLoadingPixels and closeGrabber"));
+            posesToGoTo.add(new PosesAndActions(underTrussBlue, "placeSlides"));
+            posesToGoTo.add(new PosesAndActions(slidesDownAfterPlaceBlue, "flipDown"));
+            posesToGoTo.add(new PosesAndActions(lineUpPlacementBlue, ""));
+            if(isFirstTime){
+                posesToGoTo.add(new PosesAndActions(putSlidesBackDownBeforePlaceBlue, "resetSlides"));
+            }
+            posesToGoTo.add(new PosesAndActions(finalPose, ""));
+        }
+        else{
+            posesToGoTo.add(new PosesAndActions(afterPickUpNoPixelCrashRed, ""));
+            posesToGoTo.add(new PosesAndActions(lineUpForTrussRed, ""));
+            posesToGoTo.add(new PosesAndActions(underTrussGoingBackRed, "stopLoadingPixels and closeGrabber"));
+            posesToGoTo.add(new PosesAndActions(underTrussRed, "placeSlides"));
+            posesToGoTo.add(new PosesAndActions(slidesDownAfterPlaceRed, "flipDown"));
+            posesToGoTo.add(new PosesAndActions(lineUpPlacementRed, ""));
+            if(isFirstTime){
+                posesToGoTo.add(new PosesAndActions(putSlidesBackDownBeforePlaceRed, "resetSlides"));
+            }
+            posesToGoTo.add(new PosesAndActions(finalPose, ""));
+            follower.reinit(posesToGoTo);
+            follower.goToPoints(true);
+        }
         follower.reinit(posesToGoTo);
         follower.goToPoints(true);
         openGrabber();
         myOpMode.sleep(MonkeyMap.sleepTimePlacePixels);
-        flipUp();
-        myOpMode.sleep(MonkeyMap.sleepTimeAfterFlip);
+        if(isFirstTime){
+            flipUp();
+            myOpMode.sleep(sleepTimeFlipForFirstPlaceAfterTruss);
+            placeSlides();
+            myOpMode.sleep(sleepTimePutSlidesUpNoBreakFlipper);
+        }
+        else{
+            flipUp();
+            myOpMode.sleep(MonkeyMap.sleepTimeAfterFlip);
+        }
+
     }
-
-
-    public void redAutonLoop(PointFollower follower, ArrayList<PosesAndActions> posesToGoTo){
+    public void goToPickUpInAuton(PointFollower follower, ArrayList<PosesAndActions> posesToGoTo, boolean isBlue, Pose2d finalPose){
         posesToGoTo.clear();
-        posesToGoTo.add(new PosesAndActions(afterPlacePosForNoCrashRed, ""));
-        posesToGoTo.add(new PosesAndActions(underTrussRed, "resetSlides"));
-        posesToGoTo.add(new PosesAndActions(lineUpForTrussRed, ""));
-        posesToGoTo.add(new PosesAndActions(beforePickUpAfterKnockedRed, ""));
-        follower.reinit(posesToGoTo);
-        loadPixels();
-        follower.goToPoints(true);
-
-        double yPosAfterSeeing = ((lineDist * Math.sin(Math.toRadians(OpenCVGreatestColorTest.thetaX))))+MonkeyMap.yPosBeforePickUpAfterKnockedRed + offsetForPickUp;
-
-        posesToGoTo.clear();
-        posesToGoTo.add(new PosesAndActions(new Pose2d(MonkeyMap.xPosPickUpPosAfterKnockedRed, yPosAfterSeeing,MonkeyMap.headingPlaceAndPickUp), ""));
+        if(isBlue){
+            posesToGoTo.add(new PosesAndActions(afterPlacePosForNoCrashBlue, ""));
+            posesToGoTo.add(new PosesAndActions(underTrussBlue, "resetSlides"));
+            posesToGoTo.add(new PosesAndActions(lineUpForTrussBlue, ""));
+        }
+        else{
+            posesToGoTo.add(new PosesAndActions(afterPlacePosForNoCrashRed, ""));
+            posesToGoTo.add(new PosesAndActions(underTrussRed, "resetSlides"));
+            posesToGoTo.add(new PosesAndActions(lineUpForTrussRed, ""));
+        }
+        posesToGoTo.add(new PosesAndActions(finalPose, "loadPixels"));
         follower.reinit(posesToGoTo);
         follower.goToPoints(true);
-
+    }
+    public void autonVisionPickUp(PointFollower follower, ArrayList<PosesAndActions> posesToGoTo, boolean isBlue){
         posesToGoTo.clear();
-        posesToGoTo.add(new PosesAndActions(beforePickUpAfterKnockedRed, ""));
+        if(isBlue){
+            double yPosAfterSeeing = ((lineDist * Math.sin(Math.toRadians(OpenCVGreatestColorTest.thetaX))))+MonkeyMap.yPosBeforePickUpAfterKnockedBlue + offsetForPickUp;
+            posesToGoTo.add(new PosesAndActions(new Pose2d(MonkeyMap.xPosPickUpPosAfterKnockedBlue, yPosAfterSeeing, MonkeyMap.headingPlaceAndPickUp), ""));
+        }
+        else{
+            double yPosAfterSeeing = ((lineDist * Math.sin(Math.toRadians(OpenCVGreatestColorTest.thetaX))))+MonkeyMap.yPosBeforePickUpAfterKnockedRed + offsetForPickUp;
+            posesToGoTo.add(new PosesAndActions(new Pose2d(MonkeyMap.xPosPickUpPosAfterKnockedRed, yPosAfterSeeing, MonkeyMap.headingPlaceAndPickUp), ""));
+        }
         follower.reinit(posesToGoTo);
-        loadPixels();
         follower.goToPoints(true);
-
-        yPosAfterSeeing = ((lineDist * Math.sin(Math.toRadians(OpenCVGreatestColorTest.thetaX))))+MonkeyMap.yPosBeforePickUpAfterKnockedRed + offsetForPickUp;
-
-        posesToGoTo.clear();
-        posesToGoTo.add(new PosesAndActions(new Pose2d(MonkeyMap.xPosPickUpPosAfterKnockedRed, yPosAfterSeeing,MonkeyMap.headingPlaceAndPickUp), ""));
-        follower.reinit(posesToGoTo);
-        follower.goToPoints(true);
-
         myOpMode.sleep(MonkeyMap.sleepTimePickUpPixel);
+    }
+    public void autonLoop(PointFollower follower, ArrayList<PosesAndActions> posesToGoTo, boolean isBlue, boolean isFirstTime){
+        Pose2d finalPose = new Pose2d();
+        if(isBlue){
+            finalPose = beforePickUpAfterKnockedBlue;
+        }
+        else{
+            finalPose = beforePickUpAfterKnockedRed;
+        }
+        goToPickUpInAuton(follower, posesToGoTo, isBlue, finalPose);
+        autonVisionPickUp(follower, posesToGoTo, isBlue);
 
         posesToGoTo.clear();
-        posesToGoTo.add(new PosesAndActions(afterPickUpNoPixelCrashRed, ""));
-        posesToGoTo.add(new PosesAndActions(lineUpForTrussRed, ""));
-        posesToGoTo.add(new PosesAndActions(underTrussGoingBackRed, "stopLoadingPixels and closeGrabber"));
-        posesToGoTo.add(new PosesAndActions(underTrussRed, "placeSlides"));
-        posesToGoTo.add(new PosesAndActions(slidesDownAfterPlaceRed, "flipDown"));
-        posesToGoTo.add(new PosesAndActions(lineUpPlacementRed, ""));
-        posesToGoTo.add(new PosesAndActions(placementRed, ""));
+        posesToGoTo.add(new PosesAndActions(beforePickUpAfterKnockedBlue, ""));
         follower.reinit(posesToGoTo);
         follower.goToPoints(true);
-        openGrabber();
-        myOpMode.sleep(MonkeyMap.sleepTimePlacePixels);
-        flipUp();
-        myOpMode.sleep(MonkeyMap.sleepTimeAfterFlip);
+
+        autonVisionPickUp(follower, posesToGoTo, isBlue);
+
+        if(isBlue){
+            finalPose = placementBlue;
+        }
+        else{
+            finalPose = placementRed;
+        }
+
+        placeInAuton(follower, posesToGoTo, isBlue, finalPose, isFirstTime);
     }
 
-
-
-
+    public int TeamPropDetectionReadingBeforeTruss(){
+        if(!OpenCVDetectTeamProp.isDetected){
+            return 3;
+        }
+        else if(OpenCVDetectTeamProp.centerX < 160){
+            return 2;
+        }
+        else if(OpenCVDetectTeamProp.centerX > 160){
+            return 1;
+        }
+        return 0;
+    }
+    public int TeamPropDetectionReadingAfterTruss(){
+        if(!OpenCVDetectTeamProp.isDetected){
+            return 3;
+        }
+        else if(OpenCVDetectTeamProp.centerX < 160){
+            return 2;
+        }
+        else if(OpenCVDetectTeamProp.centerX > 160){
+            return 1;
+        }
+        return 0;
+    }
 }

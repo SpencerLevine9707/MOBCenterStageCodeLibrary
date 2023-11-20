@@ -18,11 +18,12 @@ import java.util.ArrayList;
 @Config
 @Autonomous(group = "Levine Local")
 public class PIDTuner extends LinearOpMode {
-    public static double xDist = 50;
-    public static double yDist = 0;
+    public static double xDist = 0;
+    public static double yDist = -30;
     MonkeyMap wBot = new MonkeyMap(this);
     ActionRunnerCenterStageAuton actionRunner = new ActionRunnerCenterStageAuton(this, wBot);
     PointFollower follower = new PointFollower(this, actionRunner);
+    public boolean isAcross = true;
     @Override
     public void runOpMode() throws InterruptedException {
         ArrayList<PosesAndActions   > posesToGoTo = new ArrayList<>();
@@ -37,19 +38,19 @@ public class PIDTuner extends LinearOpMode {
         waitForStart();
         follower.goToPoints(true);
 
-        PosesAndActions endingPose = posesToGoTo.get(posesToGoTo.size()-1);
+//        PosesAndActions endingPose = posesToGoTo.get(posesToGoTo.size()-1);
 
         while(opModeIsActive()){
             posesToGoTo.clear();
-            if(endingPose.equals(firstPose)){
-                posesToGoTo.add(firstPose);
+            if(!isAcross){
+//                posesToGoTo.add(firstPose);
                 posesToGoTo.add(acrossPose);
             }
             else{
-                posesToGoTo.add(acrossPose);
+//                posesToGoTo.add(acrossPose);
                 posesToGoTo.add(firstPose);
             }
-            endingPose = posesToGoTo.get(posesToGoTo.size()-1);
+            isAcross = !isAcross;
             follower.reinit(posesToGoTo);
             telemetry.addLine("newPoses " + posesToGoTo);
             telemetry.update();

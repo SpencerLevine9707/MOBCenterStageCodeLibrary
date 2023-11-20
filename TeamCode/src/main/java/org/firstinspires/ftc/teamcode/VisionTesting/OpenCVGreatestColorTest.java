@@ -18,11 +18,15 @@ import java.util.ArrayList;
         public static final Scalar red = new Scalar(255, 0, 0);
         public static final Scalar pink = new Scalar(255, 0, 142);
         public static final Scalar white = new Scalar(255, 255, 255);
+        public static int heightNoDetectPixels = 60;
 
-        public static int[] lowerBlue = {100, 100, 100};
-        public static int[] upperBlue = {175, 255, 255};
+        public static int[] lowerBlue = {115, 50, 20};
+        public static int[] upperBlue = {160, 255, 255};
 
-        public static int[] lowerYellow = {20, 100, 100};
+        public static int[] lowerRed = {160, 100, 100};
+        public static int[] upperRed  = {200, 255, 255};
+
+        public static int[] lowerYellow = {20, 100, 20};
         public static int[] upperYellow = {50, 255, 255};
 
         public static int[] lowerWhite = {0, 0, 200};
@@ -70,8 +74,8 @@ import java.util.ArrayList;
             Mat hsv = new Mat();
             Imgproc.cvtColor(frame, hsv, Imgproc.COLOR_RGB2HSV_FULL);
 
-            Rect roi = new Rect(0, frame.height() / 2, frame.width(), frame.height()/2);
-            Mat frameBottomHalf = new Mat(hsv, roi);
+            Rect roi = new Rect(0, heightNoDetectPixels, frame.width(), frame.height()-heightNoDetectPixels);
+//            Mat frameBottomHalf = new Mat(hsv, roi);
 
             Imgproc.rectangle(hsv, roi, red, 2);
 
@@ -97,7 +101,7 @@ import java.util.ArrayList;
                 int y = boundingBox.y;
                 int w = boundingBox.width;
                 int h = boundingBox.height;
-                if(y > frame.height()/2){
+                if(y > heightNoDetectPixels){
                     double area = Imgproc.contourArea(contour);
                     if (area > maxArea) {
                         maxArea = area;

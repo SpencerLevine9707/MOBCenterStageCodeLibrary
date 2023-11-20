@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 @Config
 public class LevineLocalizationMap {
     //Define all variable - public static doubles because FTC dashboard allows you to change them
-    public static double poseError = 1;
+    public static double poseError = 1.5;
     public static double angError = Math.toRadians(0.25);
     public static double followRadius = 30;
     public static double poseFollowCoef = 1;

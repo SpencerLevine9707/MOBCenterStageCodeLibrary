@@ -55,6 +55,8 @@ public class ActionRunnerCenterStageAuton {
                 wBot.stopLoadingPixels();
                 wBot.closeGrabber();
                 break;
+            case "loadPixels":
+                wBot.loadPixels();
         }
         telemetry.update();
     }
