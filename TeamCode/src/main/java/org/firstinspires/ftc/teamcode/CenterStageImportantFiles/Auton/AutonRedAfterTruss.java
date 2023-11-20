@@ -36,13 +36,13 @@ public class AutonRedAfterTruss extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         wBot.init();
-        wBot.initPoses();
+        wBot.initPoses("RedAfterTruss");
         wBot.toggleRotator();
         wBot.flipUp();
         wBot.openGrabber();
         wBot.resetKnocker();
         ArrayList<PosesAndActions> posesToGoTo = new ArrayList<>();
-        Pose2d firstPose = wBot.startingPositionAfterTrussRed;
+        Pose2d firstPose = wBot.startingPosition;
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -66,22 +66,22 @@ public class AutonRedAfterTruss extends LinearOpMode {
 
         while(opModeIsActive()){
             if(zoneDetected == 1){
-                preloadPlacement = wBot.beacon1AfterTrussRed;
-                firstPlacement = wBot.placementRedBeacon1;
+                preloadPlacement = wBot.beacon1Preload;
+                firstPlacement = wBot.placementBeacon1;
             }
             else if(zoneDetected == 2){
-                preloadPlacement = wBot.beacon2AfterTrussRed;
-                firstPlacement = wBot.placementRedBeacon2;
+                preloadPlacement = wBot.beacon2Preload;
+                firstPlacement = wBot.placementBeacon2;
             }
             else{
-                preloadPlacement = wBot.beacon3AfterTrussRed;
-                firstPlacement = wBot.placementRedBeacon3;
+                preloadPlacement = wBot.beacon3Preload;
+                firstPlacement = wBot.placementBeacon3;
             }
             wBot.closeGrabber();
 
             posesToGoTo.add(new PosesAndActions(firstPose, ""));
             if(zoneDetected == 3){
-                posesToGoTo.add(new PosesAndActions(wBot.beacon3LineUpAfterTrussRed, ""));
+                posesToGoTo.add(new PosesAndActions(wBot.beacon3LineUpAfterTruss, ""));
             }
             posesToGoTo.add(new PosesAndActions(preloadPlacement, ""));
 
@@ -95,8 +95,8 @@ public class AutonRedAfterTruss extends LinearOpMode {
 
             posesToGoTo.clear();
             wBot.placeSlidesFirstTime();
-            posesToGoTo.add(new PosesAndActions(wBot.lineUpPlacementRed, "flipDown"));
-            posesToGoTo.add(new PosesAndActions(wBot.putSlidesBackDownBeforePlaceRed, "resetSlides"));
+            posesToGoTo.add(new PosesAndActions(wBot.lineUpPlacement, "flipDown"));
+            posesToGoTo.add(new PosesAndActions(wBot.putSlidesBackDownBeforePlace, "resetSlides"));
             posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
@@ -107,32 +107,32 @@ public class AutonRedAfterTruss extends LinearOpMode {
             wBot.placeSlides();
             sleep(MonkeyMap.sleepTimePutSlidesUpNoBreakFlipper);
 
-            wBot.goToPickUpInAuton(follower, posesToGoTo, false, wBot.stackKnockerPosRed);
+            wBot.goToPickUpInAuton(follower, posesToGoTo, wBot.stackKnockerPos);
             wBot.knockStack();
             sleep(MonkeyMap.sleepTimeKnockStack);
             wBot.resetKnocker();
 
             posesToGoTo.clear();
-            posesToGoTo.add(new PosesAndActions(wBot.pickUpSpotRed, "resetSlides"));
+            posesToGoTo.add(new PosesAndActions(wBot.pickUpSpot, "resetSlides"));
             wBot.loadPixels();
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
             sleep(MonkeyMap.sleepTimePickUpPixel);
 
             posesToGoTo.clear();
-            posesToGoTo.add(new PosesAndActions(wBot.beforePickUpAfterKnockedRed, ""));
+            posesToGoTo.add(new PosesAndActions(wBot.beforePickUpAfterKnocked, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
 
-            wBot.autonVisionPickUp(follower, posesToGoTo, false);
+            wBot.autonVisionPickUp(follower, posesToGoTo);
 
-            wBot.placeInAuton(follower, posesToGoTo, false, wBot.placementRed, false);
+            wBot.placeInAuton(follower, posesToGoTo, wBot.placementPos, false);
 
             for (int i = 0; i < MonkeyMap.timesToRunAuton - 1; i++) {
-                wBot.autonLoop(follower, posesToGoTo, false, false);
+                wBot.autonLoop(follower, posesToGoTo, false);
             }
             if(!isParkFinal){
-                wBot.goToPickUpInAuton(follower, posesToGoTo, false, wBot.pickUpSpotRed);
+                wBot.goToPickUpInAuton(follower, posesToGoTo, wBot.pickUpSpot);
             }
             telemetry.addData("Time for auton ", timeForAuton);
             telemetry.update();
