@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.VisionTesting;
 
 
+import com.acmerobotics.dashboard.config.Config;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -12,6 +14,7 @@ import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 import java.util.ArrayList;
+@Config
 public class OpenCVDetectTeamProp extends OpenCvPipeline {
     public static final Scalar green = new Scalar(0, 255, 0);
     public static final Scalar blue = new Scalar(0, 0, 255);
@@ -21,8 +24,8 @@ public class OpenCVDetectTeamProp extends OpenCvPipeline {
     public static double webcamSplitDist = 160;
     public static boolean isDetected = false;
     public static double minArea = 50;
-    public static double minWidth = 20;
-    public static double minHeight = 50;
+    public static double minWidth = 43;
+    public static double minHeight = 53;
     public int[] lowerColor = {0, 0, 0};
     public int[] upperColor = {0, 0, 0};
 
@@ -53,6 +56,17 @@ public class OpenCVDetectTeamProp extends OpenCvPipeline {
 
         Mat hsv = new Mat();
         Imgproc.cvtColor(frame, hsv, Imgproc.COLOR_RGB2HSV_FULL);
+        Rect box2Rect = new Rect(new Point(70, 20), new Point(90, 50));
+        Rect box1Rect = new Rect(new Point(230, 140), new Point(270, 80));
+
+//        Mat box1 = new Mat(frame, box1Rect);
+//        Mat box2 = new Mat(frame, box2Rect);
+//
+//        Imgproc.cvtColor(frame, box1, Imgproc.COLOR_RGB2HSV_FULL);
+//        Imgproc.cvtColor(frame, box2, Imgproc.COLOR_RGB2HSV_FULL);
+//
+//        Imgproc.rectangle(frame, box1Rect, new Scalar(0, 255, 0), 2);
+//        Imgproc.rectangle(frame, box2Rect, new Scalar(0, 255, 0), 2);
 
         Mat mask = new Mat();
         Mat mask1 = new Mat();
@@ -93,7 +107,7 @@ public class OpenCVDetectTeamProp extends OpenCvPipeline {
             Rect boundingBox = Imgproc.boundingRect(contour);
             int w = boundingBox.width;
             int h = boundingBox.height;
-            if (area > maxArea && area >= minArea && w >= minWidth && h>= minHeight) {
+            if (area > maxArea && area >= minArea && w >= minWidth && h >= minHeight) {
                 maxArea = area;
                 maxContour = contour;
             }
@@ -149,7 +163,7 @@ public class OpenCVDetectTeamProp extends OpenCvPipeline {
         }
         telemetry.update();
 
-        return mask;
-//        return hsv;
+//        return frame;
+        return hsv;
     }
 }

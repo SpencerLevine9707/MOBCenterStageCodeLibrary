@@ -39,9 +39,9 @@ public class goToClosestPixelTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         wBot.init();
-        wBot.initPoses();
+        wBot.initPoses("blueAfterTruss");
         wBot.toggleRotator();
-        wBot.flipUp();
+        wBot.flipUpAndRotate();
         wBot.openGrabber();
         ArrayList<PosesAndActions> posesToGoTo = new ArrayList<>();
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -66,10 +66,10 @@ public class goToClosestPixelTest extends LinearOpMode {
                  */
             }
         });
-        double yPosAfterSeeing = ((lineDist * Math.sin(Math.toRadians(OpenCVGreatestColorTest.thetaX))))+MonkeyMap.yPosBeforePickUpAfterKnockedBlue + offsetForPickUp;
+        double yPosAfterSeeing = ((lineDist * Math.sin(Math.toRadians(OpenCVGreatestColorTest.thetaX)))) + wBot.beforePickUpAfterKnocked.getY() + offsetForPickUp;
 //
-        posesToGoTo.add(new PosesAndActions(wBot.beforePickUpAfterKnockedBlue, ""));
-        posesToGoTo.add(new PosesAndActions(new Pose2d(MonkeyMap.xPosPickUpPosAfterKnockedBlue, yPosAfterSeeing,MonkeyMap.headingPlaceAndPickUp), ""));
+        posesToGoTo.add(new PosesAndActions(wBot.beforePickUpAfterKnocked, ""));
+        posesToGoTo.add(new PosesAndActions(new Pose2d(wBot.xPosPickUpPosAfterKnocked, yPosAfterSeeing,MonkeyMap.headingPlaceAndPickUp), ""));
 
         follower.init(posesToGoTo, isTest);
         waitForStart();

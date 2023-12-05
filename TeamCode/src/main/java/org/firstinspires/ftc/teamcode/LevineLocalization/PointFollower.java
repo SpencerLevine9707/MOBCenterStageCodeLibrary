@@ -374,7 +374,7 @@ public class PointFollower {
     double currVelocity = 0;
     public double currPower;
     public double distToTarg;
-    public static double maxVel = 50, almostDoneVel = 20, slowVel = almostDoneVel, evenSlowerVel = 2, testVel = 20, slowestVel = 5;
+    public static double maxVel = 50, almostDoneVel = 20, slowVel = almostDoneVel, evenSlowerVel = 2, testVel = 20, slowestVel = 8;
     public static double roomForErrorStartDecel = 0;
     public static double decceleration = 40;
     public double targetVelocity = maxVel;

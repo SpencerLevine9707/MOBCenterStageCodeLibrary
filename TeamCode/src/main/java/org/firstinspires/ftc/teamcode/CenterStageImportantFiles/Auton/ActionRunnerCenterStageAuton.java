@@ -36,10 +36,10 @@ public class ActionRunnerCenterStageAuton {
                 wBot.resetSlides();
                 break;
             case "flipUp":
-                wBot.flipUp();
+                wBot.flipUpAndRotate();
                 break;
             case "flipDown":
-                wBot.flipDown();
+                wBot.flipDownAndRotate();
                 break;
             case "closeGrabber":
                 telemetry.addLine("Closed Grabber");
@@ -54,6 +54,14 @@ public class ActionRunnerCenterStageAuton {
             case "stopLoadingPixels and closeGrabber":
                 wBot.stopLoadingPixels();
                 wBot.closeGrabber();
+                break;
+            case "unloadPixel and closeGrabber":
+                wBot.unloadPixel();
+                wBot.closeGrabber();
+                break;
+            case "stopLoadingPixels and placeSlides":
+                wBot.stopLoadingPixels();
+                wBot.placeSlides();
                 break;
             case "loadPixels":
                 wBot.loadPixels();

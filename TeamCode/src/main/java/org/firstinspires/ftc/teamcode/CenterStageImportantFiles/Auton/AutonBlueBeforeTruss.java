@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVDetectTeamProp;
 import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVGreatestColorTest;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
@@ -37,7 +38,7 @@ public class AutonBlueBeforeTruss extends LinearOpMode {
         wBot.init();
         wBot.initPoses("blueBeforeTruss");
         wBot.toggleRotator();
-        wBot.flipUp();
+        wBot.flipUpAndRotate();
         wBot.openGrabber();
         wBot.resetKnocker();
         ArrayList<PosesAndActions> posesToGoTo = new ArrayList<>();
@@ -52,6 +53,21 @@ public class AutonBlueBeforeTruss extends LinearOpMode {
 
         colorPipe = new OpenCVDetectTeamProp(telemetry, OpenCVGreatestColorTest.lowerBlue, OpenCVGreatestColorTest.upperBlue);
         webcam.setPipeline(colorPipe);
+
+        FtcDashboard.getInstance().startCameraStream(webcam, 0);
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+            @Override
+            public void onOpened() {
+                webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+            }
+
+            @Override
+            public void onError(int errorCode) {
+                /*
+                 * This will be called if the camera could not be opened
+                 */
+            }
+        });
 
         int zoneDetected = 0;
 
@@ -79,7 +95,7 @@ public class AutonBlueBeforeTruss extends LinearOpMode {
             }
 
             posesToGoTo.add(new PosesAndActions(firstPose, ""));
-            if(zoneDetected == 1){
+            if(zoneDetected == 3){
                 posesToGoTo.add(new PosesAndActions(wBot.beacon1LineUpBeforeTruss, ""));
             }
             posesToGoTo.add(new PosesAndActions(preloadPlacement, ""));
@@ -112,16 +128,17 @@ public class AutonBlueBeforeTruss extends LinearOpMode {
 
             wBot.placeInAuton(follower, posesToGoTo, firstPlacement, true);
 
-            for (int i = 0; i < MonkeyMap.timesToRunAuton; i++) {
-                wBot.autonLoop(follower, posesToGoTo, false);
-            }
-
-            if(!isParkFinal){
-                wBot.goToPickUpInAuton(follower, posesToGoTo, wBot.pickUpSpot);
-            }
-            telemetry.addData("Time for auton ", timeForAuton);
-            telemetry.update();
-            requestOpModeStop();
+//            for (int i = 0; i < MonkeyMap.timesToRunAuton; i++) {
+//                wBot.autonLoop(follower, posesToGoTo, false);
+//            }
+//
+//            if(!isParkFinal){
+//                wBot.goToPickUpInAuton(follower, posesToGoTo, wBot.pickUpSpot);
+//            }
+//            telemetry.addData("Time for auton ", timeForAuton);
+//            telemetry.update();
+            terminateOpModeNow();
         }
     }
 }
+

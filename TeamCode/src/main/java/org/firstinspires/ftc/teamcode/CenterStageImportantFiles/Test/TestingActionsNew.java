@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "Levine Local")
+@Disabled
 public class TestingActionsNew extends LinearOpMode {
     MonkeyMap wBot = new MonkeyMap(this);
     ActionRunnerCenterStageAuton actionRunner = new ActionRunnerCenterStageAuton(this, wBot);
@@ -30,7 +32,7 @@ public class TestingActionsNew extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         wBot.init();
-        wBot.initPoses();
+        wBot.initPoses("afterTrussBlue");
         wBot.toggleRotator();
         wBot.toggleFlipper();
         wBot.openGrabber();

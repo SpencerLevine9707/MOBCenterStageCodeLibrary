@@ -3,13 +3,10 @@ package org.firstinspires.ftc.teamcode.CenterStageImportantFiles.Drive;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.checkerframework.checker.units.qual.C;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMap;
 import org.firstinspires.ftc.teamcode.hardwareMaps.MecanumDrive;
@@ -19,7 +16,7 @@ import org.firstinspires.ftc.teamcode.hardwareMaps.MecanumDrive;
 public class DriveBotFirstIteration extends LinearOpMode {
     MonkeyMap wBot = new MonkeyMap(this);
     public ElapsedTime planeTime = new ElapsedTime();
-    public static double timeForPlaneWait = 0.25;
+    public static double timeForPlaneWait = 0.5;
     public static double divisorForSlidePowersUp = 1;
     public static double divisorForSlidePowersDown = 2;
 
@@ -61,7 +58,8 @@ public class DriveBotFirstIteration extends LinearOpMode {
 
             double powerFromTriggers = Math.abs(lx1) + Math.abs(ly1) + Math.abs(rx1);
 
-            drive.moveInTeleop(-lx1, -ly1, rx1, powerFromTriggers);
+//            drive.moveInTeleop(-lx1, -ly1, rx1, powerFromTriggers);
+            drive.moveInTeleop(lx1, ly1, rx1, powerFromTriggers);
 
             boolean a2 = gamepad2.a;
             boolean b2 = gamepad2.b;

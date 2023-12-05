@@ -13,11 +13,11 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMap;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PointFollower;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PosesAndActions;
-import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVDetectRed;
 import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVDetectTeamProp;
 import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVGreatestColorTest;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
@@ -36,9 +36,9 @@ public class AutonRedAfterTruss extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         wBot.init();
-        wBot.initPoses("RedAfterTruss");
-        wBot.toggleRotator();
-        wBot.flipUp();
+        wBot.initPoses("redAfterTruss");
+        wBot.rotateDown();
+        wBot.flipUpAndRotate();
         wBot.openGrabber();
         wBot.resetKnocker();
         ArrayList<PosesAndActions> posesToGoTo = new ArrayList<>();
@@ -52,19 +52,29 @@ public class AutonRedAfterTruss extends LinearOpMode {
         webcam2.setPipeline(pipeline);
         colorPipe = new OpenCVDetectTeamProp(telemetry, OpenCVGreatestColorTest.lowerRed, OpenCVGreatestColorTest.upperRed);
         webcam.setPipeline(colorPipe);
+        FtcDashboard.getInstance().startCameraStream(webcam, 0);
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+            @Override
+            public void onOpened() {
+                webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+            }
 
-        int zoneDetected = 0;
+            @Override
+            public void onError(int errorCode) {
+                /*
+                 * This will be called if the camera could not be opened
+                 */
+            }
+        });
 
-        Pose2d firstPlacement;
-        Pose2d preloadPlacement;
+        int zoneDetected = 1;
+
+        Pose2d firstPlacement = new Pose2d();
+        Pose2d preloadPlacement = new Pose2d();
 
         while(opModeInInit()){
             zoneDetected = wBot.TeamPropDetectionReadingAfterTruss();
-            telemetry.addLine("zoneDetected: " + zoneDetected);
-            telemetry.update();
-        }
 
-        while(opModeIsActive()){
             if(zoneDetected == 1){
                 preloadPlacement = wBot.beacon1Preload;
                 firstPlacement = wBot.placementBeacon1;
@@ -77,10 +87,17 @@ public class AutonRedAfterTruss extends LinearOpMode {
                 preloadPlacement = wBot.beacon3Preload;
                 firstPlacement = wBot.placementBeacon3;
             }
+            telemetry.addData("preloadPlacement", preloadPlacement);
+            telemetry.addData("firstPlacement", firstPlacement);
+            telemetry.addLine("zoneDetected: " + zoneDetected);
+            telemetry.update();
+        }
+
+        while(opModeIsActive()){
             wBot.closeGrabber();
 
             posesToGoTo.add(new PosesAndActions(firstPose, ""));
-            if(zoneDetected == 3){
+            if(zoneDetected == 1){
                 posesToGoTo.add(new PosesAndActions(wBot.beacon3LineUpAfterTruss, ""));
             }
             posesToGoTo.add(new PosesAndActions(preloadPlacement, ""));
@@ -95,48 +112,57 @@ public class AutonRedAfterTruss extends LinearOpMode {
 
             posesToGoTo.clear();
             wBot.placeSlidesFirstTime();
-            posesToGoTo.add(new PosesAndActions(wBot.lineUpPlacement, "flipDown"));
+            if(zoneDetected == 1){
+                posesToGoTo.add(new PosesAndActions(wBot.lineUpForFirstPlacementAfterTruss, ""));
+            }
+            if(zoneDetected == 2){
+                posesToGoTo.add(new PosesAndActions(wBot.lineUpPlacementBeacon2, "flipDown"));
+                posesToGoTo.add(new PosesAndActions(wBot.lineUpPlacement, "resetSlides"));
+            }
+            else{
+                posesToGoTo.add(new PosesAndActions(wBot.lineUpPlacement, "flipDown"));
+            }
             posesToGoTo.add(new PosesAndActions(wBot.putSlidesBackDownBeforePlace, "resetSlides"));
             posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
             wBot.openGrabber();
             sleep(MonkeyMap.sleepTimePlacePixels);
-            wBot.flipUp();
+            wBot.flipUpAndRotate();
             sleep(MonkeyMap.sleepTimeFlipForFirstPlaceAfterTruss);
             wBot.placeSlides();
             sleep(MonkeyMap.sleepTimePutSlidesUpNoBreakFlipper);
 
-            wBot.goToPickUpInAuton(follower, posesToGoTo, wBot.stackKnockerPos);
-            wBot.knockStack();
-            sleep(MonkeyMap.sleepTimeKnockStack);
-            wBot.resetKnocker();
-
-            posesToGoTo.clear();
-            posesToGoTo.add(new PosesAndActions(wBot.pickUpSpot, "resetSlides"));
-            wBot.loadPixels();
-            follower.reinit(posesToGoTo);
-            follower.goToPoints(true);
-            sleep(MonkeyMap.sleepTimePickUpPixel);
-
-            posesToGoTo.clear();
-            posesToGoTo.add(new PosesAndActions(wBot.beforePickUpAfterKnocked, ""));
-            follower.reinit(posesToGoTo);
-            follower.goToPoints(true);
-
-            wBot.autonVisionPickUp(follower, posesToGoTo);
-
-            wBot.placeInAuton(follower, posesToGoTo, wBot.placementPos, false);
-
-            for (int i = 0; i < MonkeyMap.timesToRunAuton - 1; i++) {
-                wBot.autonLoop(follower, posesToGoTo, false);
-            }
-            if(!isParkFinal){
-                wBot.goToPickUpInAuton(follower, posesToGoTo, wBot.pickUpSpot);
-            }
-            telemetry.addData("Time for auton ", timeForAuton);
-            telemetry.update();
-            requestOpModeStop();
+//            wBot.goToPickUpInAuton(follower, posesToGoTo, wBot.stackKnockerPos);
+//            wBot.knockStack();
+//            sleep(MonkeyMap.sleepTimeKnockStack);
+//            wBot.resetKnocker();
+//
+//            posesToGoTo.clear();
+//            posesToGoTo.add(new PosesAndActions(wBot.pickUpSpot, "resetSlides"));
+//            wBot.loadPixels();
+//            follower.reinit(posesToGoTo);
+//            follower.goToPoints(true);
+//            sleep(MonkeyMap.sleepTimePickUpPixel);
+//
+////            posesToGoTo.clear();
+////            posesToGoTo.add(new PosesAndActions(wBot.beforePickUpAfterKnocked, ""));
+////            follower.reinit(posesToGoTo);
+////            follower.goToPoints(true);
+////
+////            wBot.autonVisionPickUp(follower, posesToGoTo);
+//
+//            wBot.placeInAuton(follower, posesToGoTo, wBot.placementPos, false);
+//
+//            for (int i = 0; i < MonkeyMap.timesToRunAuton - 1; i++) {
+//                wBot.autonLoop(follower, posesToGoTo, false);
+//            }
+//            if(!isParkFinal){
+//                wBot.goToPickUpInAuton(follower, posesToGoTo, wBot.pickUpSpot);
+//            }
+//            telemetry.addData("Time for auton ", timeForAuton);
+//            telemetry.update();
+            terminateOpModeNow();
         }
     }
 }
