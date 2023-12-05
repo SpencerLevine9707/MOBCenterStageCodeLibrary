@@ -33,7 +33,7 @@ public class MonkeyMap {
     //Define all hardware
     public DcMotor frontLeft, frontRight, backLeft, backRight, conveyerMotor, armMotorLeft, armMotorRight;
 
-    public Servo spencerLikesKids, grabberServoLeft, grabberServoRight, grabber, intakeNoodleServo, flipperServoLeft, flipperServoRight, wheelServoLeft, wheelServoRight, airplaneServo, stackKnocker;
+    public Servo spencerLikesKids, grabberServo, rotatorServo, intakeNoodleServo, flipperServoLeft, flipperServoRight, wheelServoLeft, wheelServoRight, airplaneServo, stackKnocker;
 
     public VoltageSensor batteryVoltageSensor;
     public DistanceSensor lineUpSensor;
