@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps;
+package org.firstinspires.ftc.teamcode.CenterStageNEWBot.HardwareMaps;
 
 import com.acmerobotics.dashboard.config.Config;
 

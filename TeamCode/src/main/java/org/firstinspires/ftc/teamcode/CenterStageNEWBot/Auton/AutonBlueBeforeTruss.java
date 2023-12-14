@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.CenterStageImportantFiles.Auton;
+package org.firstinspires.ftc.teamcode.CenterStageNEWBot.Auton;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMap;
+import org.firstinspires.ftc.teamcode.CenterStageNEWBot.HardwareMaps.MonkeyMap;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PointFollower;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PosesAndActions;
 import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVDetectTeamProp;
@@ -23,10 +23,10 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "Center Stage")
-public class AutonBlueAfterTruss extends LinearOpMode {
+public class AutonBlueBeforeTruss extends LinearOpMode {
     OpenCvCamera webcam, webcam2;
-    static OpenCVDetectTeamProp colorPipe;
     static OpenCVGreatestColorTest pipeline;
+    static OpenCVDetectTeamProp colorPipe;
     MonkeyMap wBot = new MonkeyMap(this);
     ActionRunnerCenterStageAuton actionRunner = new ActionRunnerCenterStageAuton(this, wBot);
     PointFollower follower = new PointFollower(this, actionRunner);
@@ -36,11 +36,10 @@ public class AutonBlueAfterTruss extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         wBot.init();
-        wBot.initPoses("blueAfterTruss");
-        wBot.rotateDown();
-        wBot.flipUpAndRotate();
+        wBot.initPoses("blueBeforeTruss");
+//        wBot.toggleRotator();
+        wBot.flipUp();
         wBot.openGrabber();
-        wBot.resetKnocker();
         ArrayList<PosesAndActions> posesToGoTo = new ArrayList<>();
         Pose2d firstPose = wBot.startingPosition;
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -50,8 +49,10 @@ public class AutonBlueAfterTruss extends LinearOpMode {
         webcam2 = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 2"), cameraMonitorViewId);
         pipeline = new OpenCVGreatestColorTest(telemetry);
         webcam2.setPipeline(pipeline);
+
         colorPipe = new OpenCVDetectTeamProp(telemetry, OpenCVGreatestColorTest.lowerBlue, OpenCVGreatestColorTest.upperBlue);
         webcam.setPipeline(colorPipe);
+
         FtcDashboard.getInstance().startCameraStream(webcam, 0);
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
@@ -67,14 +68,18 @@ public class AutonBlueAfterTruss extends LinearOpMode {
             }
         });
 
-        int zoneDetected = 1;
+        int zoneDetected = 0;
 
-        Pose2d firstPlacement = new Pose2d();
-        Pose2d preloadPlacement = new Pose2d();
+        Pose2d firstPlacement;
+        Pose2d preloadPlacement;
 
         while(opModeInInit()){
-            zoneDetected = wBot.TeamPropDetectionReadingAfterTruss();
+            zoneDetected = wBot.TeamPropDetectionReadingBeforeTruss();
+            telemetry.addLine("zoneDetected: " + zoneDetected);
+            telemetry.update();
+        }
 
+        while(opModeIsActive()){
             if(zoneDetected == 1){
                 preloadPlacement = wBot.beacon1Preload;
                 firstPlacement = wBot.placementBeacon1;
@@ -87,18 +92,10 @@ public class AutonBlueAfterTruss extends LinearOpMode {
                 preloadPlacement = wBot.beacon3Preload;
                 firstPlacement = wBot.placementBeacon3;
             }
-            telemetry.addData("preloadPlacement", preloadPlacement);
-            telemetry.addData("firstPlacement", firstPlacement);
-            telemetry.addLine("zoneDetected: " + zoneDetected);
-            telemetry.update();
-        }
-
-        while(opModeIsActive()){
-            wBot.closeGrabber();
 
             posesToGoTo.add(new PosesAndActions(firstPose, ""));
             if(zoneDetected == 3){
-                posesToGoTo.add(new PosesAndActions(wBot.beacon3LineUpAfterTruss, ""));
+                posesToGoTo.add(new PosesAndActions(wBot.beacon1LineUpBeforeTruss, ""));
             }
             posesToGoTo.add(new PosesAndActions(preloadPlacement, ""));
 
@@ -111,52 +108,27 @@ public class AutonBlueAfterTruss extends LinearOpMode {
             wBot.stopLoadingPixels();
 
             posesToGoTo.clear();
-            wBot.placeSlidesFirstTime();
-            if(zoneDetected == 3){
-                posesToGoTo.add(new PosesAndActions(wBot.beacon3LineUpAfterTruss, ""));
+            if(zoneDetected == 1){
+                posesToGoTo.add(new PosesAndActions(wBot.beacon1KnockingLineUpBeforeTruss, ""));
             }
-            if(zoneDetected == 2){
-                posesToGoTo.add(new PosesAndActions(wBot.lineUpPlacementBeacon2, "flipDown"));
-                posesToGoTo.add(new PosesAndActions(wBot.lineUpPlacement, "resetSlides"));
-            }
-            else{
-                posesToGoTo.add(new PosesAndActions(wBot.lineUpPlacement, "flipDown"));
-            }
-            posesToGoTo.add(new PosesAndActions(wBot.putSlidesBackDownBeforePlace, "resetSlides"));
-            posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
+            posesToGoTo.add(new PosesAndActions(wBot.stackKnockerPos, ""));
+            follower.reinit(posesToGoTo);
+            follower.goToPoints(true, MonkeyMap.velForTurn);
+            sleep(MonkeyMap.sleepTimeKnockStack);
+
+            posesToGoTo.clear();
+            posesToGoTo.add(new PosesAndActions(wBot.pickUpSpot, "resetSlides"));
+            wBot.loadPixels();
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
-            wBot.openGrabber();
-            sleep(MonkeyMap.sleepTimePlacePixels);
-            wBot.flipUpAndRotate();
-            sleep(MonkeyMap.sleepTimeFlipForFirstPlaceAfterTruss);
-            wBot.placeSlides();
-            sleep(MonkeyMap.sleepTimePutSlidesUpNoBreakFlipper);
+            sleep(MonkeyMap.sleepTimePickUpPixel);
 
-//            wBot.goToPickUpInAuton(follower, posesToGoTo, wBot.stackKnockerPos);
-//            wBot.knockStack();
-//            sleep(MonkeyMap.sleepTimeKnockStack);
-//            wBot.resetKnocker();
-//
-//            posesToGoTo.clear();
-//            posesToGoTo.add(new PosesAndActions(wBot.pickUpSpot, "resetSlides"));
-//            wBot.loadPixels();
-//            follower.reinit(posesToGoTo);
-//            follower.goToPoints(true);
-//            sleep(MonkeyMap.sleepTimePickUpPixel);
-//
-////            posesToGoTo.clear();
-////            posesToGoTo.add(new PosesAndActions(wBot.beforePickUpAfterKnocked, ""));
-////            follower.reinit(posesToGoTo);
-////            follower.goToPoints(true);
-////
-////            wBot.autonVisionPickUp(follower, posesToGoTo);
-//
-//            wBot.placeInAuton(follower, posesToGoTo, wBot.placementPos, false);
-//
-//            for (int i = 0; i < MonkeyMap.timesToRunAuton - 1; i++) {
+            wBot.placeInAuton(follower, posesToGoTo, firstPlacement, true);
+
+//            for (int i = 0; i < MonkeyMap.timesToRunAuton; i++) {
 //                wBot.autonLoop(follower, posesToGoTo, false);
 //            }
+//
 //            if(!isParkFinal){
 //                wBot.goToPickUpInAuton(follower, posesToGoTo, wBot.pickUpSpot);
 //            }

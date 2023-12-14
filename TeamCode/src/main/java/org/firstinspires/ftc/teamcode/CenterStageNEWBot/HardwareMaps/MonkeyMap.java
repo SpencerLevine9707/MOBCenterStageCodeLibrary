@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps;
+package org.firstinspires.ftc.teamcode.CenterStageNEWBot.HardwareMaps;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -33,18 +33,21 @@ public class MonkeyMap {
     //Define all hardware
     public DcMotor frontLeft, frontRight, backLeft, backRight, conveyerMotor, armMotorLeft, armMotorRight;
 
-    public Servo spencerLikesKids, grabberServo, rotatorServo, intakeNoodleServo, flipperServoLeft, flipperServoRight, wheelServoLeft, wheelServoRight, airplaneServo, stackKnocker;
+    public Servo spencerLikesKids, grabberServoLeft, grabberServoRight, rotatorServo, flipperServoLeft, flipperServoRight, airplaneServo, correctorServo;
 
     public VoltageSensor batteryVoltageSensor;
     public DistanceSensor lineUpSensor;
 
     //Servo Positions
-    public static double grabberServoScalerDown = 0, grabberServoScalerUp = 1;
-    public static double grabberClosed = 0.36, grabberOpen = 0.2, grabberServoOpenPlacement = 0.2;
+    public static double grabberServoScalerDown = 0.1, grabberServoScalerUp = 0.5, offsetForGrabberScalar = -0.05;
+    public static double rotatorScalarDown = 0, rotatorScalarUp = 0;
+    public static double grabberClosed = 0.2, grabberOpen = 0.87, grabberServoOpenPlacement = 0.2;
     public static double wheelServoPow = 1, servoStopPow = 0.5;
-    public static double flipperScalarDown = 0.1, flipperScalarUp = 0.9, flipperScalarOffset = 0.05, flipperPosDown = 0.17, flipperPosAcross = 0.98, rotatorPickUp = 0.1835, rotatorPlace = 0.85;//0.6665 is rot dist
+    public static double flipperScalarDown = 0.1, flipperScalarUp = 0.9, flipperScalarOffset = 0.05, flipperPosDown = 0.17, flipperPosAcross = 0.98, rotatorFlushWithSldies = 0.5, rotatorPickUpAndPlace = 0.4;
     public static double airplaneServoLoadedPos = 0.29, airplaneServoGoPos = 0.16;
     public static double stackKnockerKnockedPos = 0, stackKnockerResetPos = 0.34;
+    public static double correctorServoMidPos = 0.5;
+    public static double rotatorServoUpPos = 0.78;
 
     //Motor powers and pos
     public static double conveyerPower = -1, unloadPowerForAuton = 0.55, stopLoadPower = 0, unloadPower = 1;
@@ -53,9 +56,10 @@ public class MonkeyMap {
     public static double holdPowerForSlides = -0.1, slidePowerDown = 0.3, slidePowerUp = 0.6;
 
     public static double spencerLikesKidsPosUp = 0.4, spencerLikesKidsPosDown = 0.9;
+    public static double correctorServoSpeed = 0.004, flipperServoSpeed = 0.004, rotatorServoSpeed = 0.004;
 
 
-    //Blue Poses
+    //Bfue Poses
     public Pose2d startingPosition, beacon1Preload, beacon2Preload, beacon3Preload, pickUpSpot, placementPos, placementBeacon1, placementBeacon2, placementBeacon3, underTruss, slidesDownAfterPlace,  underTrussGoingBack, stackKnockerPos, beforePickUpAfterKnocked, afterPlacePosForNoCrash, lineUpForTruss, beacon1LineUpBeforeTruss, afterPickUpNoPixelCrash, beacon1KnockingLineUpBeforeTruss, lineUpPlacement, beacon3LineUpAfterTruss, lineUpForFirstPlacementAfterTruss, putSlidesBackDownBeforePlace, lineUpPlacementBeacon2;
 
     //All Poses
@@ -63,7 +67,7 @@ public class MonkeyMap {
     public double xPosPickUpPosAfterKnocked;
 
     public static int sleepTimePlacePreloadBeacon = 700, sleepTimePickUpPixel = 0, sleepTimePlacePixels = 400, sleepTimeKnockStack = 300, sleepTimeAfterFlip = 500, sleepTimeFlipForFirstPlaceAfterTruss = 200, sleepTimePutSlidesUpNoBreakFlipper = 300;
-    public boolean grabberIsOpen = true, wheelOn = false, conveyerOn = false, flipperDown = true, airplaneLoaded = true, rotatorDown = false, isKnocked = false;
+    public boolean grabberIsOpen = true, rightGrabberOpen = true, leftGrabberOpen = true, flipperDown = true, airplaneLoaded = true, rotatorDown = false, isKnocked = false;
     public static double timesToRunAuton = 1;
     public static double lineDist = 20, offsetForPickUp = 0.5;
     public static double velForTurn = 25;
@@ -78,22 +82,25 @@ public class MonkeyMap {
     }
 
     public void init(){
-        intakeNoodleServo = myOpMode.hardwareMap.get(Servo.class, "intakeNoodleServo");
-        grabberServo = myOpMode.hardwareMap.get(Servo.class, "grabberServo");
+        grabberServoLeft = myOpMode.hardwareMap.get(Servo.class, "grabberServoLeft");
+        grabberServoRight = myOpMode.hardwareMap.get(Servo.class, "grabberServoRight");
         rotatorServo = myOpMode.hardwareMap.get(Servo.class, "rotatorServo");
         flipperServoLeft = myOpMode.hardwareMap.get(Servo.class, "flipperServoLeft");
         flipperServoRight = myOpMode.hardwareMap.get(Servo.class, "flipperServoRight");
-        wheelServoLeft = myOpMode.hardwareMap.get(Servo.class, "wheelServoLeft");
-        wheelServoRight = myOpMode.hardwareMap.get(Servo.class, "wheelServoRight");
         airplaneServo = myOpMode.hardwareMap.get(Servo.class, "airplaneServo");
-        stackKnocker = myOpMode.hardwareMap.get(Servo.class, "stackKnocker");
+        correctorServo = myOpMode.hardwareMap.get(Servo.class, "correctorServo");
 
         flipperServoLeft.setDirection(Servo.Direction.REVERSE);
-        wheelServoRight.setDirection(Servo.Direction.REVERSE);
-
+//        rotatorServo.setDirection(Servo.Direction.REVERSE);
         flipperServoLeft.scaleRange(flipperScalarDown, flipperScalarUp);
         flipperServoRight.scaleRange(flipperScalarDown + flipperScalarOffset, flipperScalarUp + flipperScalarOffset);
-        grabberServo.scaleRange(grabberServoScalerDown, grabberServoScalerUp);
+//        rotatorServo.scaleRange(rotatorScalarDown, rotatorScalarUp);
+
+        grabberServoRight.setDirection(Servo.Direction.REVERSE);
+
+        grabberServoLeft.scaleRange(grabberServoScalerDown, grabberServoScalerUp);
+        grabberServoRight.scaleRange(grabberServoScalerDown + offsetForGrabberScalar, grabberServoScalerUp + offsetForGrabberScalar);
+
 
 
         frontLeft = myOpMode.hardwareMap.get(DcMotor.class, ("frontLeft")); //port 3
@@ -302,17 +309,31 @@ public class MonkeyMap {
         }
     }
 
+    public void openRightGrabber(){
+        grabberServoRight.setPosition(grabberOpen);
+        rightGrabberOpen = true;
+    }
+    public void openLeftGrabber(){
+        grabberServoLeft.setPosition(grabberOpen);
+        leftGrabberOpen = true;
+    }
     public void openGrabber(){
-        if(flipperDown){
-            grabberServo.setPosition(grabberServoOpenPlacement);
-        }
-        else{
-            grabberServo.setPosition(grabberOpen);
-        }
+        openLeftGrabber();
+        openRightGrabber();
         grabberIsOpen = true;
     }
+
+    public void closeRightGrabber(){
+        grabberServoRight.setPosition(grabberClosed);
+        rightGrabberOpen = false;
+    }
+    public void closeLeftGrabber(){
+        grabberServoLeft.setPosition(grabberClosed);
+        leftGrabberOpen = false;
+    }
     public void closeGrabber(){
-        grabberServo.setPosition(grabberClosed);
+        closeLeftGrabber();
+        closeRightGrabber();
         grabberIsOpen = false;
     }
 
@@ -324,42 +345,59 @@ public class MonkeyMap {
             openGrabber();
         }
     }
-    public void toggleIntakeWheels(){
-        if(!wheelOn){
-            wheelServoLeft.setPosition(wheelServoPow);
-            wheelServoRight.setPosition(wheelServoPow);
-            wheelOn = true;
+
+    public void toggleLeftGrabber(){
+        if(leftGrabberOpen){
+            closeLeftGrabber();
         }
         else{
-            wheelServoLeft.setPosition(servoStopPow);
-            wheelServoRight.setPosition(servoStopPow);
-            wheelOn = false;
+            openLeftGrabber();
         }
     }
 
-    public void toggleConveyer(){
-        if(!conveyerOn){
-            conveyerMotor.setPower(conveyerPower);
-            conveyerOn = true;
+    public void toggleRightGrabber(){
+        if(rightGrabberOpen){
+            closeRightGrabber();
         }
         else{
-            conveyerMotor.setPower(0);
-            conveyerOn = false;
+            openRightGrabber();
         }
     }
+
+//    public void toggleIntakeWheels(){
+//        if(!wheelOn){
+//            wheelServoLeft.setPosition(wheelServoPow);
+//            wheelServoRight.setPosition(wheelServoPow);
+//            wheelOn = true;
+//        }
+//        else{
+//            wheelServoLeft.setPosition(servoStopPow);
+//            wheelServoRight.setPosition(servoStopPow);
+//            wheelOn = false;
+//        }
+//    }
+
+//    public void toggleConveyer(){
+//        if(!conveyerOn){
+//            conveyerMotor.setPower(conveyerPower);
+//            conveyerOn = true;
+//        }
+//        else{
+//            conveyerMotor.setPower(0);
+//            conveyerOn = false;
+//        }
+//    }
 
     public void setFlipperPos(double pos){
         flipperServoLeft.setPosition(pos);
         flipperServoRight.setPosition(pos);
     }
-    public void flipDownAndRotate(){
+    public void flipDown(){
         setFlipperPos(flipperPosDown);
-//        rotateUp();
         flipperDown = true;
     }
-    public void flipUpAndRotate(){
+    public void flipUp(){
         setFlipperPos(flipperPosAcross);
-//        rotateDown();
         flipperDown = false;
     }
 //    public void flipDown(){
@@ -373,9 +411,9 @@ public class MonkeyMap {
 
     public void toggleFlipper() {
         if (flipperDown) {
-            flipUpAndRotate();
+            flipUp();
         } else {
-            flipDownAndRotate();
+            flipDown();
         }
     }
     public void shootPlane(){
@@ -393,21 +431,27 @@ public class MonkeyMap {
             loadPlane();
         }
     }
-    public void knockStack(){
-        stackKnocker.setPosition(stackKnockerKnockedPos);
-        isKnocked = true;
+    public void setRotatorUp(){
+        rotatorServo.setPosition(rotatorServoUpPos);
     }
-    public void resetKnocker(){
-        stackKnocker.setPosition(stackKnockerResetPos);
-        isKnocked = false;
+    public void setCorrectorMid(){
+        correctorServo.setPosition(correctorServoMidPos);
     }
-    public void toggleKnocker() {
-        if (isKnocked) {
-            resetKnocker();
-        } else {
-            knockStack();
-        }
-    }
+//    public void knockStack(){
+//        stackKnocker.setPosition(stackKnockerKnockedPos);
+//        isKnocked = true;
+//    }
+//    public void resetKnocker(){
+//        stackKnocker.setPosition(stackKnockerResetPos);
+//        isKnocked = false;
+//    }
+//    public void toggleKnocker() {
+//        if (isKnocked) {
+//            resetKnocker();
+//        } else {
+//            knockStack();
+//        }
+//    }
     public void encodedSlipperySlides(int pos, double power) {
         armMotorLeft.setTargetPosition(pos);
         armMotorRight.setTargetPosition(pos);
@@ -419,21 +463,23 @@ public class MonkeyMap {
         armMotorLeft.setPower(power);
         armMotorRight.setPower(power);
     }
-    public void rotateDown(){
-        rotatorServo.setPosition(rotatorPickUp);
-        rotatorDown = true;
-    }
-    public void rotateUp(){
-        rotatorServo.setPosition(rotatorPlace);
-        rotatorDown = false;
-    }
-    public void toggleRotator() {
-        if (rotatorDown) {
-            rotateUp();
-        } else {
-            rotateDown();
-        }
-    }
+//    public void rotateDown(){
+//        rotatorServo.setPosition(rotatorPickUp);
+//        rotatorDown = true;
+//    }
+//    public void rotateUp(){
+//        rotatorServo.setPosition(rotatorPlace);
+//        rotatorDown = false;
+//    }
+//    public void toggleRotator() {
+//        if (rotatorDown) {
+//            rotateUp();
+//        } else {
+//            rotateDown();
+//        }
+//    }
+    public void rotatorFlush(){rotatorServo.setPosition(rotatorFlushWithSldies);}
+    public void rotatorPickUpAndPlace(){rotatorServo.setPosition(rotatorPickUpAndPlace);}
     public void unloadPixel(){
         conveyerMotor.setPower(unloadPowerForAuton);
     }
@@ -454,17 +500,17 @@ public class MonkeyMap {
     }
     public void getReadyPlaceAuton(){
         placeSlides();
-        flipDownAndRotate();
+        flipDown();
         closeGrabber();
     }
     public void readyPickUpAuton(){
         resetSlides();
         openGrabber();
-        flipUpAndRotate();
+        flipUp();
     }
     public void getReadyFirstPlaceAuton(){
         encodedSlipperySlides(slidePosFirstPlace, slidePowerUp);
-        flipDownAndRotate();
+        flipDown();
         closeGrabber();
     }
     public void placeInAuton(PointFollower follower, ArrayList<PosesAndActions> posesToGoTo, Pose2d finalPose, boolean isFirstTime){
@@ -484,13 +530,13 @@ public class MonkeyMap {
         openGrabber();
         myOpMode.sleep(MonkeyMap.sleepTimePlacePixels);
         if(isFirstTime){
-            flipUpAndRotate();
+            flipUp();
             myOpMode.sleep(sleepTimeFlipForFirstPlaceAfterTruss);
             placeSlides();
             myOpMode.sleep(sleepTimePutSlidesUpNoBreakFlipper);
         }
         else{
-            flipUpAndRotate();
+            flipUp();
             myOpMode.sleep(MonkeyMap.sleepTimeAfterFlip);
         }
 

@@ -9,12 +9,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMap;
+import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMapOLDBOT;
 
 @Config
 @TeleOp
 public class TestArmEncoders extends LinearOpMode {
-    MonkeyMap wBot = new MonkeyMap(this);
+    MonkeyMapOLDBOT wBot = new MonkeyMapOLDBOT(this);
     public ElapsedTime planeTime = new ElapsedTime();
 
     public static int testSlidePos = -100;

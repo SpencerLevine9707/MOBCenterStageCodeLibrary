@@ -3,24 +3,21 @@ package org.firstinspires.ftc.teamcode.CenterStageImportantFiles.Test;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.Auton.ActionRunnerCenterStageAuton;
-import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMap;
+import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMapOLDBOT;
+import org.firstinspires.ftc.teamcode.CenterStageNEWBot.Auton.ActionRunnerCenterStageAuton;
+import org.firstinspires.ftc.teamcode.CenterStageNEWBot.HardwareMaps.MonkeyMap;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PointFollower;
-import org.firstinspires.ftc.teamcode.LevineLocalization.PosesAndActions;
 import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVDetectTeamProp;
 import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVGreatestColorTest;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-
-import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "Center Stage")

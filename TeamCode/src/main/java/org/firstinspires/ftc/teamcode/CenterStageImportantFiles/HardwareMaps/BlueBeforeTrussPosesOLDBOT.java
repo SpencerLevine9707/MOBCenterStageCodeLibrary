@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps;
 import com.acmerobotics.dashboard.config.Config;
 
 @Config
-public class BlueBeforeTrussPoses {
+public class BlueBeforeTrussPosesOLDBOT {
     //X Poses
     public static double xPosStartingPosition = -35;
     public static double xPosBeacon1Preload = -26, xPosBeacon2Preload = -36, xPosBeacon3Preload = -45, xPosBeacon1LineUpBeforeTruss= -37, xPosBeacon1KnockingLineUpBeforeTruss = -51, xPosBeacon3LineUpAfterTruss = 13;

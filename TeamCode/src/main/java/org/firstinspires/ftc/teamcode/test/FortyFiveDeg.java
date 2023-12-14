@@ -3,22 +3,19 @@ package org.firstinspires.ftc.teamcode.test;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.checkerframework.checker.units.qual.C;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMap;
+import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMapOLDBOT;
 import org.firstinspires.ftc.teamcode.hardwareMaps.MecanumDrive;
 
 @Config
 @TeleOp
 @Disabled
 public class FortyFiveDeg extends LinearOpMode {
-    MonkeyMap wBot = new MonkeyMap(this);
+    MonkeyMapOLDBOT wBot = new MonkeyMapOLDBOT(this);
     public static double motorPow = 0.5;
     public static int sleepTime = 1500;
 

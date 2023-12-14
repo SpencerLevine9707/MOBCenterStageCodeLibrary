@@ -4,13 +4,13 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMap;
+import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMapOLDBOT;
 
 @TeleOp
 @Config
 public class setAllMotorPowerForTension extends LinearOpMode {
     public static double wheelPower = 1;
-    MonkeyMap wBot = new MonkeyMap(this);
+    MonkeyMapOLDBOT wBot = new MonkeyMapOLDBOT(this);
     @Override
     public void runOpMode() throws InterruptedException {
         wBot.init();

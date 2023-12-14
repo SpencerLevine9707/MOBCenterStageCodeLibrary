@@ -10,8 +10,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.Auton.ActionRunnerCenterStageAuton;
-import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMap;
+import org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps.MonkeyMapOLDBOT;
+import org.firstinspires.ftc.teamcode.CenterStageNEWBot.Auton.ActionRunnerCenterStageAuton;
+import org.firstinspires.ftc.teamcode.CenterStageNEWBot.HardwareMaps.MonkeyMap;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PointFollower;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PosesAndActions;
 import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVGreatestColorTest;
@@ -40,8 +41,8 @@ public class goToClosestPixelTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         wBot.init();
         wBot.initPoses("blueAfterTruss");
-        wBot.toggleRotator();
-        wBot.flipUpAndRotate();
+//        wBot.toggleRotator();
+        wBot.flipUp();
         wBot.openGrabber();
         ArrayList<PosesAndActions> posesToGoTo = new ArrayList<>();
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -69,7 +70,7 @@ public class goToClosestPixelTest extends LinearOpMode {
         double yPosAfterSeeing = ((lineDist * Math.sin(Math.toRadians(OpenCVGreatestColorTest.thetaX)))) + wBot.beforePickUpAfterKnocked.getY() + offsetForPickUp;
 //
         posesToGoTo.add(new PosesAndActions(wBot.beforePickUpAfterKnocked, ""));
-        posesToGoTo.add(new PosesAndActions(new Pose2d(wBot.xPosPickUpPosAfterKnocked, yPosAfterSeeing,MonkeyMap.headingPlaceAndPickUp), ""));
+        posesToGoTo.add(new PosesAndActions(new Pose2d(wBot.xPosPickUpPosAfterKnocked, yPosAfterSeeing, MonkeyMapOLDBOT.headingPlaceAndPickUp), ""));
 
         follower.init(posesToGoTo, isTest);
         waitForStart();
