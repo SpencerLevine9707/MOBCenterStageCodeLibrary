@@ -13,8 +13,6 @@ import java.util.ArrayList;
 
 public class ActionRunnerCenterStageAuton {
     public LinearOpMode myOpMode;
-    public OpMode myOperatorMode;
-    ArrayList<String> actionsToRun;
     MonkeyMap wBot;
     Telemetry telemetry;
 
@@ -27,19 +25,19 @@ public class ActionRunnerCenterStageAuton {
         telemetry.addLine("Run action");
         telemetry.addLine("action is " + action);
         switch (action) {
-            case "placeSlidesFirstTime":
+            case "flipForFirstPlace":
                 wBot.placeSlidesFirstTime();
                 break;
-            case "placeSlides":
+            case "flipForPlace":
                 wBot.placeSlides();
                 break;
-            case "resetSlides":
+            case "flipForPickUp5Pixel":
                 wBot.resetSlides();
                 break;
-            case "flipUp":
+            case "flipForPickUp3Pixel":
                 wBot.flipUp();
                 break;
-            case "flipDown":
+            case "flipForPickUp1Pixel":
                 wBot.flipDown();
                 break;
             case "closeGrabber":
@@ -49,23 +47,33 @@ public class ActionRunnerCenterStageAuton {
             case "openGrabber":
                 wBot.openGrabber();
                 break;
-            case "stopLoadingPixels":
+            case "extendSlidesPickUp":
                 wBot.stopLoadingPixels();
                 break;
-            case "stopLoadingPixels and closeGrabber":
+            case "extendSlidesPlace":
                 wBot.stopLoadingPixels();
                 wBot.closeGrabber();
                 break;
-            case "unloadPixel and closeGrabber":
+            case "extendSlidesBeacon1After":
                 wBot.unloadPixel();
                 wBot.closeGrabber();
                 break;
-            case "stopLoadingPixels and placeSlides":
+            case "extendSlidesBeacon2After":
                 wBot.stopLoadingPixels();
                 wBot.placeSlides();
                 break;
-            case "loadPixels":
+            case "extendSlidesBeacon3After":
                 wBot.loadPixels();
+                break;
+            case "extendSlidesBeacon1Before":
+                wBot.unloadPixel();
+                break;
+            case "extendSlidesBeacon2Before":
+                wBot.stopLoadingPixels();
+                break;
+            case "extendSlidesBeacon3Before":
+                wBot.loadPixels();
+                break;
         }
         telemetry.update();
     }

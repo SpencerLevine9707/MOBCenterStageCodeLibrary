@@ -5,11 +5,12 @@ import com.acmerobotics.dashboard.config.Config;
 @Config
 public class BlueBeforeTrussPoses {
     //Starting pos
-    public static double xPosStartingPos = -36, yPosStartingPos = 58;
+    public static double xPosStartingPos = -36, yPosStartingPos = -58;
 
     //After only poses
     public static double xPosPurplePixelPlacementAfter = 36, yPosPurplePixelPlacementAfter = -28;
     public static double xPosStartExtendFirstPlacementAfter = 41, yPosStartExtendFirstPlacementAfter = -28;
+    public static double xPosFirstPlacementAfter = 41, yPosFirstPlacementAfter = -28;
 
     //Before only poses
     public static double xPosGoAcrossForBeforeTrussPurplePixelFar = -36, yPosGoAcrossForBeforeTrussPurplePixelFar = -5;
@@ -20,7 +21,7 @@ public class BlueBeforeTrussPoses {
     public static double xPosStartArmExtendPickUpFar = 0, yPosStartArmExtendPickUpFar = -9;
     public static double xPosPickUpPixelFar = -28, yPosPickUpPixelFar = -7.5;
     public static double xPosPlacePixelFar = 43, yPosPlacePixelFar = -19;
-    public static double xPosFlipAfterPlaceFar = 24, xPoslipAfterPlaceFar = -16;
+    public static double xPosFlipAfterPlaceFar = 24, yPosFlipAfterPlaceFar = -16;
     public static double xPosStartArmExtendPlaceFar = 21, yPosStartArmExtendPlaceFar = -13;
 
     //Close poses
@@ -32,6 +33,6 @@ public class BlueBeforeTrussPoses {
     public static double xPosFlipAfterPlaceClose = 20, yPosFlipAfterPlaceClose = -42;
 
 
-    public static double headingStartingPositionAndBeacon = -Math.toRadians(90);
-    public static double headingPlaceFar = Math.toRadians(30), headingPlaceAndPickUpClose = Math.toRadians(-30);
+    public static double headingStartingPositionAndBeacon = Math.toRadians(90);
+    public static double headingPlaceFar = Math.toRadians(-30), headingPlaceClose = Math.toRadians(30);
 }
