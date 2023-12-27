@@ -25,7 +25,7 @@ import java.util.ArrayList;
 @Config
 @Autonomous(group = "Center Stage")
 public class AutonBlueAfterTruss extends LinearOpMode {
-    OpenCvCamera webcam, webcam2;
+    OpenCvCamera webcam;
     static OpenCVDetectTeamProp colorPipe;
     static OpenCVGreatestColorTest pipeline;
     MonkeyMap wBot = new MonkeyMap(this);
@@ -36,20 +36,14 @@ public class AutonBlueAfterTruss extends LinearOpMode {
     public ElapsedTime timeForAuton = new ElapsedTime();
     @Override
     public void runOpMode() throws InterruptedException {
-        wBot.init();
-        wBot.initPoses("blueAfterTruss");
-//        wBot.rotateDown();
-        wBot.flipUp();
-        wBot.openGrabber();
+        wBot.initForAuton("blueAfterTruss");
         ArrayList<PosesAndActions> posesToGoTo = new ArrayList<>();
         Pose2d firstPose = wBot.startingPosition;
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        webcam2 = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 2"), cameraMonitorViewId);
         pipeline = new OpenCVGreatestColorTest(telemetry);
-        webcam2.setPipeline(pipeline);
         colorPipe = new OpenCVDetectTeamProp(telemetry, OpenCVGreatestColorTest.lowerBlue, OpenCVGreatestColorTest.upperBlue);
         webcam.setPipeline(colorPipe);
         FtcDashboard.getInstance().startCameraStream(webcam, 0);

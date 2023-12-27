@@ -39,24 +39,24 @@ public class MonkeyMap {
     public DistanceSensor lineUpSensor;
 
     //Servo Positions
-    public static double grabberServoScalerDown = 0.1, grabberServoScalerUp = 0.5, offsetForGrabberScalar = -0.05;
+    public static double grabberServoScalerDown = 0.1, grabberServoScalerUp = 0.5, offsetForGrabberScalar = -0.02;
     public static double rotatorScalarDown = 0, rotatorScalarUp = 0;
-    public static double grabberClosed = 0.2, grabberOpen = 0.87, grabberServoOpenPlacement = 0.2;
+    public static double grabberClosed = 0.94, grabberOpen = 0.2, grabberServoOpenPlacement = 0.2;
     public static double wheelServoPow = 1, servoStopPow = 0.5;
-    public static double flipperScalarDown = 0.1, flipperScalarUp = 0.9, flipperScalarOffset = 0.05, flipperPosDown = 0.17, flipperPosAcross = 0.98, rotatorFlushWithSldies = 0.5, rotatorPickUpAndPlace = 0.4;
+    public static double flipperScalarDown = 0, flipperScalarUp = 1, flipperScalarOffset = 0, flipperPosDown = 0.17, flipperPosAcross = 0.89, rotatorFlushWithSldies = 0.5, rotatorPickUpAndPlace = 0.45;
     public static double airplaneServoLoadedPos = 0.29, airplaneServoGoPos = 0.16;
     public static double stackKnockerKnockedPos = 0, stackKnockerResetPos = 0.34;
     public static double correctorServoMidPos = 0.5;
-    public static double rotatorServoUpPos = 0.78;
+    public static double rotatorServoUpPos = 0.22;
 
     //Motor powers and pos
     public static double conveyerPower = -1, unloadPowerForAuton = 0.55, stopLoadPower = 0, unloadPower = 1;
     public static int resetSlidesPos = 0, placementSlidesPos = -150, slidePosFirstPlace = -150;
 
-    public static double holdPowerForSlides = -0.1, slidePowerDown = 0.3, slidePowerUp = 0.6;
+    public static double holdPowerForSlides = 0, slidePowerDown = 0.3, slidePowerUp = 0.6;
 
     public static double spencerLikesKidsPosUp = 0.4, spencerLikesKidsPosDown = 0.9;
-    public static double correctorServoSpeed = 0.004, flipperServoSpeed = 0.004, rotatorServoSpeed = 0.004;
+    public static double correctorServoSpeed = 0.003, flipperServoSpeed = 0.003, rotatorServoSpeed = 0.003;
 
 
     //Bfue Poses
@@ -155,6 +155,13 @@ public class MonkeyMap {
         telemetry.addData(">", "Jackson Harrison Shapiro is ready to start yelling and get frusturated");
         telemetry.addData("Battery Voltage: ", batteryVoltageSensor.getVoltage());
         telemetry.update();
+    }
+    public void initForAuton(String autonType){
+        initPoses(autonType);
+        flipUp();
+        closeGrabber();
+        setRotatorUp();
+        setCorrectorMid();
     }
 
     public void initPoses(String autonType){
@@ -478,7 +485,7 @@ public class MonkeyMap {
 //            rotateDown();
 //        }
 //    }
-    public void rotatorFlush(){rotatorServo.setPosition(rotatorFlushWithSldies);}
+    public void setRotatorFlush(){rotatorServo.setPosition(rotatorFlushWithSldies);}
     public void rotatorPickUpAndPlace(){rotatorServo.setPosition(rotatorPickUpAndPlace);}
     public void unloadPixel(){
         conveyerMotor.setPower(unloadPowerForAuton);

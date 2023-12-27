@@ -18,7 +18,11 @@ public class DriveBotSecondIteration extends LinearOpMode {
     public ElapsedTime planeTime = new ElapsedTime();
     public static double timeForPlaneWait = 2;
     public static double divisorForSlidePowersUp = 1;
-    public static double divisorForSlidePowersDown = 2;
+    public static double divisorForSlidePowersDown = 1;
+    public static double maxFlipperPos = 0;
+    public static double flipperPosFlushUp = MonkeyMap.flipperPosAcross -0.02, flipperPosFlushDown = 0.2;
+    public static double flipperPos30DegUp = 0.68, flipperPos30DegDown = 0.35;
+    public static double holdPowerFlush = 0, holdPower30Deg = -0.1, holdPowerUp = -0.2;
 
 
 
@@ -53,6 +57,7 @@ public class DriveBotSecondIteration extends LinearOpMode {
             double lx1 = gamepad1.left_stick_x;
             double ly1 = gamepad1.left_stick_y;
             double rx1 = gamepad1.right_stick_x;
+            double flipperPos = wBot.flipperServoLeft.getPosition();
 
             telemetry.addLine("lx1: " + lx1 + " ly1: " + ly1 + " rx1 " + rx1);
 
@@ -130,17 +135,26 @@ public class DriveBotSecondIteration extends LinearOpMode {
                 wBot.rotatorServo.setPosition(wBot.rotatorServo.getPosition() + MonkeyMap.rotatorServoSpeed * ry2);
             }
             if(rt2 > 0){
-                wBot.setFlipperPos(wBot.flipperServoLeft.getPosition() + MonkeyMap.flipperServoSpeed * rt2);
+                wBot.setFlipperPos(flipperPos + MonkeyMap.flipperServoSpeed * rt2);
             }
-            else if(lt2 > 0){
-                wBot.setFlipperPos(wBot.flipperServoLeft.getPosition() - MonkeyMap.flipperServoSpeed * lt2);
+            else if(lt2 > 0 && flipperPos > maxFlipperPos){
+                wBot.setFlipperPos(flipperPos - MonkeyMap.flipperServoSpeed * lt2);
             }
 
             if(rb2 && rb2Pressable){
                 wBot.rotatorPickUpAndPlace();
             }
             if(lb2 && lb2Pressable){
-                wBot.rotatorFlush();
+                wBot.setRotatorFlush();
+            }
+            if(flipperPos > flipperPosFlushUp || flipperPos < flipperPosFlushDown){
+                MonkeyMap.holdPowerForSlides = holdPowerFlush;
+            }
+            else if(flipperPos > flipperPos30DegUp || flipperPos < flipperPos30DegDown){
+                MonkeyMap.holdPowerForSlides = holdPower30Deg;
+            }
+            else{
+                MonkeyMap.holdPowerForSlides = holdPowerUp;
             }
 
             rb2Pressable = !rb2;
@@ -148,7 +162,7 @@ public class DriveBotSecondIteration extends LinearOpMode {
 
             telemetry.addLine("Rotator Pos: " + wBot.rotatorServo.getPosition());
             telemetry.addLine("Conveyor motor pow: " + wBot.conveyerMotor.getPower());
-            telemetry.addLine("Flipper Servo Left Pos: " + wBot.flipperServoLeft.getPosition() + " Flipper Servo Right Pos: " + wBot.flipperServoRight.getPosition());
+            telemetry.addLine("Flipper Servo Left Pos: " + flipperPos + " Flipper Servo Right Pos: " + wBot.flipperServoRight.getPosition());
             telemetry.addLine("ly2 is: " + ly2);
             telemetry.addLine("rx2 is: " + rx2);
             telemetry.addLine("ry2 is: " + ry2);

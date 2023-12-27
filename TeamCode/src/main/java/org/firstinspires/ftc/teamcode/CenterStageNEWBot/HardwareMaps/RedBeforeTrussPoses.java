@@ -4,22 +4,34 @@ import com.acmerobotics.dashboard.config.Config;
 
 @Config
 public class RedBeforeTrussPoses {
-    //X Poses
-    public static double xPosStartingPosition= -33;
-    public static double xPosBeacon1Preload = -42, xPosBeacon2Preload = -35, xPosBeacon3Preload = -27, xPosBeacon1LineUpBeforeTruss = -37, xPosBeacon1KnockingLineUpBeforeTruss = -50, xPosBeacon3LineUpAfterTruss = 13;
-    public static double xPosPickUpSpot = -57, xPosStackKnockerPos = -51, xPosPickUpPosAfterKnocked = -60, xPosBeforePickUpAfterKnocked = -50;
-    public static double xPosPlacement = 50, xPosUnderTruss = 20, xPosSlidesDownAfterPlace = 30, xPosUnderTrussGoingBack = 0, xPosAfterPlacePosForNoCrash = 42;
-    public static double xPosLineUpForTruss = -42, xPosAfterPickUpNoPixelCrash = -40, xPosLineUpPlacement = 36, xPosLineUpForFirstPlacementAfterTruss = 20, xPosPutSlidesBackDownBeforePlace = 42;
-    public static double xPosPlacementBeacon1 = 51.5, xPosPlacementBeacon2 = 51.5, xPosPlacementBeacon3 = 51.5;
+    //Starting pos
+    public static double xPosStartingPos = -36, yPosStartingPos = -58;
 
-    //Y Poses
-    public static double yPosStartingPosition = -58;
-    public static double yPosBeacon1Preload = -43, yPosBeacon2Preload = -32, yPosBeacon3Preload = -32.5, yPosBeacon1LineUpBeforeTruss = -40, yPosBeacon1KnockingLineUpBeforeTruss = -36, yPosBeacon3LineUpAfterTruss = -32.5;
-    public static double yPosPickUpSpot = -29, yPosStackKnockerPos = -29, yPosBeforePickUpAfterKnocked = -22;
-    public static double yPosPlacement = -35, yPosUnderTruss = -57, yPosSlidesDownAfterPlace = -57, yPosUnderTrussGoingBack = -57, yPosAfterPlacePosForNoCrash = -58;
-    public static double yPosLineUpForTruss = -57, yPosAfterPickUpNoPixelCrash = -48, yPosLineUpPlacement = -40, yPosLineUpForFirstPlacementAfterTruss = -20, yPosPutSlidesBackDownBeforePlace = -36;
-    public static double yPosPlacementBeacon1 = -35, yPosPlacementBeacon2 = -40, yPosPlacementBeacon3 = -44;
-    //Headings
+    //After only poses
+    public static double xPosPurplePixelPlacementAfter = 36, yPosPurplePixelPlacementAfter = -28;
+    public static double xPosStartExtendFirstPlacementAfter = 41, yPosStartExtendFirstPlacementAfter = -28;
+
+    //Before only poses
+    public static double xPosGoAcrossForBeforeTrussPurplePixelFar = -36, yPosGoAcrossForBeforeTrussPurplePixelFar = -5;
+    public static double xPosGoAcrossForBeforeTrussPurplePixelClose = -36, yPosGoAcrossForBeforeTrussPurplePixelClose = -56;
+
+    //Far poses
+    public static double xPosLineUpForPickUpFar = 20, yPosLineUpForPickUpFar = -11;
+    public static double xPosStartArmExtendPickUpFar = 0, yPosStartArmExtendPickUpFar = -9;
+    public static double xPosPickUpPixelFar = -28, yPosPickUpPixelFar = -7.5;
+    public static double xPosPlacePixelFar = 43, yPosPlacePixelFar = -19;
+    public static double xPosFlipAfterPlaceFar = 24, xPoslipAfterPlaceFar = -16;
+    public static double xPosStartArmExtendPlaceFar = 21, yPosStartArmExtendPlaceFar = -13;
+
+    //Close poses
+    public static double xPosLineUpForPickUpClose = 10, yPosLineUpForPickUpClose = -54;
+    public static double xPosStartArmExtendPickUpClose = 0, yPosStartArmExtendPickUpClose = -52;
+    public static double xPosPickUpPixelClose = -45, yPosPickUpPixelClose = -49;
+    public static double xPosStartArmExtendPlaceClose = 21, yPosStartArmExtendPlaceClose = -50;
+    public static double xPosPlacePixelClose = 43, yPosPlacePixelClose = -43;
+    public static double xPosFlipAfterPlaceClose = 20, yPosFlipAfterPlaceClose = -42;
+
 
     public static double headingStartingPositionAndBeacon = -Math.toRadians(90);
+    public static double headingPlaceFar = Math.toRadians(30), headingPlaceAndPickUpClose = Math.toRadians(-30);
 }
