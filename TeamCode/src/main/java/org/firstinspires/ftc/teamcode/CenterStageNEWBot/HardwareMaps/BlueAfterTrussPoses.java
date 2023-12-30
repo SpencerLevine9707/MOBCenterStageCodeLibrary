@@ -32,8 +32,10 @@ public class BlueAfterTrussPoses {
     public static double xPosPlacePixelClose = 43, yPosPlacePixelClose = -43;
     public static double xPosFlipAfterPlaceClose = 20, yPosFlipAfterPlaceClose = -42;
     public static double xPosGoStraightThroughTrussClose = -40, yPosGoStraightThroughTrussClose = -49;
+    public static double xPosMidStackPickUpFar = -43, yPosMidStackPickUpFar = -7.5;
+    public static double xPosMidStackPickUpClose = -48, yPosMidStackPickUpClose = -41;
 
-
+    public static double headingMidStackPickUpFar = Math.toRadians(-30), headingMidStackPickUpClose = Math.toRadians(45);
     public static double headingStartingPositionAndBeacon = -Math.toRadians(90);
     public static double headingPlaceFar = Math.toRadians(30), headingPlaceClose = Math.toRadians(-30);
     public static double headingWallBeaconBefore = Math.toRadians(55), headingTrussBeaconBefore = Math.toRadians(125), headingTiltedBeaconsAfter = Math.toRadians(60);

@@ -41,6 +41,8 @@ public class ActionRunnerCenterStageAuton {
                 wBot.flipDown();
                 wBot.rotatorPickUpAndPlace();
                 break;
+            case "flipDown and rotateDown6Pixels and fullyExtendSlides":
+                wBot.flipAndRotateDownAndExtend6Pixels();
             case "closeGrabber":
                 telemetry.addLine("Closed Grabber");
                 wBot.closeGrabber();
