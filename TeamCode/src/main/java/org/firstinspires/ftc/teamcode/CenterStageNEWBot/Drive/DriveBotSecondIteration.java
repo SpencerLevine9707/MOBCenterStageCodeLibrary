@@ -20,7 +20,7 @@ public class DriveBotSecondIteration extends LinearOpMode {
     public static double divisorForSlidePowersUp = 1;
     public static double divisorForSlidePowersDown = 1;
     public static double maxFlipperPos = 0;
-    public static double flipperPosFlushUp = MonkeyMap.flipperPosAcross -0.02, flipperPosFlushDown = 0.2;
+    public static double flipperPosFlushUp = MonkeyMap.flipperPosUp -0.02, flipperPosFlushDown = 0.2;
     public static double flipperPos30DegUp = 0.68, flipperPos30DegDown = 0.35;
     public static double holdPowerFlush = 0, holdPower30Deg = -0.1, holdPowerUp = -0.2;
 

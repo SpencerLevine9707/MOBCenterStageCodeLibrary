@@ -10,7 +10,7 @@ public class BlueAfterTrussPoses {
     //After only poses
     public static double xPosPurplePixelPlacementAfter = 36, yPosPurplePixelPlacementAfter = -28;
     public static double xPosStartExtendFirstPlacementAfter = 41, yPosStartExtendFirstPlacementAfter = -28;
-    public static double xPosFirstPlacementAfter = 41, yPosFirstPlacementAfter = -28;
+    public static double xPosFirstPlacementAfter = 41, yPosFirstPlacementAfter = -31;
 
     //Before only poses
     public static double xPosGoAcrossForBeforeTrussPurplePixelFar = -36, yPosGoAcrossForBeforeTrussPurplePixelFar = -5;
@@ -31,8 +31,13 @@ public class BlueAfterTrussPoses {
     public static double xPosStartArmExtendPlaceClose = 21, yPosStartArmExtendPlaceClose = -50;
     public static double xPosPlacePixelClose = 43, yPosPlacePixelClose = -43;
     public static double xPosFlipAfterPlaceClose = 20, yPosFlipAfterPlaceClose = -42;
+    public static double xPosGoStraightThroughTrussClose = -40, yPosGoStraightThroughTrussClose = -49;
 
 
-    public static double headingStartingPositionAndBeacon = Math.toRadians(90);
-    public static double headingPlaceFar = Math.toRadians(-30), headingPlaceClose = Math.toRadians(30);
+    public static double headingStartingPositionAndBeacon = -Math.toRadians(90);
+    public static double headingPlaceFar = Math.toRadians(30), headingPlaceClose = Math.toRadians(-30);
+    public static double headingWallBeaconBefore = Math.toRadians(55), headingTrussBeaconBefore = Math.toRadians(125), headingTiltedBeaconsAfter = Math.toRadians(60);
+    public static double headingMidBeaconBefore = Math.toRadians(100), headingBeacon1PlacementAfter = Math.toRadians(165), headingBeacon3PlacementAfter = Math.toRadians(195);
+    public static double headingBeacon1PlacementBeforeClose = Math.toRadians(60), headingBeacon2PlacementBeforeClose = Math.toRadians(40), headingBeacon3PlacementBeforeClose = Math.toRadians(20);
+    public static double headingBeacon1PlacementBeforeFar = Math.toRadians(-20), headingBeacon2PlacementBeforeFar = Math.toRadians(-40), headingBeacon3PlacementBeforeFar = Math.toRadians(-60);
 }

@@ -25,20 +25,21 @@ public class ActionRunnerCenterStageAuton {
         telemetry.addLine("Run action");
         telemetry.addLine("action is " + action);
         switch (action) {
-            case "flipForFirstPlace":
-                wBot.placeSlidesFirstTime();
+            case "flipDown and rotateDown 5Pixels":
+                wBot.flipAndRotateDown5Pixels();
                 break;
-            case "flipForPlace":
-                wBot.placeSlides();
+            case "flipDown and rotateDown 4Pixels":
+                wBot.flipAndRotateDown4Pixels();
                 break;
-            case "flipForPickUp5Pixel":
-                wBot.resetSlides();
+            case "flipDown and rotateDown 3Pixels":
+                wBot.flipAndRotateDown3Pixels();
                 break;
-            case "flipForPickUp3Pixel":
-                wBot.flipUp();
+            case "flipDown and rotateDown 2Pixels":
+                wBot.flipAndRotateDown2Pixels();
                 break;
-            case "flipForPickUp1Pixel":
+            case "flipDown and rotateDown 1Pixel":
                 wBot.flipDown();
+                wBot.rotatorPickUpAndPlace();
                 break;
             case "closeGrabber":
                 telemetry.addLine("Closed Grabber");
@@ -47,32 +48,53 @@ public class ActionRunnerCenterStageAuton {
             case "openGrabber":
                 wBot.openGrabber();
                 break;
-            case "extendSlidesPickUp":
-                wBot.stopLoadingPixels();
+            case "fullyExtendSlides":
+                wBot.fullyExtendSlides();
                 break;
-            case "extendSlidesPlace":
-                wBot.stopLoadingPixels();
-                wBot.closeGrabber();
+            case "flipUp":
+                wBot.flipUp();
                 break;
-            case "extendSlidesBeacon1After":
-                wBot.unloadPixel();
-                wBot.closeGrabber();
+            case "extendSlidesFarBeaconAfter":
+                wBot.extendSlidesFarBeaconAfter();
                 break;
-            case "extendSlidesBeacon2After":
-                wBot.stopLoadingPixels();
-                wBot.placeSlides();
+            case "extendSlidesMidBeaconAfter":
+                wBot.extendSlidesMidBeaconAfter();
                 break;
-            case "extendSlidesBeacon3After":
-                wBot.loadPixels();
+            case "extendSlidesCloseBeaconAfter":
+                wBot.extendSlidesCloseBeaconAfter();
                 break;
-            case "extendSlidesBeacon1Before":
-                wBot.unloadPixel();
+            case "extendSlidesWallBeaconBefore":
+                wBot.extendSlidesWallBeaconBefore();
                 break;
-            case "extendSlidesBeacon2Before":
-                wBot.stopLoadingPixels();
+            case "extendSlidesMidBeaconBefore":
+                wBot.extendSlidesMidBeaconBefore();
                 break;
-            case "extendSlidesBeacon3Before":
-                wBot.loadPixels();
+            case "extendSlidesTrussBeaconBefore":
+                wBot.extendSlidesTrussBeaconBefore();
+                break;
+            case "extendSlidesFirstPlacementAfterBeacon1":
+                wBot.flipUpFirstPlace();
+                wBot.extendSlidesBeacon1PreloadAfter();
+                break;
+            case "extendSlidesFirstPlacementAfterBeacon2":
+                wBot.flipUpFirstPlace();
+                wBot.extendSlidesBeacon2PreloadAfter();
+                break;
+            case "extendSlidesFirstPlacementAfterBeacon3":
+                wBot.flipUpFirstPlace();
+                wBot.extendSlidesBeacon3PreloadAfter();
+                break;
+            case "extendSlidesFirstPlacementBeforeBeacon1":
+                wBot.flipUpFirstPlace();
+                wBot.extendSlidesBeacon1PreloadBefore();
+                break;
+            case "extendSlidesFirstPlacementBeforeBeacon2":
+                wBot.flipUpFirstPlace();
+                wBot.extendSlidesBeacon2PreloadBefore();
+                break;
+            case "extendSlidesFirstPlacementBeforeBeacon3":
+                wBot.flipUpFirstPlace();
+                wBot.extendSlidesBeacon3PreloadBefore();
                 break;
         }
         telemetry.update();
