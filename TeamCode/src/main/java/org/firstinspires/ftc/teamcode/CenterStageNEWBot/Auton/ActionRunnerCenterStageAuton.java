@@ -53,8 +53,31 @@ public class ActionRunnerCenterStageAuton {
             case "fullyExtendSlides":
                 wBot.fullyExtendSlides();
                 break;
+            case "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (blue)":
+                wBot.fullyExtendSlides();
+                wBot.correctorServo.setPosition(MonkeyMap.correctorServoPlaceFarPos);
+                wBot.rotatorServo.setPosition(MonkeyMap.rotatorServoPlaceInAuton);
+                break;
+            case "fullyExtendSlides and setCorrectorPlaceClose and rotateForPlace":
+                wBot.fullyExtendSlides();
+                wBot.correctorServo.setPosition(MonkeyMap.correctorServoPlaceClosePos);
+                wBot.rotatorServo.setPosition(MonkeyMap.rotatorServoPlaceInAuton);
+                break;
             case "flipUp":
                 wBot.flipUp();
+                break;
+            case"flipDownForAuton":
+                wBot.flipDownForAuton();
+                break;
+            case"flipDownForAuton and setCorrectorPlaceFar and rotateForPlace":
+                wBot.flipDownForAuton();
+                wBot.correctorServo.setPosition(MonkeyMap.correctorServoPlaceFarPos);
+                wBot.rotatorServo.setPosition(MonkeyMap.rotatorServoPlaceInAuton);
+                break;
+            case"flipDownForAuton and setCorrectorPlaceClose and rotateForPlace":
+                wBot.flipDownForAuton();
+                wBot.correctorServo.setPosition(MonkeyMap.correctorServoPlaceClosePos);
+                wBot.rotatorServo.setPosition(MonkeyMap.rotatorServoPlaceInAuton);
                 break;
             case "extendSlidesFarBeaconAfter":
                 wBot.extendSlidesFarBeaconAfter();
@@ -97,6 +120,30 @@ public class ActionRunnerCenterStageAuton {
             case "extendSlidesFirstPlacementBeforeBeacon3":
                 wBot.flipUpFirstPlace();
                 wBot.extendSlidesBeacon3PreloadBefore();
+                break;
+            case "fullyExtendSlides and openGrabber":
+                wBot.openGrabber();
+                wBot.fullyExtendSlides();
+                break;
+            case "fullyExtendSlides and openGrabber and setCorrectorPickUpClose":
+                wBot.openGrabber();
+                wBot.fullyExtendSlides();
+                wBot.correctorServo.setPosition(MonkeyMap.correctorServoPickUpClose);
+                break;
+            case "fullyExtendSlides and openGrabber and setCorrectorPickUpCloseMid":
+                wBot.openGrabber();
+                wBot.fullyExtendSlides();
+                wBot.correctorServo.setPosition(MonkeyMap.correctorServoPickUpMidClose);
+                break;
+            case"setCorrectorPickUpCloseMid":
+                wBot.correctorServo.setPosition(MonkeyMap.correctorServoPickUpMidClose);
+                break;
+            case "fullyExtendSlides and openGrabber and setCorrectorPickUpCloseFar":
+                wBot.openGrabber();
+                wBot.fullyExtendSlides();
+                wBot.correctorServo.setPosition(MonkeyMap.correctorServoPickUpMidFar);
+                break;
+            default:
                 break;
         }
         telemetry.update();

@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.CenterStageNEWBot.HardwareMaps.MonkeyMap;
 import org.firstinspires.ftc.teamcode.RoadrunnerStuff.drive.SampleMecanumDrive;
 
 import java.lang.*;
@@ -32,15 +33,17 @@ public class trajectoryMakerForAuton extends LinearOpMode {
     //35, 63
     //-36, 63
     //
-    public static double startingPosx = -36;
+    public static double startingPosx = 14;
 
-    public static double startingPosy = 63;
+    public static double startingPosy = 58;
 
-    public static double startingHeading = Math.toRadians(90);
+    public static double startingHeading = -Math.toRadians(90);
+    MonkeyMap wBot = new MonkeyMap(this);
 
 
     @Override
     public void runOpMode() throws InterruptedException {
+        wBot.init();
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
@@ -87,6 +90,7 @@ public class trajectoryMakerForAuton extends LinearOpMode {
             telemetry.addData("y", poseEstimate.getY());
             telemetry.addData("heading", poseEstimate.getHeading());
             telemetry.addData("Storage ", trajectoryStorage);
+            telemetry.addData("Arm pose ", wBot.armMotorLeft.getCurrentPosition());
             telemetry.update();
         }
     }

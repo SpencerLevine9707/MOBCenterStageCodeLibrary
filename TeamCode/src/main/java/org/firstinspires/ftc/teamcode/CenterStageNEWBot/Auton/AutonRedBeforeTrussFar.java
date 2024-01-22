@@ -121,18 +121,18 @@ public class AutonRedBeforeTrussFar extends LinearOpMode {
             wBot.resetSlides();
 
             posesToGoTo.clear();
-            posesToGoTo.add(new PosesAndActions(wBot.lineUpForPickUpFar, "flipUp"));
-            posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "fullyExtendSlides"));
-            posesToGoTo.add(new PosesAndActions(wBot.placePixelFar, ""));
+            posesToGoTo.add(new PosesAndActions(wBot.lineUpForPickUpClose, "flipUp"));
+            posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceClose, "fullyExtendSlides"));
+            posesToGoTo.add(new PosesAndActions(wBot.placePixelClose, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
             wBot.openGrabber();
             sleep(MonkeyMap.sleepTimePlacePixel);
             wBot.resetSlides();
 
-            for (int i = 0; i < 2; i++) {
-                wBot.autonLoopFar(follower, posesToGoTo, wBot.wrapPixelTypeInt(i), false);
-            }
+//            for (int i = 0; i < MonkeyMap.timesToRunAuton; i++) {
+//                wBot.autonLoopFar(follower, posesToGoTo, wBot.wrapPixelTypeInt(i), i>1, i > 1);
+//            }
             telemetry.addData("Time for auton ", timeForAuton);
             telemetry.update();
             terminateOpModeNow();

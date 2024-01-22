@@ -8,7 +8,8 @@ public class RedBeforeTrussPoses {
     public static double xPosStartingPos = -36, yPosStartingPos = -58;
 
     //After only poses
-    public static double xPosPurplePixelPlacementAfter = 36, yPosPurplePixelPlacementAfter = -28;
+    public static double xPosPurplePixelPlacementAfterBeacon1 = 36, yPosPurplePixelPlacementAfterBeacon1 = -28;
+    public static double xPosPurplePixelPlacementAfterBeacon23 = 36, yPosPurplePixelPlacementAfterBeacon23 = -28;
     public static double xPosStartExtendFirstPlacementAfter = 41, yPosStartExtendFirstPlacementAfter = -28;
     public static double xPosFirstPlacementAfter = 41, yPosFirstPlacementAfter = -31;
 
@@ -36,10 +37,10 @@ public class RedBeforeTrussPoses {
     public static double xPosMidStackPickUpClose = -48, yPosMidStackPickUpClose = -41;
 
     public static double headingMidStackPickUpFar = Math.toRadians(-30), headingMidStackPickUpClose = Math.toRadians(45);
-    public static double headingStartingPositionAndBeacon = -Math.toRadians(90);
+    public static double headingStartingPositionAndBeacon = -Math.toRadians(90), headingPickUpClose = Math.toRadians(215);
     public static double headingPlaceFar = Math.toRadians(30), headingPlaceClose = Math.toRadians(-30);
     public static double headingWallBeaconBefore = Math.toRadians(55), headingTrussBeaconBefore = Math.toRadians(125), headingTiltedBeaconsAfter = Math.toRadians(60);
-    public static double headingMidBeaconBefore = Math.toRadians(100), headingBeacon1PlacementAfter = Math.toRadians(165), headingBeacon3PlacementAfter = Math.toRadians(195);
+    public static double headingMidBeaconBefore = Math.toRadians(100), headingBeacon1PlacementAfter = Math.toRadians(-15), headingBeacon3PlacementAfter = Math.toRadians(15);
     public static double headingBeacon1PlacementBeforeClose = Math.toRadians(60), headingBeacon2PlacementBeforeClose = Math.toRadians(40), headingBeacon3PlacementBeforeClose = Math.toRadians(20);
     public static double headingBeacon1PlacementBeforeFar = Math.toRadians(-20), headingBeacon2PlacementBeforeFar = Math.toRadians(-40), headingBeacon3PlacementBeforeFar = Math.toRadians(-60);
 }

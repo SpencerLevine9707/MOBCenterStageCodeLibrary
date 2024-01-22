@@ -69,17 +69,17 @@ public class AutonRedAfterTrussClose extends LinearOpMode {
             zoneDetected = wBot.TeamPropDetectionReading();
 
             if(zoneDetected == 1){
-                purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacons;
+                purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon1;
                 firstPlacement = wBot.firstPlacementBeacon1After;
                 firstExtendation.action = "extendSlidesFirstPlacementAfterBeacon1";
             }
             else if(zoneDetected == 2){
-                purplePixelPlacement = wBot.purplePixelPlacementAfterMidBeacon;
+                purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon23;
                 firstPlacement = wBot.firstPlacementBeacon2After;
                 firstExtendation.action = "extendSlidesFirstPlacementAfterBeacon2";
             }
             else{
-                purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacons;
+                purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon23;
                 firstPlacement = wBot.firstPlacementBeacon3After;
                 firstExtendation.action = "extendSlidesFirstPlacementAfterBeacon3";
             }
@@ -118,9 +118,9 @@ public class AutonRedAfterTrussClose extends LinearOpMode {
             wBot.openGrabber();
             sleep(MonkeyMap.sleepTimePlacePixel);
             wBot.resetSlides();
-            for (int i = 0; i < 2; i++) {
-                wBot.autonLoopClose(follower, posesToGoTo, wBot.wrapPixelTypeInt(i), true);
-            }
+//            for (int i = 0; i < MonkeyMap.timesToRunAuton; i++) {
+//                wBot.autonLoopClose(follower, posesToGoTo, wBot.wrapPixelTypeInt(i), true, i>1);
+//            }
             telemetry.addData("Time for auton ", timeForAuton);
             telemetry.update();
             terminateOpModeNow();

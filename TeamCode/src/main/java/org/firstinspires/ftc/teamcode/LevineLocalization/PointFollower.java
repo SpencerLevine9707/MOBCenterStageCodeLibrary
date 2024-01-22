@@ -358,7 +358,7 @@ public class PointFollower {
     public ElapsedTime runtime = new ElapsedTime();
     public ElapsedTime velTime = new ElapsedTime();
     public static double isBuggingRuntimeToStop;
-    public static double isBuggingRuntimeToStopError = 2.5;
+    public static double isBuggingRuntimeToStopError = 2;
     public static int finalCounter = 0;
     public static int endCounter = 0;
     public static int almostDoneCounter = 0;
@@ -374,7 +374,7 @@ public class PointFollower {
     double currVelocity = 0;
     public double currPower;
     public double distToTarg;
-    public static double maxVel = 50, almostDoneVel = 20, slowVel = almostDoneVel, evenSlowerVel = 2, testVel = 20, slowestVel = 8;
+    public static double maxVel = 40, almostDoneVel = 20, slowVel = almostDoneVel, evenSlowerVel = 2, testVel = 20, slowestVel = 4;
     public static double roomForErrorStartDecel = 0;
     public static double decceleration = 40;
     public double targetVelocity = maxVel;
@@ -443,43 +443,45 @@ public class PointFollower {
                 double relDistY = Math.sin(theoreticalTheta) * (distToTarget * j);
                 inBetweenPoints.add(new Pose2d(startingPos.getX() + relDistX, startingPos.getY() + relDistY, targetPos.getHeading()));
             }
-
-            //Get the cheek lengths
-            int leftPoints = (int) ((LevineLocalizationMap.followRadius / 2) * LevineLocalizationMap.poseFollowCoef);
-            int rightPoints;
-            if (pointTypes.get(i).type.equals("mid")) {
-                rightPoints = leftPoints;
-            } else {
-                rightPoints = 0;
-            }
-            if (leftPoints + rightPoints >= iterationsForPoses) {
-                leftPoints = iterationsForPoses / 2;
-                rightPoints = iterationsForPoses - leftPoints;
-            }
-
-            int midPoints = iterationsForPoses - (leftPoints + rightPoints);
-
-            for (int j = 0; j < leftPoints; j++) {
+            for(int j = 0; j < iterationsForPoses; j++){
                 pointTypesInBetween.add(new PointType("mid"));
             }
-            for (int j = 0; j < midPoints; j++) {
-                pointTypesInBetween.add(new PointType("inside"));
-            }
-            for (int j = 0; j < rightPoints; j++) {
-                pointTypesInBetween.add(new PointType("mid"));
-            }
+
+//            int leftPoints = (int) ((LevineLocalizationMap.followRadius / 2) * LevineLocalizationMap.poseFollowCoef);
+//            int rightPoints;
+//            if (pointTypes.get(i).type.equals("mid")) {
+//                rightPoints = leftPoints;
+//            } else {
+//                rightPoints = 0;
+//            }
+//            if (leftPoints + rightPoints >= iterationsForPoses) {
+//                leftPoints = iterationsForPoses / 2;
+//                rightPoints = iterationsForPoses - leftPoints;
+//            }
+//
+//            int midPoints = iterationsForPoses - (leftPoints + rightPoints);
+//
+//            for (int j = 0; j < leftPoints; j++) {
+//                pointTypesInBetween.add(new PointType("mid"));
+//            }
+//            for (int j = 0; j < midPoints; j++) {
+//                pointTypesInBetween.add(new PointType("inside"));
+//            }
+//            for (int j = 0; j < rightPoints; j++) {
+//                pointTypesInBetween.add(new PointType("mid"));
+//            }
             pointTypesInBetween.set(pointTypesInBetween.size() - 1, new PointType("endofpoint"));
         }
-        for (int j = 3; j < 4; j++) {
-            if (pointTypesInBetween.size() - j > 0) {
-                pointTypesInBetween.set(pointTypesInBetween.size() - j, new PointType("almostdone"));
-            }
-        }
-        for (int j = 1; j < 3; j++) {
-            if (pointTypesInBetween.size() - j > 0) {
-                pointTypesInBetween.set(pointTypesInBetween.size() - j, new PointType("end"));
-            }
-        }
+//        for (int j = 3; j < 4; j++) {
+//            if (pointTypesInBetween.size() - j > 0) {
+//                pointTypesInBetween.set(pointTypesInBetween.size() - j, new PointType("almostdone"));
+//            }
+//        }
+//        for (int j = 1; j < 3; j++) {
+//            if (pointTypesInBetween.size() - j > 0) {
+//                pointTypesInBetween.set(pointTypesInBetween.size() - j, new PointType("end"));
+//            }
+//        }
         inBetweenPoints.add(new Pose2d(this.posesToGoTo.get(this.posesToGoTo.size() - 1).pose.getX(), this.posesToGoTo.get(this.posesToGoTo.size() - 1).pose.getY(), this.posesToGoTo.get(this.posesToGoTo.size() - 1).pose.getHeading()));
         pointTypesInBetween.add(new PointType("final"));
 
@@ -560,8 +562,11 @@ public class PointFollower {
 //                    totXDist += Math.abs(posesToGoTo.get(i).pose.getX() - posesToGoTo.get(i-1).pose.getX());
 //                    totYDist += Math.abs(posesToGoTo.get(i).pose.getY() - posesToGoTo.get(i-1).pose.getY());
 //                }
-                totXDist = Math.abs(posesToGoTo.get(posesToGoTo.size()-1).pose.getX() - currPose.getX());
-                totYDist = Math.abs(posesToGoTo.get(posesToGoTo.size()-1).pose.getY() - currPose.getY());
+                if(posesToGoTo.size()-1 >= 0){
+                    totXDist = Math.abs(posesToGoTo.get(posesToGoTo.size()-1).pose.getX() - currPose.getX());
+                    totYDist = Math.abs(posesToGoTo.get(posesToGoTo.size()-1).pose.getY() - currPose.getY());
+                }
+
                 totDistToTarget = Math.hypot(totXDist, totYDist);
 
                 //Error X
@@ -623,6 +628,7 @@ public class PointFollower {
                         posesToGoTo.remove(0);
                         endOfPointCounter++;
                     }
+
                     runtime.reset();
                     inBetweenPoints.remove(0);
                     pointTypesInBetween.remove(0);
@@ -638,14 +644,13 @@ public class PointFollower {
                 telemetry.addData("New Max Vel ", newMaxVel);
                 telemetry.addData("Tot dist to target ", totDistToTarget);
                 telemetry.addData("Dist needed for decel ", distNeededToStartDecel);
-//                telemetry.addData("posesToGoTo ", posesToGoTo);
+                telemetry.addData("posesToGoTo ", posesToGoTo);
 //                telemetry.addData("Curr Pose Error: ", roomForPoseError);
-//                telemetry.addLine("Poses to go to " + posesToGoTo);
 //                telemetry.addLine("Poses in between " + inBetweenPoints);
                 telemetry.addLine("Target Pose: " + targetPose);
                 telemetry.addLine("isBuggingChecker: " + isBuggingChecker);
 //                telemetry.addLine("relDistX: " + relDistX + "relDistY: " + relDistY);
-                telemetry.addLine("Motor powers: " + wMap.getPowers(currPose, targetPose));
+//                telemetry.addLine("Motor powers: " + wMap.getPowers(currPose, targetPose));
 //                telemetry.addLine("Ang Done? " + angDone);
 //                telemetry.addLine("X Done " + xDone);
 //                telemetry.addLine("Y Done " + yDone);
@@ -653,7 +658,7 @@ public class PointFollower {
                 telemetry.addLine("CurrSpeed: " + currPower);
 //                telemetry.addLine("distToTarg " + distToTarg);
 //                telemetry.addLine("is bugging time to stop is " + isBuggingRuntimeToStop);
-//                telemetry.addLine("endofpoint counter " + endOfPointCounter);
+                telemetry.addLine("endofpoint counter " + endOfPointCounter);
                 telemetry.addData("Is Bugging Counter: ", isBuggingCounter);
 
 //                telemetry.addLine("finalCounter: " + finalCounter);
