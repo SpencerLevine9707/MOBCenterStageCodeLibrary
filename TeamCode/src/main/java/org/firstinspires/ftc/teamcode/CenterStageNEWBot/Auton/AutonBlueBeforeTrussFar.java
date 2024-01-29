@@ -35,7 +35,9 @@ public class AutonBlueBeforeTrussFar extends LinearOpMode {
     public ElapsedTime timeForAuton = new ElapsedTime();
     @Override
     public void runOpMode() throws InterruptedException {
-        wBot.initForAuton("BlueBeforeTruss");
+        wBot.init();
+        wBot.initForAuton("blueBeforeTruss");
+        wBot.resetSlides();
         ArrayList<PosesAndActions> posesToGoTo = new ArrayList<>();
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
@@ -64,27 +66,31 @@ public class AutonBlueBeforeTrussFar extends LinearOpMode {
         Pose2d firstPlacement = new Pose2d();
         Pose2d purplePixelPlacement = new Pose2d();
         PosesAndActions firstExtendation = new PosesAndActions(wBot.startExtendFirstPlacementAfter, "");
+        int firstPlaceSlidesPos = 0;
 
         while(opModeInInit()){
             zoneDetected = wBot.TeamPropDetectionReading();
 
             if(zoneDetected == 1){
                 purplePixelPlacement = wBot.goAcrossForBeforeTrussPurplePixelCloseWallBeacon;
-                firstPlacement = wBot.firstPlacementBeacon1BeforeClose;
+                firstPlacement = wBot.firstPlacementBeacon3After;
                 firstExtendation.action = "extendSlidesFirstPlacementBeforeBeacon1";
+                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePosBeacons13;
             }
             else if(zoneDetected == 2){
                 purplePixelPlacement = wBot.goAcrossForBeforeTrussPurplePixelCloseMidBeacon;
-                firstPlacement = wBot.firstPlacementBeacon2BeforeClose;
+                firstPlacement = wBot.firstPlacementBeacon2After;
                 firstExtendation.action = "extendSlidesFirstPlacementBeforeBeacon2";
+                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePosBeacon2;
             }
             else{
                 purplePixelPlacement = wBot.goAcrossForBeforeTrussPurplePixelCloseTrussBeacon;
-                firstPlacement = wBot.firstPlacementBeacon3BeforeClose;
+                firstPlacement = wBot.firstPlacementBeacon1After;
                 firstExtendation.action = "extendSlidesFirstPlacementBeforeBeacon3";
+                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePosBeacons13;
             }
-            telemetry.addData("purplePixelPlacement", purplePixelPlacement);
-            telemetry.addData("firstPlacement", firstPlacement);
+//            telemetry.addData("purplePixelPlacement", purplePixelPlacement);
+//            telemetry.addData("firstPlacement", firstPlacement);
             telemetry.addLine("zoneDetected: " + zoneDetected);
             telemetry.update();
         }
@@ -92,6 +98,8 @@ public class AutonBlueBeforeTrussFar extends LinearOpMode {
         while(opModeIsActive()){
             timeForAuton.reset();
             wBot.closeGrabber();
+            wBot.setFlipperPos(MonkeyMap.flipperPosUpPurplePixels);
+            wBot.setRotatorFlush();
 
             posesToGoTo.add(new PosesAndActions(wBot.startingPosition, ""));
             posesToGoTo.add(new PosesAndActions(purplePixelPlacement, ""));
@@ -102,39 +110,63 @@ public class AutonBlueBeforeTrussFar extends LinearOpMode {
                 wBot.extendSlidesWallBeaconBefore();
             }
             if(zoneDetected == 2){
-                wBot.extendSlidesMidBeaconBefore();
+                wBot.encodedSlipperySlides(MonkeyMap.slidesBeacon2PreloadBeforeBlue, MonkeyMap.slidePowerEncoder);
             }
             if(zoneDetected == 3){
                 wBot.extendSlidesTrussBeaconBefore();
+                wBot.correctorServo.setPosition(MonkeyMap.correctorServoBeacon2AfterPos);
             }
-            wBot.openRightGrabber();
+            sleep(MonkeyMap.sleepTimeExtendSlides);
+            wBot.openLeftGrabber();
             sleep(MonkeyMap.sleepTimePlacePurplePixel);
             wBot.resetSlides();
+            wBot.setCorrectorMid();
+            wBot.setFlipperPos(MonkeyMap.flipperPosDown6Pixels);
 
             posesToGoTo.clear();
-            posesToGoTo.add(new PosesAndActions(wBot.goAcrossForBeforeTrussPurplePixelFar, "flipDown and rotateDown6Pixels and fullyExtendSlides"));
+            if (zoneDetected == 2) {
+                posesToGoTo.add(new PosesAndActions(wBot.goAroundPurplePixelBeacon2, ""));
+            }
+            else{
+                posesToGoTo.add(new PosesAndActions(wBot.goAcrossForBeforeTrussPurplePixelFar, "flipDown and rotateDown6Pixels"));
+            }
             posesToGoTo.add(new PosesAndActions(wBot.pickUpPixelFar, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
+            wBot.fullyExtendSlides();
+            sleep(MonkeyMap.sleepTimeExtendSlides);
             wBot.closeGrabber();
             sleep(MonkeyMap.sleepTimePickUpPixel);
             wBot.resetSlides();
 
             posesToGoTo.clear();
-            posesToGoTo.add(new PosesAndActions(wBot.lineUpForPickUpClose, "flipUp"));
-            posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceClose, "fullyExtendSlides"));
-            posesToGoTo.add(new PosesAndActions(wBot.placePixelClose, ""));
+            posesToGoTo.add(new PosesAndActions(wBot.lineUpForPlaceFar, "flipUpFirstPlace"));
+            if(zoneDetected == 3){
+                posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon1)"));
+            }
+            else if(zoneDetected == 2){
+                posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon2)"));
+            }
+            else{
+                posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon3)"));
+            }
+            posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
+            sleep(MonkeyMap.sleepTimeWaitForFlipFirstPlace);
+            wBot.encodedSlipperySlides(firstPlaceSlidesPos, MonkeyMap.slidePowerEncoder);
+            sleep(MonkeyMap.sleepTimeExtendSlides);
             wBot.openGrabber();
-            sleep(MonkeyMap.sleepTimePlacePixel);
-            wBot.resetSlides();
+            sleep(MonkeyMap.sleepTimeYellowPixel);
+            wBot.resetArm();
+//            wBot.pickUpInAutonFar(follower, posesToGoTo, 0,  false, false);
+//            wBot.placeInAutonFar(follower, posesToGoTo, true);
 
 //            for (int i = 0; i < MonkeyMap.timesToRunAuton; i++) {
 //                wBot.autonLoopFar(follower, posesToGoTo, wBot.wrapPixelTypeInt(i), i>1, i > 1);
 //            }
-            telemetry.addData("Time for auton ", timeForAuton);
-            telemetry.update();
+//            telemetry.addData("Time for auton ", timeForAuton);
+//            telemetry.update();
             terminateOpModeNow();
         }
     }

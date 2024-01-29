@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.VisionTesting;
 
 
+import com.acmerobotics.dashboard.config.Config;
+
+import org.checkerframework.checker.units.qual.C;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -10,8 +13,8 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvPipeline;
-
 import java.util.ArrayList;
+@Config
     public class OpenCVGreatestColorTest extends OpenCvPipeline {
         public static final Scalar green = new Scalar(0, 255, 0);
         public static final Scalar blue = new Scalar(0, 0, 255);
@@ -20,7 +23,7 @@ import java.util.ArrayList;
         public static final Scalar white = new Scalar(255, 255, 255);
         public static int heightNoDetectPixels = 60;
 
-        public static int[] lowerBlue = {115, 50, 20};
+        public static int[] lowerBlue = {115, 20, 20};
         public static int[] upperBlue = {160, 255, 255};
 
         public static int[] lowerRed = {160, 100, 100};

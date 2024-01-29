@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "Center Stage")
-public class AutonRedAfterTrussFar extends LinearOpMode {
+public class AutonBlueBeforeTrussFarPURPLEPARK extends LinearOpMode {
     OpenCvCamera webcam;
     static OpenCVDetectTeamProp colorPipe;
     static OpenCVGreatestColorTest pipeline;
@@ -36,7 +36,7 @@ public class AutonRedAfterTrussFar extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         wBot.init();
-        wBot.initForAuton("redAfterTruss");
+        wBot.initForAuton("blueBeforeTruss");
         wBot.resetSlides();
         ArrayList<PosesAndActions> posesToGoTo = new ArrayList<>();
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -44,7 +44,7 @@ public class AutonRedAfterTrussFar extends LinearOpMode {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         pipeline = new OpenCVGreatestColorTest(telemetry);
-        colorPipe = new OpenCVDetectTeamProp(telemetry, OpenCVGreatestColorTest.lowerRed, OpenCVGreatestColorTest.upperRed);
+        colorPipe = new OpenCVDetectTeamProp(telemetry, OpenCVGreatestColorTest.lowerBlue, OpenCVGreatestColorTest.upperBlue);
         webcam.setPipeline(colorPipe);
         FtcDashboard.getInstance().startCameraStream(webcam, 0);
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
@@ -67,31 +67,28 @@ public class AutonRedAfterTrussFar extends LinearOpMode {
         Pose2d purplePixelPlacement = new Pose2d();
         PosesAndActions firstExtendation = new PosesAndActions(wBot.startExtendFirstPlacementAfter, "");
         int firstPlaceSlidesPos = 0;
-        double correctorPosFirstPlace = 0;
+        Pose2d parkBack = new Pose2d(50, 6, MonkeyMap.headingPlaceAndPickUp);
 
         while(opModeInInit()){
             zoneDetected = wBot.TeamPropDetectionReading();
 
-            if(zoneDetected == 3){
-                purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon23;
-                firstPlacement = wBot.firstPlacementBeacon1After;
-                firstExtendation.action = "extendSlidesFirstPlacementAfterBeacon1";
+            if(zoneDetected == 1){
+                purplePixelPlacement = wBot.goAcrossForBeforeTrussPurplePixelCloseWallBeacon;
+                firstPlacement = wBot.firstPlacementBeacon3After;
+                firstExtendation.action = "extendSlidesFirstPlacementBeforeBeacon1";
                 firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePosBeacons13;
-                correctorPosFirstPlace = MonkeyMap.correctorServoBeacon1PreloadPlace;
             }
             else if(zoneDetected == 2){
-                purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon23;
+                purplePixelPlacement = wBot.goAcrossForBeforeTrussPurplePixelCloseMidBeacon;
                 firstPlacement = wBot.firstPlacementBeacon2After;
-                firstExtendation.action = "extendSlidesFirstPlacementAfterBeacon2";
+                firstExtendation.action = "extendSlidesFirstPlacementBeforeBeacon2";
                 firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePosBeacon2;
-                correctorPosFirstPlace = MonkeyMap.correctorServoMidPos;
             }
             else{
-                purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon1;
-                firstPlacement = wBot.firstPlacementBeacon3After;
-                firstExtendation.action = "extendSlidesFirstPlacementAfterBeacon1";
+                purplePixelPlacement = wBot.goAcrossForBeforeTrussPurplePixelCloseTrussBeacon;
+                firstPlacement = wBot.firstPlacementBeacon1After;
+                firstExtendation.action = "extendSlidesFirstPlacementBeforeBeacon3";
                 firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePosBeacons13;
-                correctorPosFirstPlace = MonkeyMap.correctorServoBeacon3PreloadPlace;
             }
 //            telemetry.addData("purplePixelPlacement", purplePixelPlacement);
 //            telemetry.addData("firstPlacement", firstPlacement);
@@ -110,47 +107,67 @@ public class AutonRedAfterTrussFar extends LinearOpMode {
             follower.init(posesToGoTo, isTest);
             follower.goToPoints(true);
 
-            if(zoneDetected == 3) {
-                wBot.extendSlidesFarBeaconAfter();
+            if (zoneDetected == 1) {
+                wBot.extendSlidesWallBeaconBefore();
+//                wBot.correctorServo.setPosition(MonkeyMap.correctorServoBeacon2BeforePos);
             }
-            if(zoneDetected == 2){
-                wBot.extendSlidesMidBeaconAfter();
-                wBot.correctorServo.setPosition(MonkeyMap.correctorServoBeacon2BeforePos);
+            if (zoneDetected == 2) {
+                wBot.extendSlidesMidBeaconBefore();
+//                wBot.correctorServo.setPosition(MonkeyMap.correctorServoBeacon2BeforePos);
             }
-            if(zoneDetected == 1){
-                wBot.extendSlidesCloseBeaconAfter();
+            if (zoneDetected == 3) {
+                wBot.extendSlidesTrussBeaconBefore();
+                wBot.correctorServo.setPosition(MonkeyMap.correctorServoBeacon2AfterPos);
             }
             sleep(MonkeyMap.sleepTimeExtendSlides);
-            wBot.openRightGrabber();
+            wBot.openLeftGrabber();
             sleep(MonkeyMap.sleepTimePlacePurplePixel);
             wBot.resetSlides();
-            wBot.flipUpFirstPlace();
-            wBot.rotatorServo.setPosition(MonkeyMap.rotatorServoFirstPlace);
-            wBot.correctorServo.setPosition(correctorPosFirstPlace);
+            wBot.setCorrectorMid();
+            wBot.setFlipperPos(MonkeyMap.flipperPosDown6Pixels);
 
             posesToGoTo.clear();
-            posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
+            if (zoneDetected == 2) {
+                posesToGoTo.add(new PosesAndActions(wBot.goAroundPurplePixelBeacon2, ""));
+            }
+            else{
+                posesToGoTo.add(new PosesAndActions(wBot.goAcrossForBeforeTrussPurplePixelFar, "flipDown and rotateDown6Pixels"));
+            }
+            posesToGoTo.add(new PosesAndActions(wBot.pickUpPixelFar, ""));
+            follower.reinit(posesToGoTo);
+            follower.goToPoints(true);
+            wBot.fullyExtendSlides();
+            sleep(MonkeyMap.sleepTimeExtendSlides);
+            wBot.closeGrabber();
+            sleep(MonkeyMap.sleepTimePickUpPixel);
+            wBot.resetSlides();
+
+            posesToGoTo.clear();
+            posesToGoTo.add(new PosesAndActions(wBot.lineUpForPlaceFar, ""));
+//            if (zoneDetected == 3) {
+//                posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon1)"));
+//            } else if (zoneDetected == 2) {
+//                posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon2)"));
+//            } else {
+//                posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon3)"));
+//            }
+            posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, ""));
+//            posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
+            posesToGoTo.add(new PosesAndActions(parkBack, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
             sleep(MonkeyMap.sleepTimeWaitForFlipFirstPlace);
-            wBot.encodedSlipperySlides(firstPlaceSlidesPos, MonkeyMap.slidePowerEncoder);
-            sleep(MonkeyMap.sleepTimeExtendSlides);
-            wBot.openLeftGrabber();
+//            wBot.encodedSlipperySlides(firstPlaceSlidesPos, MonkeyMap.slidePowerEncoder);
+//            sleep(MonkeyMap.sleepTimeExtendSlides);
+            wBot.openGrabber();
             sleep(MonkeyMap.sleepTimeYellowPixel);
             wBot.resetArm();
-            wBot.pickUpInAutonFar(follower, posesToGoTo, 0, true, false);
-            wBot.placeInAutonFar(follower, posesToGoTo, false);
-//            wBot.pickUpInAutonFar(follower, posesToGoTo, 1, true, false);
+            sleep(1000);
+//            wBot.pickUpInAutonFar(follower, posesToGoTo, 0, false, false);
 //            wBot.placeInAutonFar(follower, posesToGoTo, false);
-//            wBot.pickUpInAutonFar(follower, posesToGoTo, 0, true, true);
-//            wBot.placeInAutonFar(follower, posesToGoTo);
-//            wBot.pickUpInAutonFar(follower, posesToGoTo, 1, true, true);
-//            wBot.placeInAutonFar(follower, posesToGoTo);
 
-//            sleep(sleepTimeTestAuton);
-
-//            for (int i = 0; i < 2; i++) {
-//                wBot.autonLoopFar(follower, posesToGoTo, wBot.wrapPixelTypeInt(i), true, i>1);
+//            for (int i = 0; i < MonkeyMap.timesToRunAuton; i++) {
+//                wBot.autonLoopFar(follower, posesToGoTo, wBot.wrapPixelTypeInt(i), i>1, i > 1);
 //            }
 //            telemetry.addData("Time for auton ", timeForAuton);
 //            telemetry.update();

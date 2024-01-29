@@ -20,6 +20,16 @@ import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVDetectTeamProp;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
+// Improvements:
+// MAKE IT SO IT CAN ONLY PICK UP 2 PIXELS!
+// Solution - Talk to quincy about cutting down surgical tubing
+// MAKE IT SO THAT THE SERVOS DONT STOP GRIPPING THE PIXELS
+// Solution - Switch grabbers to axons
+// Logan is crazy OP - tell Quincler to work more closely w/ him on pull up and stuff - He's actually cracked
+// Pull up - put the bearings on and shit
+//
+
 @Config
 public class MonkeyMap {
     //Define runtime
@@ -37,21 +47,21 @@ public class MonkeyMap {
     public DistanceSensor lineUpSensor;
 
     //Servo Positions
-    public static double grabberServoScalerDown = 0.1, grabberServoScalerUp = 0.5, offsetForGrabberScalar = 0.03;
-    public static double grabberClosed = 0.94, grabberOpen = 0;
-    public static double flipperScalarDown = 0, flipperScalarUp = 1, flipperScalarOffset = 0, flipperPosDown = 0.15, flipperPosDown2Pixels = 0.83, flipperPosDown3Pixels = 0.82, flipperPosDown4Pixels = 0.81, flipperPosDown5Pixels = 0.7825, flipperPosDown6Pixels = 0.7725, flipperPosUp = 0.82, flipperPosUpPurplePixels = 0.83, flipperPosUpFirstPlace = 0, flipperPosDownForAuton = 0.15;
-    public static double rotatorServoUpPos = 0.22, rotatorFlushWithSlides = 0.5, rotatorPickUpAndPlace = 0.45, rotator6Pixels = 0.517, rotator5Pixels = 0.517, rotator4Pixels = 0.51, rotator3Pixels = 0.485, rotator2Pixels = 0.5, rotatorServoFirstPlace = 0.6, rotatorServoPlaceInAuton = 0.58;
+    public static double grabberServoScalerDown = 0.1, grabberServoScalerUp = 0.5, offsetForGrabberScalar = 0.005;
+    public static double grabberClosed = 0.8, grabberOpen = 0, grabberOpenTele = 0.3;
+    public static double flipperScalarDown = 0, flipperScalarUp = 1, flipperScalarOffset = 0, flipperPosDown = 0.15, flipperPosDown2Pixels = 0.91, flipperPosDown3Pixels = 0.87, flipperPosDown4Pixels = 0.855, flipperPosDown5Pixels = 0.85, flipperPosDown6Pixels = 0.8425, flipperPosUp = 0.86, flipperPosUpPurplePixels = 0.91, flipperPosUpFirstPlace = 0.08, flipperPosDownForAuton = 0.2;
+    public static double rotatorServoUpPos = 0.28, rotatorFlushWithSlides = 0.52, rotatorPickUpAndPlace = 0.45, rotator6Pixels = 0.5, rotator5Pixels = 0.5, rotator4Pixels = 0.52, rotator3Pixels = 0.5, rotator2Pixels = 0.5, rotatorServoFirstPlace = 0.6, rotatorServoPlaceInAuton = 0.58;
     public static double airplaneServoLoadedPos = 0.29, airplaneServoGoPos = 0.16;
-    public static double correctorServoMidPos = 0.5, correctorServoPlaceFarPos = 0.35, correctorServoPlaceClosePos = 0.65, correctorServoBeacon2AfterPos = 0.07, correctorServoBeacon1PreloadPlace = 0.45, correctorServoBeacon3PreloadPlace = 0.55, correctorServoPickUpClose = 0.58, correctorServoPickUpMidFar = 0.38, correctorServoPickUpMidClose = 0.78;
+    public static double correctorServoMidPos = 0.5, correctorServoPlaceFarPos = 0.38, correctorServoPlaceClosePos = 0.62, correctorServoBeacon2AfterPos = 0.07, correctorServoBeacon2BeforePos = 0.93, correctorServoBeacon1PreloadPlace = 0.45, correctorServoBeacon3PreloadPlace = 0.55, correctorServoPickUpClose = 0.58, correctorServoPickUpMidFar = 0.38, correctorServoPickUpMidClose = 0.78;
     public static double correctorServoSpeed = 0.03, flipperServoSpeed = 0.03, rotatorServoSpeed = 0.03;
     public ArrayList<String> rotatorAndFlipperAutonPosesListOddPixels = new ArrayList<>(Arrays.asList("flipDown and rotateDown 5Pixels", "flipDown and rotateDown 3Pixels"));
     public ArrayList<String> rotatorAndFlipperAutonPosesListEvenPixels = new ArrayList<>(Arrays.asList("flipDown and rotateDown 4Pixels", "flipDown and rotateDown 2Pixels"));
 
     //Motor powers and pos
     public static int resetSlidesPos = 0, slidesFullyExtendedPos = -314;
-    public static int slidesBeacon1PreloadAfter = 0, slidesBeacon2PreloadAfter = -310, slidesBeacon3PreloadAfter = -310;
-    public static int slidesBeacon1PreloadBefore = -314, slidesBeacon2PreloadBefore = -250, slidesBeacon3PreloadBefore = -200;
-    public static int slidesFirstPlacePosBeacon2 = 0, slidesFirstPlacePosBeacons13 = 0;
+    public static int slidesBeacon1PreloadAfter = 0, slidesBeacon2PreloadAfter = -250, slidesBeacon3PreloadAfter = -310;
+    public static int slidesBeacon1PreloadBefore = -310, slidesBeacon2PreloadBefore = -310, slidesBeacon3PreloadBefore = -310, slidesBeacon2PreloadBeforeBlue = -250;
+    public static int slidesFirstPlacePosBeacon2 = -170, slidesFirstPlacePosBeacons13 = -150;
 
     public static double holdPowerForSlides = 0, slidePowerEncoder = 1;
 
@@ -60,13 +70,14 @@ public class MonkeyMap {
     public Pose2d startingPosition;
     public Pose2d purplePixelPlacementAfterFarAndCloseBeacon1, purplePixelPlacementAfterFarAndCloseBeacon23, purplePixelPlacementAfterMidBeacon, firstPlacementBeacon1After, firstPlacementBeacon2After, firstPlacementBeacon3After, startExtendFirstPlacementAfter;
     public Pose2d firstPlacementBeacon1BeforeClose, firstPlacementBeacon2BeforeClose, firstPlacementBeacon3BeforeClose, firstPlacementBeacon1BeforeFar, firstPlacementBeacon2BeforeFar, firstPlacementBeacon3BeforeFar;
-    public Pose2d lineUpForPickUpFar, startArmExtendPickUpFar, pickUpPixelFar,  placePixelFar, flipAfterPlaceFar, startArmExtendPlaceFar;
+    public Pose2d lineUpForPickUpFar, lineUpForPlaceFar, startArmExtendPickUpFar, pickUpPixelFar,  placePixelFar, flipAfterPlaceFar, startArmExtendPlaceFar;
     public Pose2d lineUpForPickUpClose, startArmExtendPickUpClose, pickUpPixelClose, startArmExtendPlaceClose, placePixelClose, flipAfterPlaceClose, goStraightThroughTrussClose;
     public Pose2d goAcrossForBeforeTrussPurplePixelFar, goAcrossForBeforeTrussPurplePixelCloseMidBeacon, goAcrossForBeforeTrussPurplePixelCloseWallBeacon, goAcrossForBeforeTrussPurplePixelCloseTrussBeacon;
-    public Pose2d midStackPickUpFar, midStackPickUpClose;
+    public Pose2d midStackPickUpFar, midStackPickUpClose, goAroundPurplePixelBeacon2;
+    public Pose2d parkTrianlge, lineUpParkTriangle, parkSquare, lineUpParkSquare;
     public static double headingPlaceAndPickUp = Math.toRadians(180);
 
-    public static int sleepTimePlacePurplePixel = 300, sleepTimePickUpPixel = 400, sleepTimePlacePixel = 400, sleepTimeFirstPlace = 100, sleepTimeBetweenFirstAndSecondPlace = 100, sleepTimeExtendSlides = 400, sleepTimeWaitForFlipFirstPlace = 200, sleepTimeWaitForFlip = 200, sleepTimeCorrectServo = 200;
+    public static int sleepTimePlacePurplePixel = 300, sleepTimePickUpPixel = 300, sleepTimePlacePixel = 200, sleepTimeYellowPixel = 400, sleepTimeFirstPlace = 100, sleepTimeBetweenFirstAndSecondPlace = 100, sleepTimeExtendSlides = 400, sleepTimeWaitForFlipFirstPlace = 0, sleepTimeCorrectServo = 200;
     public boolean grabberIsOpen = true, rightGrabberOpen = true, leftGrabberOpen = true, flipperDown = true, airplaneLoaded = true;
     public static int timesToRunAuton = 4;
     //Goofy noises
@@ -102,7 +113,7 @@ public class MonkeyMap {
         backLeft = myOpMode.hardwareMap.get(DcMotor.class, ("backLeft")); //port 1
         backRight = myOpMode.hardwareMap.get(DcMotor.class, ("backRight"));  //port 0
         pullUpMotorLeft = myOpMode.hardwareMap.get(DcMotor.class, "pullUpMotorLeft");
-        pullUpMotorRight = myOpMode.hardwareMap.get(DcMotor.class, "pullUpMotorLeft");
+        pullUpMotorRight = myOpMode.hardwareMap.get(DcMotor.class, "pullUpMotorRight");
         armMotorLeft = myOpMode.hardwareMap.get(DcMotor.class, "armMotorLeft");
         armMotorRight = myOpMode.hardwareMap.get(DcMotor.class, "armMotorRight");
 
@@ -183,6 +194,7 @@ public class MonkeyMap {
 
                 startExtendFirstPlacementAfter = new Pose2d(BlueAfterTrussPoses.xPosStartExtendFirstPlacementAfter, BlueAfterTrussPoses.yPosStartExtendFirstPlacementAfter, headingPlaceAndPickUp);
                 lineUpForPickUpFar = new Pose2d(BlueAfterTrussPoses.xPosLineUpForPickUpFar, BlueAfterTrussPoses.yPosLineUpForPickUpFar, headingPlaceAndPickUp);
+                lineUpForPlaceFar = new Pose2d(BlueAfterTrussPoses.xPosLineUpForPlaceFar, BlueAfterTrussPoses.yPosLineUpForPlaceFar, headingPlaceAndPickUp);
                 startArmExtendPickUpFar = new Pose2d(BlueAfterTrussPoses.xPosStartArmExtendPickUpFar, BlueAfterTrussPoses.yPosStartArmExtendPickUpFar, headingPlaceAndPickUp);
                 pickUpPixelFar = new Pose2d(BlueAfterTrussPoses.xPosPickUpPixelFar, BlueAfterTrussPoses.yPosPickUpPixelFar, headingPlaceAndPickUp);
                 placePixelFar = new Pose2d(BlueAfterTrussPoses.xPosPlacePixelFar, BlueAfterTrussPoses.yPosPlacePixelFar, BlueAfterTrussPoses.headingPlaceFar);
@@ -195,11 +207,12 @@ public class MonkeyMap {
                 placePixelClose = new Pose2d(BlueAfterTrussPoses.xPosPlacePixelClose, BlueAfterTrussPoses.yPosPlacePixelClose, BlueAfterTrussPoses.headingPlaceClose);
                 flipAfterPlaceClose = new Pose2d(BlueAfterTrussPoses.xPosFlipAfterPlaceClose, BlueAfterTrussPoses.yPosFlipAfterPlaceClose, headingPlaceAndPickUp);
                 goStraightThroughTrussClose = new Pose2d(BlueAfterTrussPoses.xPosGoStraightThroughTrussClose, BlueAfterTrussPoses.yPosGoStraightThroughTrussClose, headingPlaceAndPickUp);
+                goAroundPurplePixelBeacon2 = new Pose2d(BlueAfterTrussPoses.xPosGoAroundPurplePixelBeacon2, BlueAfterTrussPoses.yPosGoAroundPurplePixelBeacon2, BlueAfterTrussPoses.headingStartingPositionAndBeacon);
 
                 goAcrossForBeforeTrussPurplePixelFar = new Pose2d(BlueAfterTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelFar, BlueAfterTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelFar, headingPlaceAndPickUp);
                 goAcrossForBeforeTrussPurplePixelCloseMidBeacon = new Pose2d(BlueAfterTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelClose, BlueAfterTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelClose, BlueAfterTrussPoses.headingMidBeaconBefore);
-                goAcrossForBeforeTrussPurplePixelCloseWallBeacon = new Pose2d(BlueAfterTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelFar, BlueAfterTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelFar, BlueAfterTrussPoses.headingWallBeaconBefore);
-                goAcrossForBeforeTrussPurplePixelCloseTrussBeacon = new Pose2d(BlueAfterTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelFar, BlueAfterTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelFar, BlueAfterTrussPoses.headingTrussBeaconBefore);
+                goAcrossForBeforeTrussPurplePixelCloseWallBeacon = new Pose2d(BlueAfterTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelClose, BlueAfterTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelClose, BlueAfterTrussPoses.headingWallBeaconBefore);
+                goAcrossForBeforeTrussPurplePixelCloseTrussBeacon = new Pose2d(BlueAfterTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelClose, BlueAfterTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelClose, BlueAfterTrussPoses.headingTrussBeaconBefore);
 
                 midStackPickUpFar = new Pose2d(BlueAfterTrussPoses.xPosMidStackPickUpFar, BlueAfterTrussPoses.yPosMidStackPickUpFar, BlueAfterTrussPoses.headingMidStackPickUpFar);
                 midStackPickUpClose = new Pose2d(BlueAfterTrussPoses.xPosMidStackPickUpClose, BlueAfterTrussPoses.yPosMidStackPickUpClose, BlueAfterTrussPoses.headingMidStackPickUpClose);
@@ -224,6 +237,7 @@ public class MonkeyMap {
 
                 startExtendFirstPlacementAfter = new Pose2d(BlueBeforeTrussPoses.xPosStartExtendFirstPlacementAfter, BlueBeforeTrussPoses.yPosStartExtendFirstPlacementAfter, headingPlaceAndPickUp);
                 lineUpForPickUpFar = new Pose2d(BlueBeforeTrussPoses.xPosLineUpForPickUpFar, BlueBeforeTrussPoses.yPosLineUpForPickUpFar, headingPlaceAndPickUp);
+                lineUpForPlaceFar = new Pose2d(BlueBeforeTrussPoses.xPosLineUpForPlaceFar, BlueBeforeTrussPoses.yPosLineUpForPlaceFar, headingPlaceAndPickUp);
                 startArmExtendPickUpFar = new Pose2d(BlueBeforeTrussPoses.xPosStartArmExtendPickUpFar, BlueBeforeTrussPoses.yPosStartArmExtendPickUpFar, headingPlaceAndPickUp);
                 pickUpPixelFar = new Pose2d(BlueBeforeTrussPoses.xPosPickUpPixelFar, BlueBeforeTrussPoses.yPosPickUpPixelFar, headingPlaceAndPickUp);
                 placePixelFar = new Pose2d(BlueBeforeTrussPoses.xPosPlacePixelFar, BlueBeforeTrussPoses.yPosPlacePixelFar, BlueBeforeTrussPoses.headingPlaceFar);
@@ -236,11 +250,12 @@ public class MonkeyMap {
                 placePixelClose = new Pose2d(BlueBeforeTrussPoses.xPosPlacePixelClose, BlueBeforeTrussPoses.yPosPlacePixelClose, BlueBeforeTrussPoses.headingPlaceClose);
                 flipAfterPlaceClose = new Pose2d(BlueBeforeTrussPoses.xPosFlipAfterPlaceClose, BlueBeforeTrussPoses.yPosFlipAfterPlaceClose, headingPlaceAndPickUp);
                 goStraightThroughTrussClose = new Pose2d(BlueBeforeTrussPoses.xPosGoStraightThroughTrussClose, BlueBeforeTrussPoses.yPosGoStraightThroughTrussClose, headingPlaceAndPickUp);
+                goAroundPurplePixelBeacon2 = new Pose2d(BlueBeforeTrussPoses.xPosGoAroundPurplePixelBeacon2, BlueBeforeTrussPoses.yPosGoAroundPurplePixelBeacon2, BlueBeforeTrussPoses.headingStartingPositionAndBeacon);
 
-                goAcrossForBeforeTrussPurplePixelFar = new Pose2d(BlueBeforeTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelFar, BlueBeforeTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelFar, headingPlaceAndPickUp);
+                goAcrossForBeforeTrussPurplePixelFar = new Pose2d(BlueBeforeTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelFar, BlueBeforeTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelFar, BlueBeforeTrussPoses.headingStartingPositionAndBeacon);
                 goAcrossForBeforeTrussPurplePixelCloseMidBeacon = new Pose2d(BlueBeforeTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelClose, BlueBeforeTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelClose, BlueBeforeTrussPoses.headingMidBeaconBefore);
-                goAcrossForBeforeTrussPurplePixelCloseWallBeacon = new Pose2d(BlueBeforeTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelFar, BlueBeforeTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelFar, BlueBeforeTrussPoses.headingWallBeaconBefore);
-                goAcrossForBeforeTrussPurplePixelCloseTrussBeacon = new Pose2d(BlueBeforeTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelFar, BlueBeforeTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelFar, BlueBeforeTrussPoses.headingTrussBeaconBefore);
+                goAcrossForBeforeTrussPurplePixelCloseWallBeacon = new Pose2d(BlueBeforeTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelClose, BlueBeforeTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelClose, BlueBeforeTrussPoses.headingWallBeaconBefore);
+                goAcrossForBeforeTrussPurplePixelCloseTrussBeacon = new Pose2d(BlueBeforeTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelClose, BlueBeforeTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelClose, BlueBeforeTrussPoses.headingTrussBeaconBefore);
 
                 midStackPickUpFar = new Pose2d(RedAfterTrussPoses.xPosMidStackPickUpFar, RedAfterTrussPoses.yPosMidStackPickUpFar, RedAfterTrussPoses.headingMidStackPickUpFar);
                 midStackPickUpClose = new Pose2d(RedAfterTrussPoses.xPosMidStackPickUpClose, RedAfterTrussPoses.yPosMidStackPickUpClose, RedAfterTrussPoses.headingMidStackPickUpClose);
@@ -265,6 +280,7 @@ public class MonkeyMap {
 
                 startExtendFirstPlacementAfter = new Pose2d(RedAfterTrussPoses.xPosStartExtendFirstPlacementAfter, RedAfterTrussPoses.yPosStartExtendFirstPlacementAfter, headingPlaceAndPickUp);
                 lineUpForPickUpFar = new Pose2d(RedAfterTrussPoses.xPosLineUpForPickUpFar, RedAfterTrussPoses.yPosLineUpForPickUpFar, headingPlaceAndPickUp);
+                lineUpForPlaceFar = new Pose2d(RedAfterTrussPoses.xPosLineUpForPlaceFar, RedAfterTrussPoses.yPosLineUpForPlaceFar, headingPlaceAndPickUp);
                 startArmExtendPickUpFar = new Pose2d(RedAfterTrussPoses.xPosStartArmExtendPickUpFar, RedAfterTrussPoses.yPosStartArmExtendPickUpFar, headingPlaceAndPickUp);
                 pickUpPixelFar = new Pose2d(RedAfterTrussPoses.xPosPickUpPixelFar, RedAfterTrussPoses.yPosPickUpPixelFar, headingPlaceAndPickUp);
                 placePixelFar = new Pose2d(RedAfterTrussPoses.xPosPlacePixelFar, RedAfterTrussPoses.yPosPlacePixelFar, RedAfterTrussPoses.headingPlaceFar);
@@ -277,11 +293,12 @@ public class MonkeyMap {
                 placePixelClose = new Pose2d(RedAfterTrussPoses.xPosPlacePixelClose, RedAfterTrussPoses.yPosPlacePixelClose, RedAfterTrussPoses.headingPlaceClose);
                 flipAfterPlaceClose = new Pose2d(RedAfterTrussPoses.xPosFlipAfterPlaceClose, RedAfterTrussPoses.yPosFlipAfterPlaceClose, headingPlaceAndPickUp);
                 goStraightThroughTrussClose = new Pose2d(RedAfterTrussPoses.xPosGoStraightThroughTrussClose, RedAfterTrussPoses.yPosGoStraightThroughTrussClose, headingPlaceAndPickUp);
+                goAroundPurplePixelBeacon2 = new Pose2d(RedAfterTrussPoses.xPosGoAroundPurplePixelBeacon2, RedAfterTrussPoses.yPosGoAroundPurplePixelBeacon2, RedAfterTrussPoses.headingStartingPositionAndBeacon);
 
                 goAcrossForBeforeTrussPurplePixelFar = new Pose2d(RedAfterTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelFar, RedAfterTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelFar, headingPlaceAndPickUp);
                 goAcrossForBeforeTrussPurplePixelCloseMidBeacon = new Pose2d(RedAfterTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelClose, RedAfterTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelClose, RedAfterTrussPoses.headingMidBeaconBefore);
-                goAcrossForBeforeTrussPurplePixelCloseWallBeacon = new Pose2d(RedAfterTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelFar, RedAfterTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelFar, RedAfterTrussPoses.headingWallBeaconBefore);
-                goAcrossForBeforeTrussPurplePixelCloseTrussBeacon = new Pose2d(RedAfterTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelFar, RedAfterTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelFar, RedAfterTrussPoses.headingTrussBeaconBefore);
+                goAcrossForBeforeTrussPurplePixelCloseWallBeacon = new Pose2d(RedAfterTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelClose, RedAfterTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelClose, RedAfterTrussPoses.headingWallBeaconBefore);
+                goAcrossForBeforeTrussPurplePixelCloseTrussBeacon = new Pose2d(RedAfterTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelClose, RedAfterTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelClose, RedAfterTrussPoses.headingTrussBeaconBefore);
 
                 midStackPickUpFar = new Pose2d(RedAfterTrussPoses.xPosMidStackPickUpFar, RedAfterTrussPoses.yPosMidStackPickUpFar, RedAfterTrussPoses.headingMidStackPickUpFar);
                 midStackPickUpClose = new Pose2d(RedAfterTrussPoses.xPosMidStackPickUpClose, RedAfterTrussPoses.yPosMidStackPickUpClose, RedAfterTrussPoses.headingMidStackPickUpClose);
@@ -306,6 +323,7 @@ public class MonkeyMap {
 
                 startExtendFirstPlacementAfter = new Pose2d(RedBeforeTrussPoses.xPosStartExtendFirstPlacementAfter, RedBeforeTrussPoses.yPosStartExtendFirstPlacementAfter, headingPlaceAndPickUp);
                 lineUpForPickUpFar = new Pose2d(RedBeforeTrussPoses.xPosLineUpForPickUpFar, RedBeforeTrussPoses.yPosLineUpForPickUpFar, headingPlaceAndPickUp);
+                lineUpForPlaceFar = new Pose2d(RedBeforeTrussPoses.xPosLineUpForPlaceFar, RedBeforeTrussPoses.yPosLineUpForPlaceFar, headingPlaceAndPickUp);
                 startArmExtendPickUpFar = new Pose2d(RedBeforeTrussPoses.xPosStartArmExtendPickUpFar, RedBeforeTrussPoses.yPosStartArmExtendPickUpFar, headingPlaceAndPickUp);
                 pickUpPixelFar = new Pose2d(RedBeforeTrussPoses.xPosPickUpPixelFar, RedBeforeTrussPoses.yPosPickUpPixelFar, headingPlaceAndPickUp);
                 placePixelFar = new Pose2d(RedBeforeTrussPoses.xPosPlacePixelFar, RedBeforeTrussPoses.yPosPlacePixelFar, RedBeforeTrussPoses.headingPlaceFar);
@@ -318,11 +336,12 @@ public class MonkeyMap {
                 placePixelClose = new Pose2d(RedBeforeTrussPoses.xPosPlacePixelClose, RedBeforeTrussPoses.yPosPlacePixelClose, RedBeforeTrussPoses.headingPlaceClose);
                 flipAfterPlaceClose = new Pose2d(RedBeforeTrussPoses.xPosFlipAfterPlaceClose, RedBeforeTrussPoses.yPosFlipAfterPlaceClose, headingPlaceAndPickUp);
                 goStraightThroughTrussClose = new Pose2d(RedBeforeTrussPoses.xPosGoStraightThroughTrussClose, RedBeforeTrussPoses.yPosGoStraightThroughTrussClose, headingPlaceAndPickUp);
+                goAroundPurplePixelBeacon2 = new Pose2d(RedBeforeTrussPoses.xPosGoAroundPurplePixelBeacon2, RedBeforeTrussPoses.yPosGoAroundPurplePixelBeacon2, RedBeforeTrussPoses.headingStartingPositionAndBeacon);
 
                 goAcrossForBeforeTrussPurplePixelFar = new Pose2d(RedBeforeTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelFar, RedBeforeTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelFar, RedBeforeTrussPoses.headingStartingPositionAndBeacon);
                 goAcrossForBeforeTrussPurplePixelCloseMidBeacon = new Pose2d(RedBeforeTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelClose, RedBeforeTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelClose, RedBeforeTrussPoses.headingMidBeaconBefore);
-                goAcrossForBeforeTrussPurplePixelCloseWallBeacon = new Pose2d(RedBeforeTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelFar, RedBeforeTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelFar, RedBeforeTrussPoses.headingWallBeaconBefore);
-                goAcrossForBeforeTrussPurplePixelCloseTrussBeacon = new Pose2d(RedBeforeTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelFar, RedBeforeTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelFar, RedBeforeTrussPoses.headingTrussBeaconBefore);
+                goAcrossForBeforeTrussPurplePixelCloseWallBeacon = new Pose2d(RedBeforeTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelClose, RedBeforeTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelClose, RedBeforeTrussPoses.headingWallBeaconBefore);
+                goAcrossForBeforeTrussPurplePixelCloseTrussBeacon = new Pose2d(RedBeforeTrussPoses.xPosGoAcrossForBeforeTrussPurplePixelClose, RedBeforeTrussPoses.yPosGoAcrossForBeforeTrussPurplePixelClose, RedBeforeTrussPoses.headingTrussBeaconBefore);
 
                 midStackPickUpFar = new Pose2d(RedBeforeTrussPoses.xPosMidStackPickUpFar, RedBeforeTrussPoses.yPosMidStackPickUpFar, RedBeforeTrussPoses.headingMidStackPickUpFar);
                 midStackPickUpClose = new Pose2d(RedBeforeTrussPoses.xPosMidStackPickUpClose, RedBeforeTrussPoses.yPosMidStackPickUpClose, RedBeforeTrussPoses.headingMidStackPickUpClose);
@@ -341,6 +360,19 @@ public class MonkeyMap {
     public void openGrabber(){
         openLeftGrabber();
         openRightGrabber();
+        grabberIsOpen = true;
+    }
+    public void openRightGrabberTele(){
+        grabberServoRight.setPosition(grabberOpenTele);
+        rightGrabberOpen = true;
+    }
+    public void openLeftGrabberTele(){
+        grabberServoLeft.setPosition(grabberOpenTele);
+        leftGrabberOpen = true;
+    }
+    public void openGrabberTele(){
+        openLeftGrabberTele();
+        openRightGrabberTele();
         grabberIsOpen = true;
     }
 
@@ -363,7 +395,7 @@ public class MonkeyMap {
             closeGrabber();
         }
         else{
-            openGrabber();
+            openGrabberTele();
         }
     }
 
@@ -372,7 +404,7 @@ public class MonkeyMap {
             closeLeftGrabber();
         }
         else{
-            openLeftGrabber();
+            openLeftGrabberTele();
         }
     }
 
@@ -381,12 +413,12 @@ public class MonkeyMap {
             closeRightGrabber();
         }
         else{
-            openRightGrabber();
+            openRightGrabberTele();
         }
     }
 
     public void resetArm(){
-        setFlipperPos(flipperPosDown6Pixels);
+//        flipUp();
 //        closeGrabber();
         setRotatorFlush();
         setCorrectorMid();
@@ -408,6 +440,11 @@ public class MonkeyMap {
         setFlipperPos(flipperPosDown6Pixels);
         rotatorServo.setPosition(rotator6Pixels);
         fullyExtendSlides();
+    }
+    public void flipAndRotateDown6Pixels(){
+        setFlipperPos(flipperPosDown6Pixels);
+        rotatorServo.setPosition(rotator6Pixels);
+//        fullyExtendSlides();
     }
     public void flipAndRotateDown5Pixels(){
         setFlipperPos(flipperPosDown5Pixels);
@@ -527,7 +564,7 @@ public class MonkeyMap {
     }
     public void placeInAutonFar(PointFollower follower, ArrayList<PosesAndActions> posesToGoTo, boolean isBlue){
         posesToGoTo.clear();
-        posesToGoTo.add(new PosesAndActions(lineUpForPickUpFar, "flipDownForAuton"));
+        posesToGoTo.add(new PosesAndActions(lineUpForPlaceFar, "flipDownForAuton"));
 //        posesToGoTo.add(new PosesAndActions(startArmExtendPlaceFar, "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace"));
         if(isBlue){
             posesToGoTo.add(new PosesAndActions(startArmExtendPlaceFar, "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace"));
@@ -637,14 +674,17 @@ public class MonkeyMap {
     public int TeamPropDetectionReading(){
         if(!OpenCVDetectTeamProp.isDetected){
             return 1;
+//            return 1;
         }
         else if(OpenCVDetectTeamProp.centerX < 160){
-            return 2;
+            return 3;
+//            return 1;
         }
         else if(OpenCVDetectTeamProp.centerX > 160){
-            return  3;
+            return  2;
+//            return 1;
         }
-        return 0;
+        return 2;
     }
     public int wrapPixelTypeInt(int pixelType){
         while(pixelType > 1){

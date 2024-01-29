@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.CenterStageImportantFiles.HardwareMaps;
 
 import com.acmerobotics.dashboard.config.Config;
 
-@Config
+//@Config
 public class BlueAfterTrussPosesOLDBOT {
     //X Poses
     public static double xPosStartingPosition = 12.5;

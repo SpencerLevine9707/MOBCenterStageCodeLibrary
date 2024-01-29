@@ -5,42 +5,44 @@ import com.acmerobotics.dashboard.config.Config;
 @Config
 public class BlueBeforeTrussPoses {
     //Starting pos
-    public static double xPosStartingPos = -36, yPosStartingPos = -58;
+    public static double xPosStartingPos = -33, yPosStartingPos = 58;
 
     //After only poses
-    public static double xPosPurplePixelPlacementAfterBeacon1 = 36, yPosPurplePixelPlacementAfterBeacon1 = -28;
-    public static double xPosPurplePixelPlacementAfterBeacon23 = 36, yPosPurplePixelPlacementAfterBeacon23 = -28;
-    public static double xPosStartExtendFirstPlacementAfter = 41, yPosStartExtendFirstPlacementAfter = -28;
-    public static double xPosFirstPlacementAfter = 41, yPosFirstPlacementAfter = -31;
+    public static double xPosPurplePixelPlacementAfterBeacon1 = 30.4, yPosPurplePixelPlacementAfterBeacon1 = 30;
+    public static double xPosPurplePixelPlacementAfterBeacon23 = 22.4, yPosPurplePixelPlacementAfterBeacon23 = 30;
+    public static double xPosStartExtendFirstPlacementAfter = 25, yPosStartExtendFirstPlacementAfter = 34;
+    public static double xPosFirstPlacementAfter = 43, yPosFirstPlacementAfter = 28;
 
     //Before only poses
-    public static double xPosGoAcrossForBeforeTrussPurplePixelFar = -36, yPosGoAcrossForBeforeTrussPurplePixelFar = -5;
-    public static double xPosGoAcrossForBeforeTrussPurplePixelClose = -36, yPosGoAcrossForBeforeTrussPurplePixelClose = -56;
+    public static double xPosGoAcrossForBeforeTrussPurplePixelFar = -28, yPosGoAcrossForBeforeTrussPurplePixelFar = 10;
+    public static double xPosGoAroundPurplePixelBeacon2 = -50, yPosGoAroundPurplePixelBeacon2 = 10;
+    public static double xPosGoAcrossForBeforeTrussPurplePixelClose = -33, yPosGoAcrossForBeforeTrussPurplePixelClose = 44;
 
     //Far poses
-    public static double xPosLineUpForPickUpFar = 20, yPosLineUpForPickUpFar = -11;
-    public static double xPosStartArmExtendPickUpFar = 0, yPosStartArmExtendPickUpFar = -9;
-    public static double xPosPickUpPixelFar = -28, yPosPickUpPixelFar = -7.5;
-    public static double xPosPlacePixelFar = 43, yPosPlacePixelFar = -19;
+    public static double xPosLineUpForPickUpFar = 40, yPosLineUpForPickUpFar = 6;
+    public static double xPosLineUpForPlaceFar = 7, yPosLineUpForPlaceFar = 6;
+    public static double xPosStartArmExtendPickUpFar = -21, yPosStartArmExtendPickUpFar = 6;
+    public static double xPosPickUpPixelFar = -41, yPosPickUpPixelFar = 9;
+    public static double xPosPlacePixelFar = 45, yPosPlacePixelFar = 18;
     public static double xPosFlipAfterPlaceFar = 24, yPosFlipAfterPlaceFar = -16;
-    public static double xPosStartArmExtendPlaceFar = 21, yPosStartArmExtendPlaceFar = -13;
+    public static double xPosStartArmExtendPlaceFar = 30, yPosStartArmExtendPlaceFar = 6;
 
     //Close poses
-    public static double xPosLineUpForPickUpClose = 10, yPosLineUpForPickUpClose = -54;
+    public static double xPosLineUpForPickUpClose = 13, yPosLineUpForPickUpClose = 54.5;
     public static double xPosStartArmExtendPickUpClose = 0, yPosStartArmExtendPickUpClose = -52;
-    public static double xPosPickUpPixelClose = -45, yPosPickUpPixelClose = -49;
-    public static double xPosStartArmExtendPlaceClose = 21, yPosStartArmExtendPlaceClose = -50;
-    public static double xPosPlacePixelClose = 43, yPosPlacePixelClose = -43;
+    public static double xPosPickUpPixelClose = -43, yPosPickUpPixelClose = 44;
+    public static double xPosStartArmExtendPlaceClose = 30, yPosStartArmExtendPlaceClose = 54.5;
+    public static double xPosPlacePixelClose = 47, yPosPlacePixelClose = 42;
     public static double xPosFlipAfterPlaceClose = 20, yPosFlipAfterPlaceClose = -42;
-    public static double xPosGoStraightThroughTrussClose = -40, yPosGoStraightThroughTrussClose = -49;
-    public static double xPosMidStackPickUpFar = -43, yPosMidStackPickUpFar = -7.5;
-    public static double xPosMidStackPickUpClose = -48, yPosMidStackPickUpClose = -41;
+    public static double xPosGoStraightThroughTrussClose = -40, yPosGoStraightThroughTrussClose = 54.5;
+    public static double xPosMidStackPickUpFar = -40, yPosMidStackPickUpFar = 13;
+    public static double xPosMidStackPickUpClose = -50, yPosMidStackPickUpClose = 50;
 
-    public static double headingMidStackPickUpFar = Math.toRadians(-30), headingMidStackPickUpClose = Math.toRadians(45);
+    public static double headingMidStackPickUpFar = Math.toRadians(150), headingMidStackPickUpClose = Math.toRadians(230);
     public static double headingStartingPositionAndBeacon = -Math.toRadians(90), headingPickUpClose = Math.toRadians(215);
-    public static double headingPlaceFar = Math.toRadians(30), headingPlaceClose = Math.toRadians(-30);
-    public static double headingWallBeaconBefore = Math.toRadians(55), headingTrussBeaconBefore = Math.toRadians(125), headingTiltedBeaconsAfter = Math.toRadians(60);
-    public static double headingMidBeaconBefore = Math.toRadians(100), headingBeacon1PlacementAfter = Math.toRadians(-15), headingBeacon3PlacementAfter = Math.toRadians(15);
-    public static double headingBeacon1PlacementBeforeClose = Math.toRadians(60), headingBeacon2PlacementBeforeClose = Math.toRadians(40), headingBeacon3PlacementBeforeClose = Math.toRadians(20);
-    public static double headingBeacon1PlacementBeforeFar = Math.toRadians(-20), headingBeacon2PlacementBeforeFar = Math.toRadians(-40), headingBeacon3PlacementBeforeFar = Math.toRadians(-60);
+    public static double headingPlaceFar = Math.toRadians(200), headingPlaceClose = Math.toRadians(160);
+    public static double headingWallBeaconBefore = Math.toRadians(245), headingTrussBeaconBefore = Math.toRadians(290), headingTiltedBeaconsAfter = Math.toRadians(60);
+    public static double headingMidBeaconBefore = Math.toRadians(280), headingBeacon1PlacementAfter = Math.toRadians(195), headingBeacon3PlacementAfter = Math.toRadians(161);
+    public static double headingBeacon1PlacementBeforeClose = Math.toRadians(220), headingBeacon2PlacementBeforeClose = Math.toRadians(200), headingBeacon3PlacementBeforeClose = Math.toRadians(190);
+    public static double headingBeacon1PlacementBeforeFar = Math.toRadians(220), headingBeacon2PlacementBeforeFar = Math.toRadians(200), headingBeacon3PlacementBeforeFar = Math.toRadians(190);
 }

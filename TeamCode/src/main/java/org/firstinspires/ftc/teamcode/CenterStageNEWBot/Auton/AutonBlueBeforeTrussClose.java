@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "Center Stage")
+@Disabled
 public class AutonBlueBeforeTrussClose extends LinearOpMode {
     OpenCvCamera webcam;
     public static int sleepTimeTestAuton = 10000;
@@ -116,8 +118,8 @@ public class AutonBlueBeforeTrussClose extends LinearOpMode {
 //            for (int i = 0; i < 2; i++) {
 //                wBot.autonLoopFar(follower, posesToGoTo, wBot.wrapPixelTypeInt(i), true, i>1);
 //            }
-            telemetry.addData("Time for auton ", timeForAuton);
-            telemetry.update();
+//            telemetry.addData("Time for auton ", timeForAuton);
+//            telemetry.update();
             terminateOpModeNow();
         }
     }

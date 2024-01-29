@@ -27,22 +27,31 @@ public class ActionRunnerCenterStageAuton {
         switch (action) {
             case "flipDown and rotateDown 5Pixels":
                 wBot.flipAndRotateDown5Pixels();
+                wBot.closeGrabber();
                 break;
             case "flipDown and rotateDown 4Pixels":
                 wBot.flipAndRotateDown4Pixels();
+                wBot.closeGrabber();
                 break;
             case "flipDown and rotateDown 3Pixels":
                 wBot.flipAndRotateDown3Pixels();
+                wBot.closeGrabber();
                 break;
             case "flipDown and rotateDown 2Pixels":
                 wBot.flipAndRotateDown2Pixels();
+                wBot.closeGrabber();
                 break;
             case "flipDown and rotateDown 1Pixel":
                 wBot.flipDown();
                 wBot.rotatorPickUpAndPlace();
+                wBot.closeGrabber();
                 break;
             case "flipDown and rotateDown6Pixels and fullyExtendSlides":
                 wBot.flipAndRotateDownAndExtend6Pixels();
+                break;
+            case "flipDown and rotateDown6Pixels":
+                wBot.flipAndRotateDown6Pixels();
+                break;
             case "closeGrabber":
                 telemetry.addLine("Closed Grabber");
                 wBot.closeGrabber();
@@ -53,10 +62,25 @@ public class ActionRunnerCenterStageAuton {
             case "fullyExtendSlides":
                 wBot.fullyExtendSlides();
                 break;
-            case "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (blue)":
+            case "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace":
                 wBot.fullyExtendSlides();
                 wBot.correctorServo.setPosition(MonkeyMap.correctorServoPlaceFarPos);
                 wBot.rotatorServo.setPosition(MonkeyMap.rotatorServoPlaceInAuton);
+                break;
+            case "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon1)":
+//                wBot.encodedSlipperySlides(MonkeyMap.slidesFirstPlacePosBeacons13, MonkeyMap.slidePowerEncoder);
+                wBot.correctorServo.setPosition(MonkeyMap.correctorServoBeacon1PreloadPlace);
+                wBot.rotatorServo.setPosition(MonkeyMap.rotatorServoFirstPlace);
+                break;
+            case "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon2)":
+//                wBot.encodedSlipperySlides(MonkeyMap.slidesFirstPlacePosBeacon2, MonkeyMap.slidePowerEncoder);
+                wBot.correctorServo.setPosition(MonkeyMap.correctorServoMidPos);
+                wBot.rotatorServo.setPosition(MonkeyMap.rotatorServoFirstPlace);
+                break;
+            case "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon3)":
+//                wBot.encodedSlipperySlides(MonkeyMap.slidesFirstPlacePosBeacons13, MonkeyMap.slidePowerEncoder);
+                wBot.correctorServo.setPosition(MonkeyMap.correctorServoBeacon3PreloadPlace);
+                wBot.rotatorServo.setPosition(MonkeyMap.rotatorServoFirstPlace);
                 break;
             case "fullyExtendSlides and setCorrectorPlaceClose and rotateForPlace":
                 wBot.fullyExtendSlides();
@@ -112,6 +136,9 @@ public class ActionRunnerCenterStageAuton {
             case "extendSlidesFirstPlacementBeforeBeacon1":
                 wBot.flipUpFirstPlace();
                 wBot.extendSlidesBeacon1PreloadBefore();
+                break;
+            case"flipUpFirstPlace":
+                wBot.flipUpFirstPlace();
                 break;
             case "extendSlidesFirstPlacementBeforeBeacon2":
                 wBot.flipUpFirstPlace();
