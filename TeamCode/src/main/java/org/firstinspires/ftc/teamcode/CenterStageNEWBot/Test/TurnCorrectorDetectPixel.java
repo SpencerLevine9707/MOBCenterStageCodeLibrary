@@ -1,29 +1,35 @@
-package org.firstinspires.ftc.teamcode.CenterStageNEWBot.Drive;
+package org.firstinspires.ftc.teamcode.CenterStageNEWBot.Test;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.CenterStageNEWBot.HardwareMaps.MonkeyMap;
+import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVGreatestColorTest;
 import org.firstinspires.ftc.teamcode.hardwareMaps.MecanumDrive;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Config
 @TeleOp
-public class DriveBotSecondIteration extends LinearOpMode {
+public class TurnCorrectorDetectPixel extends LinearOpMode {
+    OpenCvCamera webcam2;
     MonkeyMap wBot = new MonkeyMap(this);
+    static OpenCVGreatestColorTest pipeline;
     public ElapsedTime planeTime = new ElapsedTime(), timeForCloseLeft = new ElapsedTime(), timeForCloseRight = new ElapsedTime();
     public static double timeForPlaneWait = 0.75;
+    public static int webcamWidth = 320;
+    public static int webcamHeight = 240;
+    public static int webcamWidthCenter = webcamWidth/2;
+    public static int xThreshhold = 40;
     public static double maxFlipperPos = 0;
     public static double lowestFlipperPos = 1;
     public static double slideSpeed = -150;
@@ -32,11 +38,9 @@ public class DriveBotSecondIteration extends LinearOpMode {
     public static boolean slideResetOnInit = false;
     public static double slowSpeedDrive = 0.3;
     public static double maxRotatorPosUp = 0.644, maxRotatorPosDown = 0.43;
-    public static double lowestFlipperPosDown = 0.83, highestFlipperPos = 0;
-    public static double correctorServoMinPosition = 0.07, correctorServoMaxPosition = 0.93;
+    public static double lowestFlipperPosDown = 0.765, highestFlipperPos = 0.02;
     public static double divisorForSpinPower = 1.5;
     public static double timeForCloseWait = 0.75;
-    public Orientation angles;
 
 
 
@@ -46,9 +50,6 @@ public class DriveBotSecondIteration extends LinearOpMode {
         if(slideResetOnInit){
             wBot.resetSlidePoses();
         }
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        wBot.gyro.initialize(parameters);
 
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
@@ -77,15 +78,32 @@ public class DriveBotSecondIteration extends LinearOpMode {
         wBot.encodedSlipperySlides(MonkeyMap.resetSlidesPos, MonkeyMap.slidePowerEncoder);
         wBot.loadPlane();
         double rotatorRange = maxRotatorPosUp - maxRotatorPosDown;
-        double correctorRange = correctorServoMaxPosition - correctorServoMinPosition;
         timeForCloseLeft.reset();
         timeForCloseRight.reset();
+
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        webcam2 = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 2"), cameraMonitorViewId);
+        pipeline = new OpenCVGreatestColorTest(telemetry);
+        webcam2.setPipeline(pipeline);
+        webcam2.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+            @Override
+            public void onOpened() {
+                webcam2.startStreaming(webcamWidth, webcamHeight, OpenCvCameraRotation.UPRIGHT);
+            }
+
+            @Override
+            public void onError(int errorCode) {
+                /*
+                 * This will be called if the camera could not be opened
+                 */
+            }
+        });
+        FtcDashboard.getInstance().startCameraStream(webcam2, 0);
 
         waitForStart();
 
         while(opModeIsActive()){
-            angles = wBot.gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-            double heading = angles.firstAngle;
+            int xDist = OpenCVGreatestColorTest.centerX - webcamWidthCenter;
 //            Gamepad 1 controls
             double lx1 = gamepad1.left_stick_x;
             double ly1 = gamepad1.left_stick_y;
@@ -107,7 +125,7 @@ public class DriveBotSecondIteration extends LinearOpMode {
                 powerForMotors = slowSpeedDrive;
             }
             else{
-               powerForMotors = powerFromTriggers;
+                powerForMotors = powerFromTriggers;
             }
             if(a1 && a1Pressable){
                 isReserveDrive = !isReserveDrive;
@@ -212,8 +230,16 @@ public class DriveBotSecondIteration extends LinearOpMode {
 
             telemetry.addLine("armMotorLeftPow: " + wBot.armMotorLeft.getPower() + " armMotorRightPow: " + wBot.armMotorRight.getPower());
 
-            if(Math.abs(rx2) > 0) {
-                wBot.correctorServo.setPosition(wBot.correctorServo.getPosition() + MonkeyMap.correctorServoSpeed * rx2);
+//            if(Math.abs(rx2) > 0) {
+//                wBot.correctorServo.setPosition(wBot.correctorServo.getPosition() + MonkeyMap.correctorServoSpeed * rx2);
+//            }
+            if(flipperPos > lowestFlipperPosDown){
+                if(xDist < -xThreshhold){
+                    wBot.correctorServo.setPosition(wBot.correctorServo.getPosition() + MonkeyMap.correctorServoSpeed);
+                }
+                else if(xDist > xThreshhold){
+                    wBot.correctorServo.setPosition(wBot.correctorServo.getPosition() - MonkeyMap.correctorServoSpeed);
+                }
             }
 //            if(Math.abs(ry2) > 0){
 //                wBot.rotatorServo.setPosition(wBot.rotatorServo.getPosition() + MonkeyMap.rotatorServoSpeed * ry2);
@@ -242,22 +268,15 @@ public class DriveBotSecondIteration extends LinearOpMode {
                 wBot.setRotatorFlush();
             }
             else{
-                double flipperScalar = Math.abs((flipperPos/(lowestFlipperPosDown-highestFlipperPos)) - 1);
+                double flipperScalar = Math.abs((wBot.flipperServoRight.getPosition()/(lowestFlipperPosDown-highestFlipperPos)) - 1);
                 double newRotatorPos = maxRotatorPosDown + (flipperScalar*rotatorRange);
                 wBot.rotatorServo.setPosition(newRotatorPos);
             }
-            if(flipperPos < lowestFlipperPosDown){
-                double correctorScalar = angleWrap(heading)/180;
-                double newCorrectorPos = correctorServoMinPosition + (correctorScalar*correctorServoMaxPosition);
-                wBot.correctorServo.setPosition(newCorrectorPos);
-            }
+            //0.218 - 0.783
 
 
             if(dpu2 && dpu2Pressable){
                 wBot.setCorrectorMid();
-            }
-            if(dpd2 && dpd2Pressable){
-                wBot.gyro.initialize(parameters);
             }
 
 //            if(dpd2 && dpd2Pressable){
@@ -293,9 +312,7 @@ public class DriveBotSecondIteration extends LinearOpMode {
             dpu2Pressable = !dpu2;
             dpd2Pressable = !dpd2;
 
-            telemetry.addData("Heading", angles.firstAngle);
-            telemetry.addData("Roll", angles.secondAngle);
-            telemetry.addData("Pitch", angles.thirdAngle);
+
             telemetry.addLine("slidesPox: " + wBot.armMotorRight.getCurrentPosition());
             telemetry.addLine("slidesPos (left): " + wBot.armMotorLeft.getCurrentPosition());
             telemetry.addLine("slidesPos target: " + wBot.armMotorRight.getTargetPosition());
@@ -311,12 +328,4 @@ public class DriveBotSecondIteration extends LinearOpMode {
             telemetry.update();
         }
     }
-    public double angleWrap(double angle){
-        angle += 90;
-        if(angle > 180 || angle < -180){
-            return 90;
-        }
-        return angle;
-    }
 }
-

@@ -1,28 +1,25 @@
-package org.firstinspires.ftc.teamcode.CenterStageNEWBot.Drive;
+package org.firstinspires.ftc.teamcode.CenterStageNEWBot.Test;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.CenterStageNEWBot.HardwareMaps.MonkeyMap;
 import org.firstinspires.ftc.teamcode.hardwareMaps.MecanumDrive;
 
 @Config
 @TeleOp
-public class DriveBotSecondIteration extends LinearOpMode {
+public class GrabAfterPixelDetected extends LinearOpMode {
     MonkeyMap wBot = new MonkeyMap(this);
-    public ElapsedTime planeTime = new ElapsedTime(), timeForCloseLeft = new ElapsedTime(), timeForCloseRight = new ElapsedTime();
+    public ElapsedTime planeTime = new ElapsedTime();
+    public ElapsedTime timeForClose = new ElapsedTime();
     public static double timeForPlaneWait = 0.75;
     public static double maxFlipperPos = 0;
     public static double lowestFlipperPos = 1;
@@ -32,11 +29,12 @@ public class DriveBotSecondIteration extends LinearOpMode {
     public static boolean slideResetOnInit = false;
     public static double slowSpeedDrive = 0.3;
     public static double maxRotatorPosUp = 0.644, maxRotatorPosDown = 0.43;
-    public static double lowestFlipperPosDown = 0.83, highestFlipperPos = 0;
-    public static double correctorServoMinPosition = 0.07, correctorServoMaxPosition = 0.93;
+    public static double lowestFlipperPosDown = 0.765, highestFlipperPos = 0.02;
     public static double divisorForSpinPower = 1.5;
+    public static double pullUpPowMotor = 1;
+    public ColorRangeSensor color;
+    public static double distForPickUp = 0.35;
     public static double timeForCloseWait = 0.75;
-    public Orientation angles;
 
 
 
@@ -46,9 +44,6 @@ public class DriveBotSecondIteration extends LinearOpMode {
         if(slideResetOnInit){
             wBot.resetSlidePoses();
         }
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-        wBot.gyro.initialize(parameters);
 
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
@@ -77,15 +72,13 @@ public class DriveBotSecondIteration extends LinearOpMode {
         wBot.encodedSlipperySlides(MonkeyMap.resetSlidesPos, MonkeyMap.slidePowerEncoder);
         wBot.loadPlane();
         double rotatorRange = maxRotatorPosUp - maxRotatorPosDown;
-        double correctorRange = correctorServoMaxPosition - correctorServoMinPosition;
-        timeForCloseLeft.reset();
-        timeForCloseRight.reset();
+
+        color = hardwareMap.get(ColorRangeSensor.class, "colorSense");
+        timeForClose.reset();
 
         waitForStart();
 
         while(opModeIsActive()){
-            angles = wBot.gyro.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-            double heading = angles.firstAngle;
 //            Gamepad 1 controls
             double lx1 = gamepad1.left_stick_x;
             double ly1 = gamepad1.left_stick_y;
@@ -107,11 +100,11 @@ public class DriveBotSecondIteration extends LinearOpMode {
                 powerForMotors = slowSpeedDrive;
             }
             else{
-               powerForMotors = powerFromTriggers;
+                powerForMotors = powerFromTriggers;
             }
-            if(a1 && a1Pressable){
-                isReserveDrive = !isReserveDrive;
-            }
+//            if(a1 && a1Pressable){
+//                isReserveDrive = !isReserveDrive;
+//            }
             if(isReserveDrive){
                 drive.moveInTeleop(-lx1, -ly1, rx1, powerForMotors);
             }
@@ -162,22 +155,16 @@ public class DriveBotSecondIteration extends LinearOpMode {
 
             if(a2 && a2Pressable){
                 wBot.toggleGrabber();
-                timeForCloseLeft.reset();
-                timeForCloseRight.reset();
+                timeForClose.reset();
             }
             if(x2 && x2Pressable){
                 wBot.toggleLeftGrabber();
-                timeForCloseLeft.reset();
             }
             if(b2 && b2Pressable){
                 wBot.toggleRightGrabber();
-                timeForCloseRight.reset();
             }
-            if(wBot.detectionLeftGrabber.getDistance(DistanceUnit.INCH) < MonkeyMap.distForPickUpDetect && timeForCloseLeft.seconds() > timeForCloseWait && flipperPos > lowestFlipperPosDown){
-                wBot.closeLeftGrabber();
-            }
-            if(wBot.detectionRightGrabber.getDistance(DistanceUnit.INCH) < MonkeyMap.distForPickUpDetect && timeForCloseRight.seconds() > timeForCloseWait && flipperPos > lowestFlipperPosDown){
-                wBot.closeRightGrabber();
+            if(color.getDistance(DistanceUnit.INCH) < distForPickUp && timeForClose.seconds() > timeForCloseWait){
+                wBot.closeGrabber();
             }
 
             telemetry.addLine("Grabber Servo Pos (left) " + wBot.grabberServoLeft.getPosition() + " Grabber Servo Pos (Right) " + wBot.grabberServoRight.getPosition());
@@ -242,22 +229,15 @@ public class DriveBotSecondIteration extends LinearOpMode {
                 wBot.setRotatorFlush();
             }
             else{
-                double flipperScalar = Math.abs((flipperPos/(lowestFlipperPosDown-highestFlipperPos)) - 1);
+                double flipperScalar = Math.abs((wBot.flipperServoRight.getPosition()/(lowestFlipperPosDown-highestFlipperPos)) - 1);
                 double newRotatorPos = maxRotatorPosDown + (flipperScalar*rotatorRange);
                 wBot.rotatorServo.setPosition(newRotatorPos);
             }
-            if(flipperPos < lowestFlipperPosDown){
-                double correctorScalar = angleWrap(heading)/180;
-                double newCorrectorPos = correctorServoMinPosition + (correctorScalar*correctorServoMaxPosition);
-                wBot.correctorServo.setPosition(newCorrectorPos);
-            }
+            //0.218 - 0.783
 
 
             if(dpu2 && dpu2Pressable){
                 wBot.setCorrectorMid();
-            }
-            if(dpd2 && dpd2Pressable){
-                wBot.gyro.initialize(parameters);
             }
 
 //            if(dpd2 && dpd2Pressable){
@@ -293,30 +273,21 @@ public class DriveBotSecondIteration extends LinearOpMode {
             dpu2Pressable = !dpu2;
             dpd2Pressable = !dpd2;
 
-            telemetry.addData("Heading", angles.firstAngle);
-            telemetry.addData("Roll", angles.secondAngle);
-            telemetry.addData("Pitch", angles.thirdAngle);
-            telemetry.addLine("slidesPox: " + wBot.armMotorRight.getCurrentPosition());
-            telemetry.addLine("slidesPos (left): " + wBot.armMotorLeft.getCurrentPosition());
-            telemetry.addLine("slidesPos target: " + wBot.armMotorRight.getTargetPosition());
-            telemetry.addLine("Rotator Pos: " + wBot.rotatorServo.getPosition());
-//            telemetry.addLine("Conveyor motor pow: " + wBot.conveyerMotor.getPower());
-            telemetry.addLine("Flipper Servo Left Pos: " + flipperPos + " Flipper Servo Right Pos: " + wBot.flipperServoRight.getPosition());
-            telemetry.addLine("ly2 is: " + ly2);
-            telemetry.addLine("rx2 is: " + rx2);
-            telemetry.addLine("ry2 is: " + ry2);
-            telemetry.addLine("Corrector Servo pos is " + wBot.correctorServo.getPosition());
+            telemetry.addData("DistanceDetected", color.getDistance(DistanceUnit.INCH));
+
+//            telemetry.addLine("slidesPox: " + wBot.armMotorRight.getCurrentPosition());
+//            telemetry.addLine("slidesPos (left): " + wBot.armMotorLeft.getCurrentPosition());
+//            telemetry.addLine("slidesPos target: " + wBot.armMotorRight.getTargetPosition());
+//            telemetry.addLine("Rotator Pos: " + wBot.rotatorServo.getPosition());
+////            telemetry.addLine("Conveyor motor pow: " + wBot.conveyerMotor.getPower());
+//            telemetry.addLine("Flipper Servo Left Pos: " + flipperPos + " Flipper Servo Right Pos: " + wBot.flipperServoRight.getPosition());
+//            telemetry.addLine("ly2 is: " + ly2);
+//            telemetry.addLine("rx2 is: " + rx2);
+//            telemetry.addLine("ry2 is: " + ry2);
+//            telemetry.addLine("Corrector Servo pos is " + wBot.correctorServo.getPosition());
 
 
             telemetry.update();
         }
     }
-    public double angleWrap(double angle){
-        angle += 90;
-        if(angle > 180 || angle < -180){
-            return 90;
-        }
-        return angle;
-    }
 }
-

@@ -67,7 +67,7 @@ public class AutonBlueBeforeTrussFarPURPLEPARK extends LinearOpMode {
         Pose2d purplePixelPlacement = new Pose2d();
         PosesAndActions firstExtendation = new PosesAndActions(wBot.startExtendFirstPlacementAfter, "");
         int firstPlaceSlidesPos = 0;
-        Pose2d parkBack = new Pose2d(50, 6, MonkeyMap.headingPlaceAndPickUp);
+        Pose2d parkBack = new Pose2d(50, 6, MonkeyMap.headingPickUp);
 
         while(opModeInInit()){
             zoneDetected = wBot.TeamPropDetectionReading();

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "Center Stage")
-public class AutonBlueAfterTrussFar extends LinearOpMode {
+public class AutonBlueAfterTrussParkSquare extends LinearOpMode {
     OpenCvCamera webcam;
     static OpenCVDetectTeamProp colorPipe;
     static OpenCVGreatestColorTest pipeline;
@@ -48,6 +48,8 @@ public class AutonBlueAfterTrussFar extends LinearOpMode {
         colorPipe = new OpenCVDetectTeamProp(telemetry, OpenCVGreatestColorTest.lowerBlue, OpenCVGreatestColorTest.upperBlue);
         webcam.setPipeline(colorPipe);
         FtcDashboard.getInstance().startCameraStream(webcam, 0);
+        Pose2d parkBack = new Pose2d(50, 6, MonkeyMap.headingPickUp);
+        Pose2d lineUpParkBack = new Pose2d(40, 6, MonkeyMap.headingPickUp);
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
@@ -140,7 +142,11 @@ public class AutonBlueAfterTrussFar extends LinearOpMode {
             wBot.openRightGrabber();
             sleep(MonkeyMap.sleepTimeYellowPixel);
             wBot.resetArm();
+            wBot.setFlipperPos(MonkeyMap.flipperPosDown6Pixels);
+            sleep(MonkeyMap.sleepTimeLineUpToPlaceParkAutons);
             posesToGoTo.clear();
+            posesToGoTo.add(new PosesAndActions(wBot.lineUpParkSquare, ""));
+            posesToGoTo.add(new PosesAndActions(wBot.parkSquare, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
 //            wBot.pickUpInAutonFar(follower, posesToGoTo, 0, true, false);

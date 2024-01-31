@@ -11,7 +11,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.CenterStageNEWBot.HardwareMaps.MonkeyMap;
-import org.firstinspires.ftc.teamcode.CenterStageNEWBot.HardwareMaps.RedBeforeTrussPoses;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PointFollower;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PosesAndActions;
 import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVDetectTeamProp;
@@ -41,7 +40,7 @@ public class AutonRedBeforeTrussFarPURPLEPARK extends LinearOpMode {
         wBot.resetSlides();
         ArrayList<PosesAndActions> posesToGoTo = new ArrayList<>();
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
-        Pose2d parkBack = new Pose2d(45, 6, MonkeyMap.headingPlaceAndPickUp);
+        Pose2d parkBack = new Pose2d(45, 6, MonkeyMap.headingPickUp);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);

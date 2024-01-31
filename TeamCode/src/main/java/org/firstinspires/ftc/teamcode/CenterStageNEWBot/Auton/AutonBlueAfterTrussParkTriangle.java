@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "Center Stage")
-public class AutonBlueAfterTrussFar extends LinearOpMode {
+public class AutonBlueAfterTrussParkTriangle extends LinearOpMode {
     OpenCvCamera webcam;
     static OpenCVDetectTeamProp colorPipe;
     static OpenCVGreatestColorTest pipeline;
@@ -140,7 +140,11 @@ public class AutonBlueAfterTrussFar extends LinearOpMode {
             wBot.openRightGrabber();
             sleep(MonkeyMap.sleepTimeYellowPixel);
             wBot.resetArm();
+            wBot.setFlipperPos(MonkeyMap.flipperPosDown6Pixels);
+            sleep(MonkeyMap.sleepTimeLineUpToPlaceParkAutons);
             posesToGoTo.clear();
+            posesToGoTo.add(new PosesAndActions(wBot.lineUpParkTriangle, ""));
+            posesToGoTo.add(new PosesAndActions(wBot.parkTrianlge, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
 //            wBot.pickUpInAutonFar(follower, posesToGoTo, 0, true, false);
