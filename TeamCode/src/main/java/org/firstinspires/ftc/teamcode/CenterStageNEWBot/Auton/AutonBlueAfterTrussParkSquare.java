@@ -125,27 +125,29 @@ public class AutonBlueAfterTrussParkSquare extends LinearOpMode {
                 wBot.extendSlidesCloseBeaconAfter();
             }
             sleep(MonkeyMap.sleepTimeExtendSlides);
-            wBot.openLeftGrabber();
+            wBot.openRightGrabber();
             sleep(MonkeyMap.sleepTimePlacePurplePixel);
+            wBot.setCorrectorMid();
             wBot.resetSlides();
             wBot.flipUpFirstPlace();
-            wBot.rotatorServo.setPosition(MonkeyMap.rotatorServoFirstPlace);
-            wBot.correctorServo.setPosition(correctorPosFirstPlace);
+//            wBot.rotatorServo.setPosition(MonkeyMap.rotatorServoFirstPlace);
+//            wBot.correctorServo.setPosition(correctorPosFirstPlace);
 
             posesToGoTo.clear();
+            posesToGoTo.add(new PosesAndActions(wBot.startExtendFirstPlacementAfter, ""));
+            posesToGoTo.add(new PosesAndActions(wBot.turnForFirstPlacementAfter, ""));
             posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
+            wBot.setAutoRotator(wBot.flipperServoLeft.getPosition());
             sleep(MonkeyMap.sleepTimeWaitForFlipFirstPlace);
             wBot.encodedSlipperySlides(firstPlaceSlidesPos, MonkeyMap.slidePowerEncoder);
             sleep(MonkeyMap.sleepTimeExtendSlides);
-            wBot.openRightGrabber();
+            wBot.openLeftGrabber();
             sleep(MonkeyMap.sleepTimeYellowPixel);
             wBot.resetArm();
-            wBot.setFlipperPos(MonkeyMap.flipperPosDown6Pixels);
-            sleep(MonkeyMap.sleepTimeLineUpToPlaceParkAutons);
             posesToGoTo.clear();
-            posesToGoTo.add(new PosesAndActions(wBot.lineUpParkSquare, ""));
+            posesToGoTo.add(new PosesAndActions(wBot.lineUpParkSquare, "closeGrabber"));
             posesToGoTo.add(new PosesAndActions(wBot.parkSquare, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);

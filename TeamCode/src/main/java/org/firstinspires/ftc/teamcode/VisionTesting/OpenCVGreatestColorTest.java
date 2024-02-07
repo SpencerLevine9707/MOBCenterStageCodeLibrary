@@ -22,11 +22,19 @@ import java.util.ArrayList;
         public static final Scalar pink = new Scalar(255, 0, 142);
         public static final Scalar white = new Scalar(255, 255, 255);
         public static int heightNoDetectPixels = 60;
+//    Scalar lowerBlue = new Scalar(100, 125, 100); // HSV lower threshold for blue
+//    Scalar upperBlue = new Scalar(120, 255, 255); // HSV high threshold for blue
+//     Scalar lowerRed1 = new Scalar(0, 150, 40); // HSV lower threshold for red (low range)
+//        Scalar upperRed1 = new Scalar(20, 255, 255); // HSV high threshold for red (low range)
+//
+//        // Define the HSV range for red color (high range)
+//        Scalar lowerRed2 = new Scalar(150, 150, 40); // HSV lower threshold for red (high range)
+//        Scalar upperRed2 = new Scalar(180, 255, 255); // HSV high threshold for red (high range)
 
-        public static int[] lowerBlue = {115, 20, 20};
+        public static int[] lowerBlue = {90, 50, 20};
         public static int[] upperBlue = {160, 255, 255};
 
-        public static int[] lowerRed = {160, 100, 100};
+        public static int[] lowerRed = {150, 150, 40};
         public static int[] upperRed  = {200, 255, 255};
 
         public static int[] lowerYellow = {20, 100, 20};

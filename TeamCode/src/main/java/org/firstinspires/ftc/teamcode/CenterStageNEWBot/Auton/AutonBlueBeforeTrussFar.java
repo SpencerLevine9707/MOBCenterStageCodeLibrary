@@ -117,7 +117,7 @@ public class AutonBlueBeforeTrussFar extends LinearOpMode {
                 wBot.correctorServo.setPosition(MonkeyMap.correctorServoBeacon2AfterPos);
             }
             sleep(MonkeyMap.sleepTimeExtendSlides);
-            wBot.openLeftGrabber();
+            wBot.openRightGrabber();
             sleep(MonkeyMap.sleepTimePlacePurplePixel);
             wBot.resetSlides();
             wBot.setCorrectorMid();
@@ -141,18 +141,22 @@ public class AutonBlueBeforeTrussFar extends LinearOpMode {
 
             posesToGoTo.clear();
             posesToGoTo.add(new PosesAndActions(wBot.lineUpForPlaceFar, "flipUpFirstPlace"));
-            if(zoneDetected == 3){
-                posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon1)"));
-            }
-            else if(zoneDetected == 2){
-                posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon2)"));
-            }
-            else{
-                posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon3)"));
-            }
+            posesToGoTo.add(new PosesAndActions(wBot.turnAfterPickUpPixelFar, ""));
+//            if(zoneDetected == 3){
+//                posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon1)"));
+//            }
+//            else if(zoneDetected == 2){
+//                posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon2)"));
+//            }
+//            else{
+//                posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon3)"));
+//            }
+            posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, ""));
+            posesToGoTo.add(new PosesAndActions(wBot.turnForFirstPlacementAfter, ""));
             posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
+            wBot.setAutoRotator(wBot.flipperServoLeft.getPosition());
             sleep(MonkeyMap.sleepTimeWaitForFlipFirstPlace);
             wBot.encodedSlipperySlides(firstPlaceSlidesPos, MonkeyMap.slidePowerEncoder);
             sleep(MonkeyMap.sleepTimeExtendSlides);

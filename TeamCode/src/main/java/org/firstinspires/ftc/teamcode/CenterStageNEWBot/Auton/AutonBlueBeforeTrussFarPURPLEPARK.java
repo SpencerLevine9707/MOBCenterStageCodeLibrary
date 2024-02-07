@@ -120,7 +120,7 @@ public class AutonBlueBeforeTrussFarPURPLEPARK extends LinearOpMode {
                 wBot.correctorServo.setPosition(MonkeyMap.correctorServoBeacon2AfterPos);
             }
             sleep(MonkeyMap.sleepTimeExtendSlides);
-            wBot.openLeftGrabber();
+            wBot.openRightGrabber();
             sleep(MonkeyMap.sleepTimePlacePurplePixel);
             wBot.resetSlides();
             wBot.setCorrectorMid();
@@ -144,16 +144,10 @@ public class AutonBlueBeforeTrussFarPURPLEPARK extends LinearOpMode {
 
             posesToGoTo.clear();
             posesToGoTo.add(new PosesAndActions(wBot.lineUpForPlaceFar, ""));
-//            if (zoneDetected == 3) {
-//                posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon1)"));
-//            } else if (zoneDetected == 2) {
-//                posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon2)"));
-//            } else {
-//                posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace (beacon3)"));
-//            }
+            posesToGoTo.add(new PosesAndActions(wBot.turnAfterPickUpPixelFar, ""));
             posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, ""));
 //            posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
-            posesToGoTo.add(new PosesAndActions(parkBack, ""));
+            posesToGoTo.add(new PosesAndActions(wBot.parkTriangle, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
             sleep(MonkeyMap.sleepTimeWaitForFlipFirstPlace);
@@ -162,7 +156,6 @@ public class AutonBlueBeforeTrussFarPURPLEPARK extends LinearOpMode {
             wBot.openGrabber();
             sleep(MonkeyMap.sleepTimeYellowPixel);
             wBot.resetArm();
-            sleep(1000);
 //            wBot.pickUpInAutonFar(follower, posesToGoTo, 0, false, false);
 //            wBot.placeInAutonFar(follower, posesToGoTo, false);
 

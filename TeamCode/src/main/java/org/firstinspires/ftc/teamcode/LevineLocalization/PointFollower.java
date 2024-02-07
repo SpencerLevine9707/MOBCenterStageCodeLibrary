@@ -375,7 +375,7 @@ public class PointFollower {
     public double currPower;
     public double distToTarg;
     public static double maxVel = 40, almostDoneVel = 20, slowVel = almostDoneVel, evenSlowerVel = 2, testVel = 20, slowestVel = 4;
-    public static double roomForErrorStartDecel = 0;
+    public static double roomForErrorStartDecel = 0.1;
     public static double decceleration = 40;
     public double targetVelocity = maxVel;
     public static double accelerationConst = 200;
@@ -519,6 +519,7 @@ public class PointFollower {
             totYDist += Math.abs(posesToGoTo.get(i).pose.getY() - posesToGoTo.get(i-1).pose.getY());
         }
         double totDistToTarget = Math.hypot(totXDist, totYDist);
+        double prevDistToTarget = totDistToTarget;
 
         if(distNeededToStartDecel > totDistToTarget){
 //            totDistToTarget = ((Math.pow(slowestVel, 2) - Math.pow(newNEWMaxVel, 2))/(-2*decceleration))
@@ -539,6 +540,7 @@ public class PointFollower {
             isBuggingRuntimeToStop = isBuggingRuntimeToStopError;
 
             if (!inBetweenPoints.isEmpty()) {
+                prevDistToTarget = totDistToTarget;
                 double isBuggingChecker = runtime.seconds();
                 Pose2d targetPose = inBetweenPoints.get(0);
                 double roomForPoseError = new PointType("mid").followRadius / 2;
@@ -584,10 +586,10 @@ public class PointFollower {
                 }
 
                 if (stopAfter){
-                    if(Math.abs(totDistToTarget) < Math.abs(distNeededToStartDecel)){
+                    if(Math.abs(totDistToTarget) < Math.abs(distNeededToStartDecel) && totDistToTarget < prevDistToTarget + targetVelocity*timeForVel /*roomForErrorStartDecel*/){
                         targetVelocity = targetVelocity - (decceleration*timeForVel);
                     }
-                    else{
+                    else if(Math.abs(totDistToTarget) > Math.abs(distNeededToStartDecel)){
                         targetVelocity = newMaxVel;
                     }
                 }

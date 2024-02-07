@@ -43,7 +43,6 @@ public class OpenCVDetectTeamProp extends OpenCvPipeline {
         this.telemetry = telemetry;
         System.arraycopy(lowerColor, 0, this.lowerColor, 0, this.lowerColor.length);
         System.arraycopy(upperColor, 0, this.upperColor, 0, this.upperColor.length);
-
     }
 
     @Override
@@ -165,5 +164,6 @@ public class OpenCVDetectTeamProp extends OpenCvPipeline {
 
 //        return frame;
         return hsv;
+//        return mask;
     }
 }

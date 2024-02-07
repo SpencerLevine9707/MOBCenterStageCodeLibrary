@@ -10,8 +10,8 @@ public class RedAfterTrussPoses {
     //After only poses
     public static double xPosPurplePixelPlacementAfterBeacon1 = 36, yPosPurplePixelPlacementAfterBeacon1 = -30;
     public static double xPosPurplePixelPlacementAfterBeacon23 = 27, yPosPurplePixelPlacementAfterBeacon23 = -27;
-    public static double xPosStartExtendFirstPlacementAfter = 25, yPosStartExtendFirstPlacementAfter = -34;
-    public static double xPosFirstPlacementAfter = 45, yPosFirstPlacementAfterBeacon1 = -32, yPosFirstPlacementAfterBeacon2 = -28, yPosFirstPlacementAfterBeacon3 = -24;
+    public static double xPosStartExtendFirstPlacementAfter = 45, yPosStartExtendFirstPlacementAfter = -33;
+    public static double xPosFirstPlacementAfter = 50, yPosFirstPlacementAfterBeacon1 = -19, yPosFirstPlacementAfterBeacon2 = -33, yPosFirstPlacementAfterBeacon3 = -38;
 
     //Before only poses
     public static double xPosGoAcrossForBeforeTrussPurplePixelFar = -36, yPosGoAcrossForBeforeTrussPurplePixelFar = -5;
@@ -20,7 +20,7 @@ public class RedAfterTrussPoses {
 
     //Far poses
     public static double xPosLineUpForPickUpFar = 40, yPosLineUpForPickUpFar = -8;
-    public static double xPosLineUpForPlaceFar = 10, yPosLineUpForPlaceFar = -8;
+    public static double xPosLineUpForPlaceFar = 15, yPosLineUpForPlaceFar = -8;
     public static double xPosStartArmExtendPickUpFar = -21, yPosStartArmExtendPickUpFar = -8;
     public static double xPosPickUpPixelFar = -43, yPosPickUpPixelFar = -11;
     public static double xPosPlacePixelFar = 45, yPosPlacePixelFar = -21;
@@ -39,9 +39,9 @@ public class RedAfterTrussPoses {
     public static double xPosMidStackPickUpClose = -50, yPosMidStackPickUpClose = -50;
 
     //Park Poses
-    public static double xPosParkTriangle = 50, yPosParkTriangle = -6;
-    public static double xPosLineUpParkTriangle = 40, yPosLineUpParkTriangle = -6;
-    public static double xPosParkSquare = 50, yPosParkSquare = -55;
+    public static double xPosParkTriangle = 53, yPosParkTriangle = -10;
+    public static double xPosLineUpParkTriangle = 40, yPosLineUpParkTriangle = -10;
+    public static double xPosParkSquare = 53, yPosParkSquare = -55;
     public static double xPosLineUpParkSquare = 40, yPosLineUpParkSquare = -55;
 
     public static double headingMidStackPickUpFar = Math.toRadians(210), headingMidStackPickUpClose = Math.toRadians(130);
