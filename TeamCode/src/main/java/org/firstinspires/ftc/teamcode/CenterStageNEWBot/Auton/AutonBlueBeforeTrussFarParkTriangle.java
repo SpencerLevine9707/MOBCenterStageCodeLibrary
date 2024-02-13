@@ -138,6 +138,7 @@ public class AutonBlueBeforeTrussFarParkTriangle extends LinearOpMode {
             wBot.closeGrabber();
             sleep(MonkeyMap.sleepTimePickUpPixel);
             wBot.resetSlides();
+            sleep(7000);
 
             posesToGoTo.clear();
             posesToGoTo.add(new PosesAndActions(wBot.lineUpForPlaceFar, "flipUpFirstPlace"));

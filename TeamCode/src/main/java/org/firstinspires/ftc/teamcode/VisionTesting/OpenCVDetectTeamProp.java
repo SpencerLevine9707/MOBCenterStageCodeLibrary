@@ -24,7 +24,7 @@ public class OpenCVDetectTeamProp extends OpenCvPipeline {
     public static double webcamSplitDist = 160;
     public static boolean isDetected = false;
     public static double minArea = 50;
-    public static double minWidth = 43;
+    public static double minWidth = 45;
     public static double minHeight = 53;
     public int[] lowerColor = {0, 0, 0};
     public int[] upperColor = {0, 0, 0};
@@ -163,7 +163,7 @@ public class OpenCVDetectTeamProp extends OpenCvPipeline {
         telemetry.update();
 
 //        return frame;
-        return hsv;
-//        return mask;
+//        return hsv;
+        return mask;
     }
 }

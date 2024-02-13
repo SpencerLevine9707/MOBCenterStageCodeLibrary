@@ -147,6 +147,8 @@ public class AutonRedAfterTrussParkSquare extends LinearOpMode {
             posesToGoTo.add(new PosesAndActions(wBot.parkSquare, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
+            wBot.flipUp();
+            sleep(1000);
 //            wBot.pickUpInAutonFar(follower, posesToGoTo, 0, true, false);
 //            wBot.placeInAutonFar(follower, posesToGoTo, false);
 //            wBot.pickUpInAutonFar(follower, posesToGoTo, 1, true, false);

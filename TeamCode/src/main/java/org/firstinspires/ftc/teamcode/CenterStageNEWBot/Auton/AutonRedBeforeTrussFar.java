@@ -140,6 +140,8 @@ public class AutonRedBeforeTrussFar extends LinearOpMode {
             sleep(MonkeyMap.sleepTimePickUpPixel);
             wBot.resetSlides();
 
+            sleep(6500);
+
             posesToGoTo.clear();
             posesToGoTo.add(new PosesAndActions(wBot.lineUpForPlaceFar, "flipUpFirstPlace"));
             posesToGoTo.add(new PosesAndActions(wBot.turnAfterPickUpPixelFar, ""));

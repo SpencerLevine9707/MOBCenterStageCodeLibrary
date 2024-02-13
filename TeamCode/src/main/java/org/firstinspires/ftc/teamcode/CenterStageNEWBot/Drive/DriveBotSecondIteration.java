@@ -24,12 +24,12 @@ public class DriveBotSecondIteration extends LinearOpMode {
     public ElapsedTime planeTime = new ElapsedTime(), timeForCloseLeft = new ElapsedTime(), timeForCloseRight = new ElapsedTime();
     public static double timeForPlaneWait = 0.75;
     public static double maxFlipperPos = 0;
-    public static double lowestFlipperPos = 0.98;
+    public static double lowestFlipperPos = 0.95;
     public static double slideSpeed = -300;
     public static int maxArmPos = 0, minArmPos = -430;
     public static boolean retractSlidesOnFlip = true;
     public static boolean slideResetOnInit = false;
-    public static double slowSpeedDrive = 0.3;
+    public static double slowSpeedDrive = 0.2;
     public static double divisorForSpinPower = 1.5;
     public static double timeForCloseWait = 0.75;
     public Orientation angles;
@@ -133,13 +133,13 @@ public class DriveBotSecondIteration extends LinearOpMode {
                 planeTime.reset();
             }
 
-            if(rt1 > 0){
-                wBot.pullUpMotorRight.setPower(rt1);
-                wBot.pullUpMotorLeft.setPower(-rt1);
+            if(lt1 > 0){
+                wBot.pullUpMotorRight.setPower(lt1);
+                wBot.pullUpMotorLeft.setPower(-lt1);
             }
-            else if(lt1 > 0){
-                wBot.pullUpMotorRight.setPower(-lt1);
-                wBot.pullUpMotorLeft.setPower(lt1);
+            else if(rt1 > 0){
+                wBot.pullUpMotorRight.setPower(-rt1);
+                wBot.pullUpMotorLeft.setPower(rt1);
             }
             else{
                 wBot.pullUpMotorRight.setPower(0);
