@@ -5,13 +5,13 @@ import com.acmerobotics.dashboard.config.Config;
 @Config
 public class RedAfterTrussPoses {
     //Starting pos
-    public static double xPosStartingPos = 16, yPosStartingPos = -58;
+    public static double xPosStartingPos = 10, yPosStartingPos = -60;
 
     //After only poses
-    public static double xPosPurplePixelPlacementAfterBeacon1 = 39, yPosPurplePixelPlacementAfterBeacon1 = -30;
-    public static double xPosPurplePixelPlacementAfterBeacon23 = 27, yPosPurplePixelPlacementAfterBeacon23 = -27;
-    public static double xPosStartExtendFirstPlacementAfter = 45, yPosStartExtendFirstPlacementAfter = -33;
-    public static double xPosFirstPlacementAfter = 50, yPosFirstPlacementAfterBeacon1 = -21, yPosFirstPlacementAfterBeacon2 = -33, yPosFirstPlacementAfterBeacon3 = -38;
+    public static double xPosPurplePixelPlacementAfterBeacon1 = 40, yPosPurplePixelPlacementAfterBeacon1 = -30;
+    public static double xPosPurplePixelPlacementAfterBeacon23 = 32, yPosPurplePixelPlacementAfterBeacon23 = -27;
+    public static double xPosStartExtendFirstPlacementAfter = 45, yPosStartExtendFirstPlacementAfter = -35;
+    public static double xPosFirstPlacementAfter = 53, yPosFirstPlacementAfterBeacon1 = -23, yPosFirstPlacementAfterBeacon2 = -35, yPosFirstPlacementAfterBeacon3 = -39;
 
     //Before only poses
     public static double xPosGoAcrossForBeforeTrussPurplePixelFar = -36, yPosGoAcrossForBeforeTrussPurplePixelFar = -5;

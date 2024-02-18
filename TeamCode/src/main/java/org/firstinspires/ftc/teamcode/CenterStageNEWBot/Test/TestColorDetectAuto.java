@@ -15,7 +15,6 @@ import org.firstinspires.ftc.teamcode.CenterStageNEWBot.HardwareMaps.MonkeyMap;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PointFollower;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PosesAndActions;
 import org.firstinspires.ftc.teamcode.VisionTesting.DavidBoxCodeForPropDetect;
-import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVDetectTeamProp;
 import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVGreatestColorTest;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
@@ -106,7 +105,7 @@ public class TestColorDetectAuto extends LinearOpMode {
         while(opModeIsActive()){
             timeForAuton.reset();
             wBot.closeGrabber();
-            wBot.setFlipperPos(MonkeyMap.flipperPosUpPurplePixels);
+            wBot.setFlipperPos(MonkeyMap.flipperPosUpPurplePixels, MonkeyMap.flipperPower);
             wBot.setRotatorFlush();
 
             posesToGoTo.add(new PosesAndActions(wBot.startingPosition, ""));
@@ -139,13 +138,13 @@ public class TestColorDetectAuto extends LinearOpMode {
             posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
-            wBot.setAutoRotator(wBot.flipperServoLeft.getPosition());
+            wBot.setAutoRotator(wBot.flipperMotor.getCurrentPosition());
             sleep(MonkeyMap.sleepTimeWaitForFlipFirstPlace);
             wBot.encodedSlipperySlides(firstPlaceSlidesPos, MonkeyMap.slidePowerEncoder);
             sleep(MonkeyMap.sleepTimeExtendSlides);
             wBot.openLeftGrabber();
             sleep(MonkeyMap.sleepTimeYellowPixel);
-            wBot.resetArm();
+            wBot.resetArmAuton();
 //            posesToGoTo.clear();
 //            follower.reinit(posesToGoTo);
 //            follower.goToPoints(true);

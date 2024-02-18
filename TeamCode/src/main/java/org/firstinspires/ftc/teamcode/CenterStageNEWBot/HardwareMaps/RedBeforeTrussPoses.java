@@ -5,27 +5,27 @@ import com.acmerobotics.dashboard.config.Config;
 @Config
 public class RedBeforeTrussPoses {
     //Starting pos
-    public static double xPosStartingPos = -31, yPosStartingPos = -58;
+    public static double xPosStartingPos = -37, yPosStartingPos = -60;
 
     //After only poses
     public static double xPosPurplePixelPlacementAfterBeacon1 = 30.4, yPosPurplePixelPlacementAfterBeacon1 = -30;
     public static double xPosPurplePixelPlacementAfterBeacon23 = 22.4, yPosPurplePixelPlacementAfterBeacon23 = -30;
-    public static double xPosStartExtendFirstPlacementAfter = 40, yPosStartExtendFirstPlacementAfter = -27;
-    public static double xPosFirstPlacementAfter = 52, yPosFirstPlacementAfterBeacon1 = -17, yPosFirstPlacementAfterBeacon2 = -27, yPosFirstPlacementAfterBeacon3 = -32;
+    public static double xPosStartExtendFirstPlacementAfter = 40, yPosStartExtendFirstPlacementAfter = -30;
+    public static double xPosFirstPlacementAfter = 52, yPosFirstPlacementAfterBeacon1 = -20, yPosFirstPlacementAfterBeacon2 = -30, yPosFirstPlacementAfterBeacon3 = -33;
 
     //Before only poses
     public static double xPosGoAcrossForBeforeTrussPurplePixelFar = -29, yPosGoAcrossForBeforeTrussPurplePixelFar = -8;
-    public static double xPosGoAroundPurplePixelBeacon2 = -50, yPosGoAroundPurplePixelBeacon2 = -15;
+    public static double xPosGoAroundPurplePixelBeacon2 = -50, yPosGoAroundPurplePixelBeacon2 = -5;
     public static double xPosGoAcrossForBeforeTrussPurplePixelClose = -36, yPosGoAcrossForBeforeTrussPurplePixelClose = -45;
 
     //Far poses
     public static double xPosLineUpForPickUpFar = 40, yPosLineUpForPickUpFar = -5;
     public static double xPosLineUpForPlaceFar = 15, yPosLineUpForPlaceFar = -5;
     public static double xPosStartArmExtendPickUpFar = -21, yPosStartArmExtendPickUpFar = -5;
-    public static double xPosPickUpPixelFar = -43, yPosPickUpPixelFar = -5;
+    public static double xPosPickUpPixelFar = -36, yPosPickUpPixelFar = -5;
     public static double xPosPlacePixelFar = 47, yPosPlacePixelFar = -22;
     public static double xPosFlipAfterPlaceFar = 24, yPosFlipAfterPlaceFar = -16;
-    public static double xPosStartArmExtendPlaceFar = 30, yPosStartArmExtendPlaceFar = -3;
+    public static double xPosStartArmExtendPlaceFar = 30, yPosStartArmExtendPlaceFar = -5;
 
     //Close poses
     public static double xPosLineUpForPickUpClose = 13, yPosLineUpForPickUpClose = -54.5;

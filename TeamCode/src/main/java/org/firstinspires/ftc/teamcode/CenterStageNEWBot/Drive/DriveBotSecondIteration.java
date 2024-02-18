@@ -23,15 +23,17 @@ public class DriveBotSecondIteration extends LinearOpMode {
     MonkeyMap wBot = new MonkeyMap(this);
     public ElapsedTime planeTime = new ElapsedTime(), timeForCloseLeft = new ElapsedTime(), timeForCloseRight = new ElapsedTime();
     public static double timeForPlaneWait = 0.75;
-    public static double maxFlipperPos = 0;
-    public static double lowestFlipperPos = 0.95;
+    public static double roomForErrorFlipper = 5;
+    public static int maxFlipperPos = 1600;
+    public static int minFlipperPos = -10;
     public static double slideSpeed = -300;
-    public static int maxArmPos = 0, minArmPos = -430;
-    public static boolean retractSlidesOnFlip = true;
+    public static int maxArmPos = 0, minArmPos = -660;
+    public static boolean retractSlidesOnFlip = false;
     public static boolean slideResetOnInit = false;
     public static double slowSpeedDrive = 0.2;
     public static double divisorForSpinPower = 1.5;
     public static double timeForCloseWait = 0.75;
+    public static int roomForErrorSlidePos = 10;
     public Orientation angles;
 
 
@@ -61,6 +63,7 @@ public class DriveBotSecondIteration extends LinearOpMode {
         boolean lb2Pressable = true;
         boolean rb2Pressable = true;
         boolean a1Pressable = true;
+        boolean dpu1Pressable = true;
         boolean isReserveDrive = false;
         boolean armCameDown = true;
         boolean autoCorrectorAdjust = false;
@@ -70,13 +73,16 @@ public class DriveBotSecondIteration extends LinearOpMode {
         planeTime.reset();
         wBot.setRotatorUp();
         wBot.setCorrectorMid();
-        wBot.flipUp();
         wBot.closeGrabber();
         wBot.encodedSlipperySlides(maxArmPos, MonkeyMap.slidePowerEncoder);
         wBot.loadPlane();
 
         timeForCloseLeft.reset();
         timeForCloseRight.reset();
+
+//        wBot.resetFlipperPos();
+        wBot.flipUp();
+        wBot.pullUpDown();
 
         waitForStart();
 
@@ -86,8 +92,8 @@ public class DriveBotSecondIteration extends LinearOpMode {
             double heading = angles.firstAngle;
 
             //flipperPos stuff
-            double flipperPos = wBot.flipperServoLeft.getPosition();
-            boolean isFlipperDown = flipperPos > MonkeyMap.lowestFlipperPosDown;
+            double flipperPos = wBot.flipperMotor.getCurrentPosition();
+            boolean isFlipperDown = flipperPos < MonkeyMap.lowestFlipperPosDown;
 
 //            Gamepad 1 controls
             double lx1 = gamepad1.left_stick_x;
@@ -99,6 +105,7 @@ public class DriveBotSecondIteration extends LinearOpMode {
             boolean rb1 = gamepad1.right_bumper, lb1 = gamepad1.left_bumper;
             double rt1 = gamepad1.right_trigger, lt1 = gamepad1.left_trigger;
             boolean a1 = gamepad1.a;
+            boolean dpu1 = gamepad1.dpad_up;
 
             telemetry.addLine("lx1: " + lx1 + " ly1: " + ly1 + " rx1 " + rx1);
 
@@ -111,9 +118,9 @@ public class DriveBotSecondIteration extends LinearOpMode {
             else{
                powerForMotors = powerFromTriggers;
             }
-            if(a1 && a1Pressable){
-                isReserveDrive = !isReserveDrive;
-            }
+//            if(a1 && a1Pressable){
+//                isReserveDrive = !isReserveDrive;
+//            }
 
             if(isReserveDrive){
                 drive.moveInTeleop(-lx1, -ly1, rx1, powerForMotors);
@@ -127,12 +134,10 @@ public class DriveBotSecondIteration extends LinearOpMode {
                 planeTime.reset();
             }
 
-
-            if(lsb1 && rsb1 && planeTime.seconds() > timeForPlaneWait){
-                wBot.shootPlane();
-                planeTime.reset();
-            }
-
+//            if(lsb1 && rsb1 && planeTime.seconds() > timeForPlaneWait){
+//                wBot.shootPlane();
+//                planeTime.reset();
+//            }
             if(lt1 > 0){
                 wBot.pullUpMotorRight.setPower(lt1);
                 wBot.pullUpMotorLeft.setPower(-lt1);
@@ -144,6 +149,9 @@ public class DriveBotSecondIteration extends LinearOpMode {
             else{
                 wBot.pullUpMotorRight.setPower(0);
                 wBot.pullUpMotorLeft.setPower(0);
+            }
+            if(dpu1 && dpu1Pressable){
+                wBot.togglePullUp();
             }
 
 //            Gamepad 2 controls
@@ -186,8 +194,7 @@ public class DriveBotSecondIteration extends LinearOpMode {
                 }
                 autoCorrectorAdjust = false;
                 if(armCameDown){
-                    wBot.setCorrectorMid();
-                    wBot.setRotatorFlush();
+                    wBot.resetArm();
                     armCameDown = false;
                 }
             }
@@ -224,8 +231,15 @@ public class DriveBotSecondIteration extends LinearOpMode {
                 wBot.encodedSlipperySlides(minArmPos, MonkeyMap.slidePowerEncoder);
             }
 
+            if(rb2 && rb2Pressable){
+                wBot.setRotatorUp();
+            }
+            if(lb2 && lb2Pressable){
+                wBot.setRotatorFlush();
+            }
 
-            telemetry.addLine("armMotorLeftPow: " + wBot.armMotorLeft.getPower() + " armMotorRightPow: " + wBot.armMotorRight.getPower());
+
+            telemetry.addLine("armMotorLeftPow: " + wBot.armMotorLeft.getPower());
 
             if(Math.abs(rx2) > 0) {
                 wBot.correctorServo.setPosition(wBot.correctorServo.getPosition() + MonkeyMap.correctorServoSpeed * rx2);
@@ -233,17 +247,24 @@ public class DriveBotSecondIteration extends LinearOpMode {
 //            if(Math.abs(ry2) > 0){
 //                wBot.rotatorServo.setPosition(wBot.rotatorServo.getPosition() + MonkeyMap.rotatorServoSpeed * ry2);
 //            }
-            if(rt2 > 0 && flipperPos < lowestFlipperPos){
-                wBot.setFlipperPos(flipperPos + MonkeyMap.flipperServoSpeed * rt2);
+            if(rt2 > 0 && flipperPos - roomForErrorFlipper <= maxFlipperPos){
+                wBot.setFlipperPos((int) (flipperPos - (MonkeyMap.flipperMotorSpeed * rt2)), MonkeyMap.flipperPower);
                 if(retractSlidesOnFlip){
                     wBot.resetSlides();
                 }
             }
-            else if(lt2 > 0 && flipperPos > maxFlipperPos){
-                wBot.setFlipperPos(flipperPos - MonkeyMap.flipperServoSpeed * lt2);
+            else if(lt2 > 0 && flipperPos + roomForErrorFlipper >= minFlipperPos){
+                wBot.setFlipperPos((int) (flipperPos + (MonkeyMap.flipperMotorSpeed * lt2)), MonkeyMap.flipperPower);
                 if(retractSlidesOnFlip){
                     wBot.resetSlides();
                 }
+            }
+
+            if(flipperPos <= minFlipperPos){
+                wBot.setFlipperPos(minFlipperPos, MonkeyMap.flipperPower);
+            }
+            if(flipperPos >= maxFlipperPos){
+                wBot.setFlipperPos(maxFlipperPos, MonkeyMap.flipperPower);
             }
 
 
@@ -262,6 +283,7 @@ public class DriveBotSecondIteration extends LinearOpMode {
             }
 
             a1Pressable = !a1;
+            dpu1Pressable = !dpu1;
             rb2Pressable = !rb2;
             lb2Pressable = !lb2;
             x2Pressable = !x2;
@@ -276,16 +298,16 @@ public class DriveBotSecondIteration extends LinearOpMode {
             telemetry.addData("Heading", angles.firstAngle);
             telemetry.addData("Roll", angles.secondAngle);
             telemetry.addData("Pitch", angles.thirdAngle);
-            telemetry.addLine("slidesPox: " + wBot.armMotorRight.getCurrentPosition());
             telemetry.addLine("slidesPos (left): " + wBot.armMotorLeft.getCurrentPosition());
-            telemetry.addLine("slidesPos target: " + wBot.armMotorRight.getTargetPosition());
             telemetry.addLine("Rotator Pos: " + wBot.rotatorServo.getPosition());
 //            telemetry.addLine("Conveyor motor pow: " + wBot.conveyerMotor.getPower());
-            telemetry.addLine("Flipper Servo Left Pos: " + flipperPos + " Flipper Servo Right Pos: " + wBot.flipperServoRight.getPosition());
+            telemetry.addLine("Flipper Motor Pos: " + flipperPos);
+            telemetry.addLine("Flipper Motor Targ Pos: " + wBot.flipperMotor.getTargetPosition());
             telemetry.addLine("ly2 is: " + ly2);
             telemetry.addLine("rx2 is: " + rx2);
             telemetry.addLine("ry2 is: " + ry2);
             telemetry.addLine("Corrector Servo pos is " + wBot.correctorServo.getPosition());
+            telemetry.addData("Pull Up Servo Pos ", wBot.pullUpServoLeft.getPosition());
 
 
             telemetry.update();

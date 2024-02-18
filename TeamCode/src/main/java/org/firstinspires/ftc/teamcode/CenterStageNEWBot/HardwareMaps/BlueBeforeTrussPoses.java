@@ -5,7 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 @Config
 public class BlueBeforeTrussPoses {
     //Starting pos
-    public static double xPosStartingPos = -33, yPosStartingPos = 58;
+    public static double xPosStartingPos = -37, yPosStartingPos = 58;
 
     //After only poses
     public static double xPosPurplePixelPlacementAfterBeacon1 = 30.4, yPosPurplePixelPlacementAfterBeacon1 = 30;
@@ -19,10 +19,10 @@ public class BlueBeforeTrussPoses {
     public static double xPosGoAcrossForBeforeTrussPurplePixelClose = -33, yPosGoAcrossForBeforeTrussPurplePixelClose = 42;
 
     //Far poses
-    public static double xPosLineUpForPickUpFar = 40, yPosLineUpForPickUpFar = 4;
-    public static double xPosLineUpForPlaceFar = 15, yPosLineUpForPlaceFar = 4;
-    public static double xPosStartArmExtendPickUpFar = -21, yPosStartArmExtendPickUpFar = 4;
-    public static double xPosPickUpPixelFar = -45, yPosPickUpPixelFar = 9;
+    public static double xPosLineUpForPickUpFar = 40, yPosLineUpForPickUpFar = 5;
+    public static double xPosLineUpForPlaceFar = 15, yPosLineUpForPlaceFar = 5;
+    public static double xPosStartArmExtendPickUpFar = -21, yPosStartArmExtendPickUpFar = 5;
+    public static double xPosPickUpPixelFar = -45, yPosPickUpPixelFar = 5;
     public static double xPosPlacePixelFar = 45, yPosPlacePixelFar = 18;
     public static double xPosFlipAfterPlaceFar = 24, yPosFlipAfterPlaceFar = -16;
     public static double xPosStartArmExtendPlaceFar = 30, yPosStartArmExtendPlaceFar = 5;

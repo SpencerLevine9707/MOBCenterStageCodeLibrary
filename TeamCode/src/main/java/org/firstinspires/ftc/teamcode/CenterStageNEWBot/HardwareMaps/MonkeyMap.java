@@ -32,7 +32,7 @@ public class MonkeyMap {
     //Define all hardware
     public DcMotor frontLeft, frontRight, backLeft, backRight, pullUpMotorLeft, pullUpMotorRight, armMotorLeft, flipperMotor;
 
-    public Servo spencerLikesKids, grabberServoLeft, grabberServoRight, rotatorServo, flipperServoLeft, flipperServoRight, airplaneServo, correctorServo;
+    public Servo spencerLikesKids, grabberServoLeft, grabberServoRight, rotatorServo, airplaneServo, correctorServo, pullUpServoLeft, pullUpServoRight;
 
     public VoltageSensor batteryVoltageSensor;
 //    public DistanceSensor lineUpSensor;
@@ -42,26 +42,30 @@ public class MonkeyMap {
     //Servo Positions
     public static double grabberServoScalerDown = 0.1, grabberServoScalerUp = 0.7, offsetForGrabberScalar = 0.025;
     public static double grabberClosed = 0.695, grabberOpen = 0, grabberOpenTele = 0.3;
-    public static double flipperScalarDown = 0.05, flipperScalarUp = 0.95, flipperScalarOffset = 0.025, flipperPosDown = 0.15, flipperPosDown2Pixels = 0.91, flipperPosDown3Pixels = 0.87, flipperPosDown4Pixels = 0.855, flipperPosDown5Pixels = 0.915, flipperPosDown6Pixels = 0.8825, flipperPosUp = 100, flipperPosUpPurplePixels = 0.92, flipperPosUpFirstPlace = 0.82, flipperPosDownForAuton = 0.6;
+    public static int flipperPosDown = 1, flipperPosDown2Pixels = 1, flipperPosDown3Pixels = 1, flipperPosDown4Pixels = 1, flipperPosDown5Pixels = 275, flipperPosDown6Pixels = 350, flipperPosUp = 300, flipperPosUpPurplePixels = 300, flipperPosUpFirstPlace = 485, flipperPosFirstPlacePlayingWithAlliance = 650, flipperPosDownForAuton = 300;
     public static double rotatorServoUpPos = 0.23, rotatorFlushWithSlides = 0.505, rotatorPickUpAndPlace = 0.45, rotator6Pixels = 0.5, rotator5Pixels = 0.5, rotator4Pixels = 0.52, rotator3Pixels = 0.5, rotator2Pixels = 0.5, rotatorServoFirstPlace = 0.6, rotatorServoPlaceInAuton = 0.58;
     public static double airplaneServoLoadedPos = 0.29, airplaneServoGoPos = 0.05;
     public static double correctorServoMidPos = 0.5, correctorServoPlaceFarPos = 0.38, correctorServoPlaceClosePos = 0.62, correctorServoBeacon2AfterPos = 0.07, correctorServoBeacon2BeforePos = 0.93, correctorServoBeacon1PreloadPlace = 0.45, correctorServoBeacon3PreloadPlace = 0.55, correctorServoPickUpClose = 0.58, correctorServoPickUpMidFar = 0.38, correctorServoPickUpMidClose = 0.78;
-    public static double correctorServoSpeed = 0.03, flipperServoSpeed = 0.03, rotatorServoSpeed = 0.03;
+    public static double correctorServoSpeed = 0.03, rotatorServoSpeed = 0.03;
+    public static double flipperMotorSpeed = 250;
     public ArrayList<String> rotatorAndFlipperAutonPosesListOddPixels = new ArrayList<>(Arrays.asList("flipDown and rotateDown 5Pixels", "flipDown and rotateDown 3Pixels"));
     public ArrayList<String> rotatorAndFlipperAutonPosesListEvenPixels = new ArrayList<>(Arrays.asList("flipDown and rotateDown 4Pixels", "flipDown and rotateDown 2Pixels"));
 
     //Auto adjust place and stuff
     public static double maxRotatorPosUp = 0.644, maxRotatorPosDown = 0.37;
-    public static double lowestFlipperPosDown = 0.85, highestFlipperPos = 0;
+    public static int lowestFlipperPosDown = 400, highestFlipperPos = 1600;
     public static double correctorServoMinPosition = 0.07, correctorServoMaxPosition = 0.93;
     public double rotatorRange = MonkeyMap.maxRotatorPosUp - MonkeyMap.maxRotatorPosDown;
     public double correctorRange = MonkeyMap.correctorServoMaxPosition - MonkeyMap.correctorServoMinPosition;
 
+    //Pull Up Servo Poses
+    public static double pullUpServoDownPos = 0.7, pullUpServoUpPos = 0.29;
+
     //Motor powers and pos
-    public static int resetSlidesPos = 0, slidesFullyExtendedPos = -314;
+    public static int resetSlidesPos = 0, slidesFullyExtendedPos = -660;
     public static int slidesBeacon1PreloadAfter = 0, slidesBeacon2PreloadAfter = -250, slidesBeacon3PreloadAfter = -430;
     public static int slidesBeacon1PreloadBefore = -310, slidesBeacon2PreloadBefore = -350, slidesBeacon3PreloadBefore = -350, slidesBeacon2PreloadBeforeBlue = -310;
-    public static int slidesFirstPlacePosBeacon2 = -170, slidesFirstPlacePosBeacons13 = -170;
+    public static int slidesFirstPlacePosBeacon2 = -150, slidesFirstPlacePosBeacons13 = -150;
 
     public static double holdPowerForSlides = 0, slidePowerEncoder = 1, flipperPower = 1;
 
@@ -78,8 +82,8 @@ public class MonkeyMap {
     public static double headingPickUp = Math.toRadians(180);
     public static double headingPlace = Math.toRadians(0);
 
-    public static int sleepTimePlacePurplePixel = 300, sleepTimePickUpPixel = 300, sleepTimePlacePixel = 200, sleepTimeYellowPixel = 1000, sleepTimeFirstPlace = 100, sleepTimeBetweenFirstAndSecondPlace = 100, sleepTimeExtendSlides = 400, sleepTimeWaitForFlipFirstPlace = 0, sleepTimeCorrectServo = 200, sleepTimeWaitToCloseParkAutons = 500;
-    public boolean grabberIsOpen = true, rightGrabberOpen = true, leftGrabberOpen = true, flipperDown = true, airplaneLoaded = true;
+    public static int sleepTimePlacePurplePixel = 300, sleepTimePickUpPixel = 300, sleepTimePlacePixel = 200, sleepTimeYellowPixel = 400, sleepTimeFirstPlace = 100, sleepTimeBetweenFirstAndSecondPlace = 100, sleepTimeExtendSlides = 400, sleepTimeWaitForFlipFirstPlace = 0, sleepTimeCorrectServo = 200, sleepTimeWaitToCloseParkAutons = 500, sleepTimeWaitToResetAuton = 500;
+    public boolean grabberIsOpen = true, rightGrabberOpen = true, leftGrabberOpen = true, flipperDown = true, airplaneLoaded = true, pullUpDown = true;
     public static int timesToRunAuton = 4;
     //Goofy noises
     public int matchStart, wIntro, endgameStart, yabbaDabbaDo, driversPickUp, funnyFunny, teleStart;
@@ -97,17 +101,14 @@ public class MonkeyMap {
         grabberServoLeft = myOpMode.hardwareMap.get(Servo.class, "grabberServoLeft");
         grabberServoRight = myOpMode.hardwareMap.get(Servo.class, "grabberServoRight");
         rotatorServo = myOpMode.hardwareMap.get(Servo.class, "rotatorServo");
-        flipperServoLeft = myOpMode.hardwareMap.get(Servo.class, "flipperServoLeft");
-        flipperServoRight = myOpMode.hardwareMap.get(Servo.class, "flipperServoRight");
         airplaneServo = myOpMode.hardwareMap.get(Servo.class, "airplaneServo");
         correctorServo = myOpMode.hardwareMap.get(Servo.class, "correctorServo");
+        pullUpServoLeft = myOpMode.hardwareMap.get(Servo.class, "pullUpServoLeft");
+        pullUpServoRight = myOpMode.hardwareMap.get(Servo.class, "pullUpServoRight");
 
-        flipperServoRight.setDirection(Servo.Direction.REVERSE);
-        flipperServoLeft.scaleRange(flipperScalarDown, flipperScalarUp);
-        flipperServoRight.scaleRange(flipperScalarDown + flipperScalarOffset, flipperScalarUp + flipperScalarOffset);
-//        rotatorServo.scaleRange(rotatorScalarDown, rotatorScalarUp);
 
         grabberServoRight.setDirection(Servo.Direction.REVERSE);
+        pullUpServoRight.setDirection(Servo.Direction.REVERSE);
 
         grabberServoLeft.scaleRange(grabberServoScalerDown, grabberServoScalerUp);
         grabberServoRight.scaleRange(grabberServoScalerDown + offsetForGrabberScalar, grabberServoScalerUp + offsetForGrabberScalar);
@@ -130,6 +131,7 @@ public class MonkeyMap {
         backLeft.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.FORWARD);
         armMotorLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        flipperMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         armMotorLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -177,12 +179,13 @@ public class MonkeyMap {
     }
     public void initForAuton(String autonType){
         initPoses(autonType);
-        flipUp();
         closeGrabber();
         setRotatorUp();
         setCorrectorMid();
-        resetSlidePoses();
-        resetFlipperPos();
+//        resetSlidePoses();
+//        resetFlipperPos();
+        flipUp();
+        resetSlides();
     }
 
     public void initPoses(String autonType){
@@ -461,67 +464,77 @@ public class MonkeyMap {
         }
     }
 
-    public void resetArm(){
+    public void resetArmAuton(){
 //        flipUp();
 //        closeGrabber();
         setRotatorFlush();
         setCorrectorMid();
         resetSlides();
     }
+    public void resetArm(){
+        resetSlides();
+        flipUp();
+        closeGrabber();
+        setRotatorUp();
+        setCorrectorMid();
+    }
     public void setFlipperPos(int pos, double power) {
         flipperMotor.setTargetPosition(pos);
         flipperMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         flipperMotor.setPower(power);
     }
-//    public void flipDown(){
-//        setFlipperPos(flipperPosDown);
-//        flipperDown = true;
-//    }
-//    public void flipDownForAuton(){
-//        setFlipperPos(flipperPosDownForAuton);
-//        flipperDown = true;
-//    }
-//    public void flipAndRotateDownAndExtend6Pixels(){
-//        setFlipperPos(flipperPosDown6Pixels);
-//        rotatorServo.setPosition(rotator6Pixels);
+    public void flipDown(){
+        setFlipperPos(flipperPosDown, flipperPower);
+        flipperDown = true;
+    }
+    public void flipDownForAuton(){
+        setFlipperPos(flipperPosDownForAuton, flipperPower);
+        flipperDown = true;
+    }
+    public void flipDownPurplePixel(){
+        setFlipperPos(flipperPosUpPurplePixels, flipperPower);
+    }
+    public void flipAndRotateDownAndExtend6Pixels(){
+        setFlipperPos(flipperPosDown6Pixels, flipperPower);
+        rotatorServo.setPosition(rotator6Pixels);
+        fullyExtendSlides();
+    }
+    public void flipAndRotateDown6Pixels(){
+        setFlipperPos(flipperPosDown6Pixels, flipperPower);
+        rotatorServo.setPosition(rotator6Pixels);
 //        fullyExtendSlides();
-//    }
-//    public void flipAndRotateDown6Pixels(){
-//        setFlipperPos(flipperPosDown6Pixels);
-//        rotatorServo.setPosition(rotator6Pixels);
-////        fullyExtendSlides();
-//    }
-//    public void flipAndRotateDown5Pixels(){
-//        setFlipperPos(flipperPosDown5Pixels);
-//        rotatorServo.setPosition(rotator5Pixels);
-//    }
-//    public void flipAndRotateDown4Pixels(){
-//        setFlipperPos(flipperPosDown4Pixels);
-//        rotatorServo.setPosition(rotator4Pixels);
-//    }
-//    public void flipAndRotateDown3Pixels(){
-//        setFlipperPos(flipperPosDown3Pixels);
-//        rotatorServo.setPosition(rotator3Pixels);
-//    }
-//    public void flipAndRotateDown2Pixels(){
-//        setFlipperPos(flipperPosDown2Pixels);
-//        rotatorServo.setPosition(rotator2Pixels);
-//    }
+    }
+    public void flipAndRotateDown5Pixels(){
+        setFlipperPos(flipperPosDown5Pixels, flipperPower);
+        rotatorServo.setPosition(rotator5Pixels);
+    }
+    public void flipAndRotateDown4Pixels(){
+        setFlipperPos(flipperPosDown4Pixels, flipperPower);
+        rotatorServo.setPosition(rotator4Pixels);
+    }
+    public void flipAndRotateDown3Pixels(){
+        setFlipperPos(flipperPosDown3Pixels, flipperPower);
+        rotatorServo.setPosition(rotator3Pixels);
+    }
+    public void flipAndRotateDown2Pixels(){
+        setFlipperPos(flipperPosDown2Pixels, flipperPower);
+        rotatorServo.setPosition(rotator2Pixels);
+    }
     public void flipUp(){
         setFlipperPos(flipperPosUp, flipperPower);
         flipperDown = false;
     }
-//    public void flipUpFirstPlace(){
-//        setFlipperPos(flipperPosUpFirstPlace);
-//    }
+    public void flipUpFirstPlace(){
+        setFlipperPos(flipperPosUpFirstPlace, flipperPower);
+    }
 
-//    public void toggleFlipper() {
-//        if (flipperDown) {
-//            flipUp();
-//        } else {
-//            flipDown();
-//        }
-//    }
+    public void toggleFlipper() {
+        if (flipperDown) {
+            flipUp();
+        } else {
+            flipDown();
+        }
+    }
     public void shootPlane(){
         airplaneServo.setPosition(airplaneServoGoPos);
         airplaneLoaded = false;
@@ -535,6 +548,23 @@ public class MonkeyMap {
             shootPlane();
         } else {
             loadPlane();
+        }
+    }
+    public void pullUpDown(){
+        pullUpServoLeft.setPosition(pullUpServoDownPos);
+        pullUpServoRight.setPosition(pullUpServoDownPos);
+        pullUpDown = true;
+    }
+    public void pullUpUp(){
+        pullUpServoLeft.setPosition(pullUpServoUpPos);
+        pullUpServoRight.setPosition(pullUpServoUpPos);
+        pullUpDown = false;
+    }
+    public void togglePullUp() {
+        if (pullUpDown) {
+            pullUpUp();
+        } else {
+            pullUpDown();
         }
     }
     public void setRotatorUp(){
@@ -623,7 +653,7 @@ public class MonkeyMap {
         myOpMode.sleep(sleepTimeBetweenFirstAndSecondPlace);
         openGrabber();
         myOpMode.sleep(sleepTimePlacePixel);
-        resetArm();
+        resetArmAuton();
     }
     public void pickUpInAutonFar(PointFollower follower, ArrayList<PosesAndActions> posesToGoTo, int pixelType, boolean isOddPixels, boolean goToMid){
         posesToGoTo.clear();
@@ -648,7 +678,7 @@ public class MonkeyMap {
         follower.goToPoints(true);
         closeGrabber();
         myOpMode.sleep(sleepTimePickUpPixel);
-        resetArm();
+        resetArmAuton();
     }
     public void placeInAutonClose(PointFollower follower, ArrayList<PosesAndActions> posesToGoTo, boolean isBlue){
         posesToGoTo.clear();
@@ -670,7 +700,7 @@ public class MonkeyMap {
         myOpMode.sleep(sleepTimeBetweenFirstAndSecondPlace);
         openGrabber();
         myOpMode.sleep(sleepTimePlacePixel);
-        resetArm();
+        resetArmAuton();
     }
     public void pickUpInAutonClose(PointFollower follower, ArrayList<PosesAndActions> posesToGoTo, int pixelType, boolean isOddPixels, boolean goToMid){
         posesToGoTo.clear();
@@ -697,7 +727,7 @@ public class MonkeyMap {
         myOpMode.sleep(sleepTimeCorrectServo);
         closeGrabber();
         myOpMode.sleep(sleepTimePickUpPixel);
-        resetArm();
+        resetArmAuton();
 //        resetSlides();
 //        flipDownForAuton();
 //        correctorServo.setPosition(MonkeyMap.correctorServoPlaceClosePos);
@@ -715,16 +745,16 @@ public class MonkeyMap {
     }
     public int TeamPropDetectionReading(){
         if(!OpenCVDetectTeamProp.isDetected){
-            return 1;
-//            return testZone;
+//            return 1;
+            return testZone;
         }
         else if(OpenCVDetectTeamProp.centerX < 160){
-            return 3;
-//            return testZone;
+//            return 3;
+            return testZone;
         }
         else if(OpenCVDetectTeamProp.centerX > 160){
-            return  2;
-//            return testZone;
+//            return  2;
+            return testZone;
         }
         return testZone;
     }
@@ -746,11 +776,11 @@ public class MonkeyMap {
     }
     public void setAutoCorrector(double heading){
         double correctorScalar = angleWrap(heading)/180;
-        double newCorrectorPos = MonkeyMap.correctorServoMinPosition + (correctorScalar*correctorRange);
+        double newCorrectorPos = correctorServoMinPosition + (correctorScalar*correctorRange);
         correctorServo.setPosition(newCorrectorPos);
     }
     public void setAutoRotator(double flipperPos){
-        double flipperScalar = Math.abs((flipperPos/(MonkeyMap.lowestFlipperPosDown-MonkeyMap.highestFlipperPos)) - 1);
+        double flipperScalar = Math.abs((flipperPos-lowestFlipperPosDown)/(lowestFlipperPosDown-highestFlipperPos));
         double newRotatorPos = MonkeyMap.maxRotatorPosDown + (flipperScalar*rotatorRange);
         rotatorServo.setPosition(newRotatorPos);
     }
