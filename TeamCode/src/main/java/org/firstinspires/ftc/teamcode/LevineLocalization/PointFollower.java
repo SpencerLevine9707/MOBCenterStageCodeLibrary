@@ -35,7 +35,6 @@ public class PointFollower {
     Pose2d startOfNewGo = new Pose2d(), prevPoseForVel = new Pose2d();
     public double currVelocity = 0;
     public double currPower;
-    public double distToTarg;
     public static double maxVel = 40, testVel = 20, slowestVel = 4;
     public static double decceleration = 40;
     public double targetVelocity = maxVel;
@@ -50,14 +49,17 @@ public class PointFollower {
         this.actionRunner = actionRunner;
     }
 
-    public void init(ArrayList<PosesAndActions> posesToGoTo, boolean isTest) {
+    public void init(ArrayList<PosesAndActions> posesToGoTo, boolean isTest, boolean firstTime) {
         if(isTest){
             maxVel = testVel;
         }
 
+        if(firstTime){
+            drive = new SampleMecanumDrive(this.myOpMode.hardwareMap);
+        }
+
         wMap.init(posesToGoTo.get(0).pose);
         startOfNewGo = posesToGoTo.get(0).pose;
-        drive = new SampleMecanumDrive(this.myOpMode.hardwareMap);
         drive.setPoseEstimate(posesToGoTo.get(0).pose);
 
         this.posesToGoTo.clear();
@@ -88,9 +90,6 @@ public class PointFollower {
 
             double distToTarget = totDistToTarget / iterationsForPoses;
 
-            distToTarg = distToTarget;
-
-
             theoreticalTheta = MathsAndStuff.AngleWrap(Math.atan2(yDist, xDist));
 
             for (int j = 0; j < iterationsForPoses; j++) {
@@ -113,9 +112,11 @@ public class PointFollower {
     }
 
     public void reinit(ArrayList<PosesAndActions> posesToGoTo) {
+        drive.update();
         posesToGoTo.add(0, new PosesAndActions(drive.getPoseEstimate(), ""));
-        init(posesToGoTo, false);
-        telemetry.addLine("poses to go to 1 is " + posesToGoTo.get(0));
+//        posesToGoTo.add(0, new PosesAndActions(new Pose2d(drive.getPoseEstimate().getX(), drive.getPoseEstimate().getY(), drive.getRawExternalHeading()), ""));
+        init(posesToGoTo, false, false);
+//        telemetry.addLine("poses to go to 1 is " + posesToGoTo.get(0));
     }
 
     public void goToPoints(boolean stopAfter){
@@ -124,11 +125,14 @@ public class PointFollower {
 
     public void goToPoints(boolean stopAfter, double newMaxVel) {
         startOfNewGo = drive.getPoseEstimate();
+//        startOfNewGo = new Pose2d(drive.getPoseEstimate().getX(), drive.getPoseEstimate().getY(), drive.getRawExternalHeading());
         prevPoseForVel = drive.getPoseEstimate();
+//        prevPoseForVel = new Pose2d(drive.getPoseEstimate().getX(), drive.getPoseEstimate().getY(), drive.getRawExternalHeading());
         currPower = 0;
         GetVelocityPIDController getVel = new GetVelocityPIDController(PIDVals, targetVelocity);
         velTime.reset();
         Pose2d currPose = drive.getPoseEstimate();
+//        Pose2d currPose = new Pose2d(drive.getPoseEstimate().getX(), drive.getPoseEstimate().getY(), drive.getRawExternalHeading());
         targetVelocity = newMaxVel;
         double distNeededToStartDecel = ((Math.pow(slowestVel, 2) - Math.pow(newMaxVel, 2))/(-2*decceleration));
         double totXDist = 0;
@@ -150,6 +154,7 @@ public class PointFollower {
             drive.update();
 
             currPose = drive.getPoseEstimate();
+//            currPose = new Pose2d(drive.getPoseEstimate().getX(), drive.getPoseEstimate().getY(), drive.getRawExternalHeading());
 
             double timeForVel = velTime.seconds();
 
@@ -260,7 +265,7 @@ public class PointFollower {
                 telemetry.addData("New Max Vel ", newMaxVel);
                 telemetry.addData("Tot dist to target ", totDistToTarget);
 //                telemetry.addData("Dist needed for decel ", distNeededToStartDecel);
-//                telemetry.addData("posesToGoTo ", posesToGoTo);
+                telemetry.addData("posesToGoTo ", posesToGoTo);
 //                telemetry.addLine("Target Pose: " + targetPose);
                 telemetry.addLine("isBuggingChecker: " + isBuggingChecker);
 //                telemetry.addLine("CurrSpeed: " + currPower);

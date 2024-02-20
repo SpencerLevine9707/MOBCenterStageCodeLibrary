@@ -42,10 +42,10 @@ public class MonkeyMap {
     //Servo Positions
     public static double grabberServoScalerDown = 0.1, grabberServoScalerUp = 0.7, offsetForGrabberScalar = 0.025;
     public static double grabberClosed = 0.695, grabberOpen = 0, grabberOpenTele = 0.3;
-    public static int flipperPosDown = 1, flipperPosDown2Pixels = 1, flipperPosDown3Pixels = 1, flipperPosDown4Pixels = 1, flipperPosDown5Pixels = 275, flipperPosDown6Pixels = 350, flipperPosUp = 300, flipperPosUpPurplePixels = 300, flipperPosUpFirstPlace = 485, flipperPosFirstPlacePlayingWithAlliance = 650, flipperPosDownForAuton = 300;
+    public static int flipperPosDown = 1, flipperPosDown2Pixels = 1, flipperPosDown3Pixels = 1, flipperPosDown4Pixels = 1, flipperPosDown5Pixels = 275, flipperPosDown6Pixels = 390, flipperPosUp = 300, flipperPosUpPurplePixels = 300, flipperPosUpFirstPlace = 485, flipperPosFirstPlacePlayingWithAlliance = 650, flipperPosDownForAuton = 300;
     public static double rotatorServoUpPos = 0.23, rotatorFlushWithSlides = 0.505, rotatorPickUpAndPlace = 0.45, rotator6Pixels = 0.5, rotator5Pixels = 0.5, rotator4Pixels = 0.52, rotator3Pixels = 0.5, rotator2Pixels = 0.5, rotatorServoFirstPlace = 0.6, rotatorServoPlaceInAuton = 0.58;
     public static double airplaneServoLoadedPos = 0.29, airplaneServoGoPos = 0.05;
-    public static double correctorServoMidPos = 0.5, correctorServoPlaceFarPos = 0.38, correctorServoPlaceClosePos = 0.62, correctorServoBeacon2AfterPos = 0.07, correctorServoBeacon2BeforePos = 0.93, correctorServoBeacon1PreloadPlace = 0.45, correctorServoBeacon3PreloadPlace = 0.55, correctorServoPickUpClose = 0.58, correctorServoPickUpMidFar = 0.38, correctorServoPickUpMidClose = 0.78;
+    public static double correctorServoMidPos = 0.47, correctorServoPlaceFarPos = 0.38, correctorServoPlaceClosePos = 0.62, correctorServoBeacon2AfterPos = 0.04, correctorServoBeacon2BeforePos = 0.9, correctorServoBeacon1PreloadPlace = 0.45, correctorServoBeacon3PreloadPlace = 0.55, correctorServoPickUpClose = 0.58, correctorServoPickUpMidFar = 0.38, correctorServoPickUpMidClose = 0.78;
     public static double correctorServoSpeed = 0.03, rotatorServoSpeed = 0.03;
     public static double flipperMotorSpeed = 250;
     public ArrayList<String> rotatorAndFlipperAutonPosesListOddPixels = new ArrayList<>(Arrays.asList("flipDown and rotateDown 5Pixels", "flipDown and rotateDown 3Pixels"));
@@ -54,7 +54,7 @@ public class MonkeyMap {
     //Auto adjust place and stuff
     public static double maxRotatorPosUp = 0.644, maxRotatorPosDown = 0.37;
     public static int lowestFlipperPosDown = 400, highestFlipperPos = 1600;
-    public static double correctorServoMinPosition = 0.07, correctorServoMaxPosition = 0.93;
+    public static double correctorServoMinPosition = 0.04, correctorServoMaxPosition = 0.9;
     public double rotatorRange = MonkeyMap.maxRotatorPosUp - MonkeyMap.maxRotatorPosDown;
     public double correctorRange = MonkeyMap.correctorServoMaxPosition - MonkeyMap.correctorServoMinPosition;
 
@@ -82,13 +82,13 @@ public class MonkeyMap {
     public static double headingPickUp = Math.toRadians(180);
     public static double headingPlace = Math.toRadians(0);
 
-    public static int sleepTimePlacePurplePixel = 300, sleepTimePickUpPixel = 300, sleepTimePlacePixel = 200, sleepTimeYellowPixel = 400, sleepTimeFirstPlace = 100, sleepTimeBetweenFirstAndSecondPlace = 100, sleepTimeExtendSlides = 400, sleepTimeWaitForFlipFirstPlace = 0, sleepTimeCorrectServo = 200, sleepTimeWaitToCloseParkAutons = 500, sleepTimeWaitToResetAuton = 500;
+    public static int sleepTimePlacePurplePixel = 300, sleepTimePickUpPixel = 300, sleepTimePlacePixel = 200, sleepTimeYellowPixel = 400, sleepTimeFirstPlace = 100, sleepTimeBetweenFirstAndSecondPlace = 100, sleepTimeExtendSlides = 600, sleepTimeWaitForFlipFirstPlace = 0, sleepTimeCorrectServo = 200, sleepTimeWaitToCloseParkAutons = 500, sleepTimeWaitToResetAuton = 500;
     public boolean grabberIsOpen = true, rightGrabberOpen = true, leftGrabberOpen = true, flipperDown = true, airplaneLoaded = true, pullUpDown = true;
     public static int timesToRunAuton = 4;
     //Goofy noises
     public int matchStart, wIntro, endgameStart, yabbaDabbaDo, driversPickUp, funnyFunny, teleStart;
-    public BNO055IMU gyro;
-    public static int testZone = 2;
+//    public BNO055IMU gyro;
+    public static int testZone = 1;
 
     public MonkeyMap (LinearOpMode opmode) {
         myOpMode = opmode;
@@ -124,7 +124,7 @@ public class MonkeyMap {
         armMotorLeft = myOpMode.hardwareMap.get(DcMotor.class, "armMotorLeft");
         flipperMotor = myOpMode.hardwareMap.get(DcMotor.class, "flipperMotor");
 
-        gyro = myOpMode.hardwareMap.get(BNO055IMU.class, "imu");
+//        gyro = myOpMode.hardwareMap.get(BNO055IMU.class, "imu");
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
@@ -478,6 +478,11 @@ public class MonkeyMap {
         setRotatorUp();
         setCorrectorMid();
     }
+    public void setArmFirstPlace(){
+        encodedSlipperySlides(slidesFirstPlacePosBeacons13, slidePowerEncoder);
+        flipUpFirstPlace();
+        setAutoRotator(flipperMotor.getTargetPosition());
+    }
     public void setFlipperPos(int pos, double power) {
         flipperMotor.setTargetPosition(pos);
         flipperMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -493,6 +498,7 @@ public class MonkeyMap {
     }
     public void flipDownPurplePixel(){
         setFlipperPos(flipperPosUpPurplePixels, flipperPower);
+        setRotatorFlush();
     }
     public void flipAndRotateDownAndExtend6Pixels(){
         setFlipperPos(flipperPosDown6Pixels, flipperPower);
@@ -765,7 +771,7 @@ public class MonkeyMap {
         return pixelType;
     }
     public double angleWrap(double angle){
-        angle += 90;
+//        angle += 90;
         while(angle < 180){
             angle += 180;
         }

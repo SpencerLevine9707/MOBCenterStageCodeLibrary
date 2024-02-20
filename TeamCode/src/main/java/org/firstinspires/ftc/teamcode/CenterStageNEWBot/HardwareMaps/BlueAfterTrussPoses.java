@@ -12,7 +12,7 @@ public class BlueAfterTrussPoses {
     public static double xPosPurplePixelPlacementAfterBeacon1 = 40, yPosPurplePixelPlacementAfterBeacon1 = 30;
     public static double xPosPurplePixelPlacementAfterBeacon23 = 31, yPosPurplePixelPlacementAfterBeacon23 = 25.5;
     public static double xPosStartExtendFirstPlacementAfter = 45, yPosStartExtendFirstPlacementAfter = 35;
-    public static double xPosFirstPlacementAfter = 52, yPosFirstPlacementAfterBeacon1 = 42, yPosFirstPlacementAfterBeacon2 = 35, yPosFirstPlacementAfterBeacon3 = 25;
+    public static double xPosFirstPlacementAfter = 50, yPosFirstPlacementAfterBeacon1 = 42, yPosFirstPlacementAfterBeacon2 = 35, yPosFirstPlacementAfterBeacon3 = 25;
 
     //Before only poses
     public static double xPosGoAcrossForBeforeTrussPurplePixelFar = -36, yPosGoAcrossForBeforeTrussPurplePixelFar = -5;

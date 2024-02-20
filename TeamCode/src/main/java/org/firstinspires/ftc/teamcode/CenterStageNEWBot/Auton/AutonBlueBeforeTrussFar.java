@@ -99,7 +99,7 @@ public class AutonBlueBeforeTrussFar extends LinearOpMode {
 
             posesToGoTo.add(new PosesAndActions(wBot.startingPosition, ""));
             posesToGoTo.add(new PosesAndActions(purplePixelPlacement, ""));
-            follower.init(posesToGoTo, isTest);
+            follower.init(posesToGoTo, isTest, true);
             follower.goToPoints(true);
 
             if(zoneDetected == 1) {
@@ -140,15 +140,15 @@ public class AutonBlueBeforeTrussFar extends LinearOpMode {
             posesToGoTo.clear();
             posesToGoTo.add(new PosesAndActions(wBot.lineUpForPlaceFar, "flipUpFirstPlace"));
             posesToGoTo.add(new PosesAndActions(wBot.turnAfterPickUpPixelFar, ""));
-            posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, ""));
-            posesToGoTo.add(new PosesAndActions(wBot.turnForFirstPlacementAfter, ""));
+            posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "extendSlidesPlaceFirstPixel"));
+//            posesToGoTo.add(new PosesAndActions(wBot.turnForFirstPlacementAfter, ""));
             posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
-            wBot.setAutoRotator(wBot.flipperMotor.getCurrentPosition());
-            sleep(MonkeyMap.sleepTimeWaitForFlipFirstPlace);
-            wBot.encodedSlipperySlides(firstPlaceSlidesPos, MonkeyMap.slidePowerEncoder);
-            sleep(MonkeyMap.sleepTimeExtendSlides);
+//            wBot.setAutoRotator(wBot.flipperMotor.getCurrentPosition());
+//            sleep(MonkeyMap.sleepTimeWaitForFlipFirstPlace);
+//            wBot.encodedSlipperySlides(firstPlaceSlidesPos, MonkeyMap.slidePowerEncoder);
+//            sleep(MonkeyMap.sleepTimeExtendSlides);
             wBot.openGrabber();
             sleep(MonkeyMap.sleepTimeYellowPixel);
             wBot.resetArm();

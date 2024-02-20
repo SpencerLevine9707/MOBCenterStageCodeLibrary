@@ -58,6 +58,10 @@ public class ActionRunnerCenterStageAuton {
             case "fullyExtendSlides":
                 wBot.fullyExtendSlides();
                 break;
+            case "extendSlidesPlaceFirstPixel":
+                wBot.encodedSlipperySlides(MonkeyMap.slidesFirstPlacePosBeacons13, MonkeyMap.slidePowerEncoder);
+                wBot.setAutoRotator(wBot.flipperMotor.getTargetPosition());
+                break;
             case "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace":
                 wBot.fullyExtendSlides();
                 wBot.correctorServo.setPosition(MonkeyMap.correctorServoPlaceFarPos);

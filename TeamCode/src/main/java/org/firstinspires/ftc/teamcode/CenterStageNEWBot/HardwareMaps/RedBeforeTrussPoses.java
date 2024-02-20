@@ -10,12 +10,12 @@ public class RedBeforeTrussPoses {
     //After only poses
     public static double xPosPurplePixelPlacementAfterBeacon1 = 30.4, yPosPurplePixelPlacementAfterBeacon1 = -30;
     public static double xPosPurplePixelPlacementAfterBeacon23 = 22.4, yPosPurplePixelPlacementAfterBeacon23 = -30;
-    public static double xPosStartExtendFirstPlacementAfter = 40, yPosStartExtendFirstPlacementAfter = -30;
-    public static double xPosFirstPlacementAfter = 52, yPosFirstPlacementAfterBeacon1 = -20, yPosFirstPlacementAfterBeacon2 = -30, yPosFirstPlacementAfterBeacon3 = -33;
+    public static double xPosStartExtendFirstPlacementAfter = 40, yPosStartExtendFirstPlacementAfter = -25;
+    public static double xPosFirstPlacementAfter = 52, yPosFirstPlacementAfterBeacon1 = -28, yPosFirstPlacementAfterBeacon2 = -23, yPosFirstPlacementAfterBeacon3 = -38;
 
     //Before only poses
     public static double xPosGoAcrossForBeforeTrussPurplePixelFar = -29, yPosGoAcrossForBeforeTrussPurplePixelFar = -8;
-    public static double xPosGoAroundPurplePixelBeacon2 = -50, yPosGoAroundPurplePixelBeacon2 = -5;
+    public static double xPosGoAroundPurplePixelBeacon2 = -60, yPosGoAroundPurplePixelBeacon2 = -5;
     public static double xPosGoAcrossForBeforeTrussPurplePixelClose = -36, yPosGoAcrossForBeforeTrussPurplePixelClose = -45;
 
     //Far poses

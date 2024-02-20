@@ -97,7 +97,7 @@ public class AutonBlueAfterTrussParkTriangle extends LinearOpMode {
 
             posesToGoTo.add(new PosesAndActions(wBot.startingPosition, ""));
             posesToGoTo.add(new PosesAndActions(purplePixelPlacement, ""));
-            follower.init(posesToGoTo, isTest);
+            follower.init(posesToGoTo, isTest, true);
             follower.goToPoints(true);
 
             if(zoneDetected == 1) {
