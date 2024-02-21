@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.CenterStageNEWBot.Auton.ActionRunnerCenterStageAuton;
 import org.firstinspires.ftc.teamcode.CenterStageNEWBot.HardwareMaps.MonkeyMap;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PointFollower;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PosesAndActions;
@@ -73,17 +72,17 @@ public class AutonBlueAfterTrussParkSquare extends LinearOpMode {
             if(zoneDetected == 1){
                 purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon23;
                 firstPlacement = wBot.firstPlacementBeacon3After;
-                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePosBeacons13;
+                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
             }
             else if(zoneDetected == 2){
                 purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon23;
                 firstPlacement = wBot.firstPlacementBeacon2After;
-                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePosBeacon2;
+                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
             }
             else{
                 purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon1;
                 firstPlacement = wBot.firstPlacementBeacon1After;
-                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePosBeacons13;
+                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
             }
 
             telemetry.addLine("zoneDetected: " + zoneDetected);
@@ -119,15 +118,15 @@ public class AutonBlueAfterTrussParkSquare extends LinearOpMode {
 
             posesToGoTo.clear();
             posesToGoTo.add(new PosesAndActions(wBot.startExtendFirstPlacementAfter, ""));
-            posesToGoTo.add(new PosesAndActions(wBot.turnForFirstPlacementAfter, ""));
+            posesToGoTo.add(new PosesAndActions(wBot.turnForFirstPlacementAfter, "extendSlidesPlaceFirstPixel"));
             posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
 
-            wBot.setAutoRotator(wBot.flipperMotor.getCurrentPosition());
-            sleep(MonkeyMap.sleepTimeWaitForFlipFirstPlace);
-            wBot.encodedSlipperySlides(firstPlaceSlidesPos, MonkeyMap.slidePowerEncoder);
-            sleep(MonkeyMap.sleepTimeExtendSlides);
+//            wBot.setAutoRotator(wBot.flipperMotor.getCurrentPosition());
+//            sleep(MonkeyMap.sleepTimeWaitForFlipFirstPlace);
+//            wBot.encodedSlipperySlides(firstPlaceSlidesPos, MonkeyMap.slidePowerEncoder);
+//            sleep(MonkeyMap.sleepTimeExtendSlides);
             wBot.openRightGrabber();
             sleep(MonkeyMap.sleepTimeYellowPixel);
             wBot.resetArm();

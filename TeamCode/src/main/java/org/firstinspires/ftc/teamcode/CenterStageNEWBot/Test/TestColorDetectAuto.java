@@ -78,21 +78,21 @@ public class TestColorDetectAuto extends LinearOpMode {
                 purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon23;
                 firstPlacement = wBot.firstPlacementBeacon3After;
                 firstExtendation.action = "extendSlidesFirstPlacementAfterBeacon1";
-                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePosBeacons13;
+                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
                 correctorPosFirstPlace = MonkeyMap.correctorServoBeacon3PreloadPlace;
             }
             else if(zoneDetected == 2){
                 purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon23;
                 firstPlacement = wBot.firstPlacementBeacon2After;
                 firstExtendation.action = "extendSlidesFirstPlacementAfterBeacon2";
-                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePosBeacon2;
+                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
                 correctorPosFirstPlace = MonkeyMap.correctorServoMidPos;
             }
             else{
                 purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon1;
                 firstPlacement = wBot.firstPlacementBeacon1After;
                 firstExtendation.action = "extendSlidesFirstPlacementAfterBeacon3";
-                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePosBeacons13;
+                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
                 correctorPosFirstPlace = MonkeyMap.correctorServoBeacon1PreloadPlace;
             }
 //            telemetry.addData("purplePixelPlacement", purplePixelPlacement);

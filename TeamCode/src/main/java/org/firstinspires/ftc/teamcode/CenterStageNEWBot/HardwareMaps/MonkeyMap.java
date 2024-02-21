@@ -4,7 +4,6 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -42,7 +41,7 @@ public class MonkeyMap {
     //Servo Positions
     public static double grabberServoScalerDown = 0.1, grabberServoScalerUp = 0.7, offsetForGrabberScalar = 0.025;
     public static double grabberClosed = 0.695, grabberOpen = 0, grabberOpenTele = 0.3;
-    public static int flipperPosDown = 1, flipperPosDown2Pixels = 1, flipperPosDown3Pixels = 1, flipperPosDown4Pixels = 1, flipperPosDown5Pixels = 275, flipperPosDown6Pixels = 390, flipperPosUp = 300, flipperPosUpPurplePixels = 300, flipperPosUpFirstPlace = 485, flipperPosFirstPlacePlayingWithAlliance = 650, flipperPosDownForAuton = 300;
+    public static int flipperPosDown = 1, flipperPosDown2Pixels = 1, flipperPosDown3Pixels = 1, flipperPosDown4Pixels = 1, flipperPosDown5Pixels = 275, flipperPosDown6Pixels = 380, flipperPosUp = 300, flipperPosUpPurplePixels = 300, flipperPosUpFirstPlace = 485, flipperPosFirstPlaceOtherAlliance = 700, flipperPosDownForAuton = 300;
     public static double rotatorServoUpPos = 0.23, rotatorFlushWithSlides = 0.505, rotatorPickUpAndPlace = 0.45, rotator6Pixels = 0.5, rotator5Pixels = 0.5, rotator4Pixels = 0.52, rotator3Pixels = 0.5, rotator2Pixels = 0.5, rotatorServoFirstPlace = 0.6, rotatorServoPlaceInAuton = 0.58;
     public static double airplaneServoLoadedPos = 0.29, airplaneServoGoPos = 0.05;
     public static double correctorServoMidPos = 0.47, correctorServoPlaceFarPos = 0.38, correctorServoPlaceClosePos = 0.62, correctorServoBeacon2AfterPos = 0.04, correctorServoBeacon2BeforePos = 0.9, correctorServoBeacon1PreloadPlace = 0.45, correctorServoBeacon3PreloadPlace = 0.55, correctorServoPickUpClose = 0.58, correctorServoPickUpMidFar = 0.38, correctorServoPickUpMidClose = 0.78;
@@ -65,7 +64,7 @@ public class MonkeyMap {
     public static int resetSlidesPos = 0, slidesFullyExtendedPos = -660;
     public static int slidesBeacon1PreloadAfter = 0, slidesBeacon2PreloadAfter = -250, slidesBeacon3PreloadAfter = -430;
     public static int slidesBeacon1PreloadBefore = -310, slidesBeacon2PreloadBefore = -350, slidesBeacon3PreloadBefore = -350, slidesBeacon2PreloadBeforeBlue = -310;
-    public static int slidesFirstPlacePosBeacon2 = -150, slidesFirstPlacePosBeacons13 = -150;
+    public static int slidesFirstPlacePos = -150, slidesFirstPlacePosOtherAlliance = -200;
 
     public static double holdPowerForSlides = 0, slidePowerEncoder = 1, flipperPower = 1;
 
@@ -479,7 +478,7 @@ public class MonkeyMap {
         setCorrectorMid();
     }
     public void setArmFirstPlace(){
-        encodedSlipperySlides(slidesFirstPlacePosBeacons13, slidePowerEncoder);
+        encodedSlipperySlides(slidesFirstPlacePos, slidePowerEncoder);
         flipUpFirstPlace();
         setAutoRotator(flipperMotor.getTargetPosition());
     }

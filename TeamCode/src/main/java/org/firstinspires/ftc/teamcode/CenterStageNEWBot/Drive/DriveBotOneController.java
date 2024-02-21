@@ -21,7 +21,7 @@ import org.firstinspires.ftc.teamcode.RoadrunnerStuff.drive.SampleMecanumDrive;
 
 @Config
 @TeleOp
-public class DriveBotSecondIteration extends LinearOpMode {
+public class DriveBotOneController extends LinearOpMode {
     MonkeyMap wBot = new MonkeyMap(this);
     SampleMecanumDrive driver;
     public ElapsedTime planeTime = new ElapsedTime(), timeForCloseLeft = new ElapsedTime(), timeForCloseRight = new ElapsedTime();
@@ -57,18 +57,16 @@ public class DriveBotSecondIteration extends LinearOpMode {
 
         MecanumDrive drive = new MecanumDrive(wBot.frontLeft, wBot.frontRight, wBot.backLeft, wBot.backRight);
 
-        boolean a2Pressable = true;
-        boolean b2Pressable = true;
-        boolean x2Pressable = true;
-        boolean y2Pressable = true;
-        boolean dpu2Pressable = true;
-        boolean dpl2Pressable = true;
-        boolean dpr2Pressable = true;
-        boolean dpd2Pressable = true;
-        boolean lb2Pressable = true;
-        boolean rb2Pressable = true;
         boolean a1Pressable = true;
+        boolean b1Pressable = true;
+        boolean x1Pressable = true;
+        boolean y1Pressable = true;
         boolean dpu1Pressable = true;
+        boolean dpl1Pressable = true;
+        boolean dpr1Pressable = true;
+        boolean dpd1Pressable = true;
+        boolean lb1Pressable = true;
+        boolean rb1Pressable = true;
         boolean isReserveDrive = false;
         boolean armCameDown = true;
         boolean autoCorrectorAdjust = false;
@@ -103,89 +101,50 @@ public class DriveBotSecondIteration extends LinearOpMode {
             double lx1 = gamepad1.left_stick_x;
             double ly1 = gamepad1.left_stick_y;
             double rx1 = gamepad1.right_stick_x;
+            double ry1 = gamepad1.right_stick_y;
             boolean y1 = gamepad1.y;
-            boolean lsb1 = gamepad1.left_stick_button;
-            boolean rsb1 = gamepad1.right_stick_button;
-            boolean rb1 = gamepad1.right_bumper, lb1 = gamepad1.left_bumper;
-            double rt1 = gamepad1.right_trigger, lt1 = gamepad1.left_trigger;
-            boolean a1 = gamepad1.a;
-            boolean dpu1 = gamepad1.dpad_up;
 
             telemetry.addLine("lx1: " + lx1 + " ly1: " + ly1 + " rx1 " + rx1);
 
-            double powerFromTriggers = Math.abs(lx1) + Math.abs(ly1) + Math.abs(rx1/divisorForSpinPower);
+            powerForMotors = Math.abs(lx1) + Math.abs(ly1) + Math.abs(rx1/divisorForSpinPower);
+            drive.moveInTeleop(lx1, ly1, rx1, powerForMotors);
 
-//            drive.moveInTeleop(-lx1, -ly1, rx1, powerFromTriggers);
-            if(rb1){
-                powerForMotors = slowSpeedDrive;
-            }
-            else{
-               powerForMotors = powerFromTriggers;
-            }
-//            if(a1 && a1Pressable){
-//                isReserveDrive = !isReserveDrive;
-//            }
-
-            if(isReserveDrive){
-                drive.moveInTeleop(-lx1, -ly1, rx1, powerForMotors);
-            }
-            else{
-                drive.moveInTeleop(lx1, ly1, rx1, powerForMotors);
-            }
 
             if(y1 && planeTime.seconds() > timeForPlaneWait){
                 wBot.toggleAirplane();
                 planeTime.reset();
             }
 
-//            if(lsb1 && rsb1 && planeTime.seconds() > timeForPlaneWait){
-//                wBot.shootPlane();
-//                planeTime.reset();
-//            }
-            if(lt1 > 0){
-                wBot.pullUpMotorRight.setPower(lt1);
-                wBot.pullUpMotorLeft.setPower(-lt1);
-            }
-            else if(rt1 > 0){
-                wBot.pullUpMotorRight.setPower(-rt1);
-                wBot.pullUpMotorLeft.setPower(rt1);
-            }
             else{
                 wBot.pullUpMotorRight.setPower(0);
                 wBot.pullUpMotorLeft.setPower(0);
             }
-            if(dpu1 && dpu1Pressable){
-                wBot.togglePullUp();
-            }
 
 //            Gamepad 2 controls
-            boolean a2 = gamepad2.a;
-            boolean b2 = gamepad2.b;
-            boolean x2 = gamepad2.x;
-            boolean y2 = gamepad2.y;
-            boolean lb2 = gamepad2.left_bumper;
-            boolean rb2 = gamepad2.right_bumper;
-            double rt2 = gamepad2.right_trigger;
-            double lt2 = gamepad2.left_trigger;
-            boolean dpu2 = gamepad2.dpad_up;
-            boolean dpd2 = gamepad2.dpad_down;
-            boolean dpl2 = gamepad2.dpad_left;
-            boolean dpr2 = gamepad2.dpad_right;
-            double ly2 = gamepad2.left_stick_y;
-            double ry2 = gamepad2.right_stick_y;
-            double rx2 = gamepad2.right_stick_x;
+            boolean a1 = gamepad1.a;
+            boolean b1 = gamepad1.b;
+            boolean x1 = gamepad1.x;
+//            boolean y1 = gamepad2.y;
+            boolean lb1 = gamepad1.left_bumper;
+            boolean rb1 = gamepad1.right_bumper;
+            double rt1 = gamepad1.right_trigger;
+            double lt1 = gamepad1.left_trigger;
+            boolean dpu1 = gamepad1.dpad_up;
+            boolean dpd1 = gamepad1.dpad_down;
+            boolean dpl1 = gamepad1.dpad_left;
+            boolean dpr1 = gamepad1.dpad_right;
 
 
-            if(a2 && a2Pressable){
+            if(a1 && a1Pressable){
                 wBot.toggleGrabber();
                 timeForCloseLeft.reset();
                 timeForCloseRight.reset();
             }
-            if(b2 && b2Pressable && timeForCloseRight.seconds() > timeForCloseWait){
+            if(b1 && b1Pressable && timeForCloseRight.seconds() > timeForCloseWait){
                 wBot.toggleLeftGrabber();
                 timeForCloseLeft.reset();
             }
-            if(x2 && x2Pressable && timeForCloseLeft.seconds() > timeForCloseWait){
+            if(x1 && x1Pressable && timeForCloseLeft.seconds() > timeForCloseWait){
                 wBot.toggleRightGrabber();
                 timeForCloseRight.reset();
             }
@@ -213,7 +172,7 @@ public class DriveBotSecondIteration extends LinearOpMode {
                 if(autoCorrectorAdjust){
                     wBot.setAutoCorrector(heading);
                 }
-                if (dpl2 && dpl2Pressable){
+                if (dpl1 && dpl1Pressable){
                     autoCorrectorAdjust = !autoCorrectorAdjust;
                     if(!autoCorrectorAdjust){
                         wBot.setCorrectorMid();
@@ -224,14 +183,14 @@ public class DriveBotSecondIteration extends LinearOpMode {
 
             telemetry.addLine("Grabber Servo Pos (left) " + wBot.grabberServoLeft.getPosition() + " Grabber Servo Pos (Right) " + wBot.grabberServoRight.getPosition());
 
-            if(y2 && y2Pressable){
+            if(y1 && y1Pressable){
                 wBot.setArmFirstPlace();
 //                if(retractSlidesOnFlip){
 //                    wBot.resetSlides();
 //                }
             }
-            if(Math.abs(ly2) > 0 && wBot.armMotorLeft.getTargetPosition() <= maxArmPos && wBot.armMotorLeft.getTargetPosition() >= minArmPos) {
-                wBot.encodedSlipperySlides((int) (wBot.armMotorLeft.getCurrentPosition() - (slideSpeed * ly2)), MonkeyMap.slidePowerEncoder);
+            if(Math.abs(ry1) > 0 && wBot.armMotorLeft.getTargetPosition() <= maxArmPos && wBot.armMotorLeft.getTargetPosition() >= minArmPos) {
+                wBot.encodedSlipperySlides((int) (wBot.armMotorLeft.getCurrentPosition() - (slideSpeed * ry1)), MonkeyMap.slidePowerEncoder);
             }
             if(wBot.armMotorLeft.getTargetPosition() >= maxArmPos){
                 wBot.encodedSlipperySlides(maxArmPos, MonkeyMap.slidePowerEncoder);
@@ -240,30 +199,26 @@ public class DriveBotSecondIteration extends LinearOpMode {
                 wBot.encodedSlipperySlides(minArmPos, MonkeyMap.slidePowerEncoder);
             }
 
-            if(lb2 && lb2Pressable){
+            if(lb1 && lb1Pressable){
                 wBot.resetArm();
             }
-            if(rb2 && rb2Pressable){
+            if(rb1 && rb1Pressable){
                 wBot.setRotatorFlush();
             }
 
 
             telemetry.addLine("armMotorLeftPow: " + wBot.armMotorLeft.getPower());
-
-            if(Math.abs(rx2) > 0) {
-                wBot.correctorServo.setPosition(wBot.correctorServo.getPosition() + MonkeyMap.correctorServoSpeed * rx2);
-            }
 //            if(Math.abs(ry2) > 0){
 //                wBot.rotatorServo.setPosition(wBot.rotatorServo.getPosition() + MonkeyMap.rotatorServoSpeed * ry2);
 //            }
-            if(rt2 > 0 && flipperPos - roomForErrorFlipper <= maxFlipperPos){
-                wBot.setFlipperPos((int) (flipperPos - (MonkeyMap.flipperMotorSpeed * rt2)), MonkeyMap.flipperPower);
+            if(rt1 > 0 && flipperPos - roomForErrorFlipper <= maxFlipperPos){
+                wBot.setFlipperPos((int) (flipperPos - (MonkeyMap.flipperMotorSpeed * rt1)), MonkeyMap.flipperPower);
                 if(retractSlidesOnFlip || retractSlidesForFlipping){
                     wBot.resetSlides();
                 }
             }
-            else if(lt2 > 0 && flipperPos + roomForErrorFlipper >= minFlipperPos){
-                wBot.setFlipperPos((int) (flipperPos + (MonkeyMap.flipperMotorSpeed * lt2)), MonkeyMap.flipperPower);
+            else if(lt1 > 0 && flipperPos + roomForErrorFlipper >= minFlipperPos){
+                wBot.setFlipperPos((int) (flipperPos + (MonkeyMap.flipperMotorSpeed * lt1)), MonkeyMap.flipperPower);
                 if(retractSlidesOnFlip || retractSlidesForFlipping){
                     wBot.resetSlides();
                 }
@@ -277,12 +232,12 @@ public class DriveBotSecondIteration extends LinearOpMode {
             }
 
 
-            if(dpu2 && dpu2Pressable){
+            if(dpu1 && dpu1Pressable){
                 wBot.setCorrectorMid();
             }
-            if(dpd2 && dpd2Pressable){
-                driver.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(90)));
-            }
+//            if(dpd1 && dpd1Pressable){
+//                driver.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(90)));
+//            }
 
             if(wBot.leftGrabberOpen && wBot.rightGrabberOpen){
                 wBot.grabberIsOpen = true;
@@ -293,16 +248,16 @@ public class DriveBotSecondIteration extends LinearOpMode {
 
             a1Pressable = !a1;
             dpu1Pressable = !dpu1;
-            rb2Pressable = !rb2;
-            lb2Pressable = !lb2;
-            x2Pressable = !x2;
-            b2Pressable = !b2;
-            a2Pressable = !a2;
-            y2Pressable = !y2;
-            dpu2Pressable = !dpu2;
-            dpd2Pressable = !dpd2;
-            dpl2Pressable = !dpl2;
-            dpr2Pressable = !dpr2;
+            rb1Pressable = !rb1;
+            lb1Pressable = !lb1;
+            x1Pressable = !x1;
+            b1Pressable = !b1;
+            a1Pressable = !a1;
+            y1Pressable = !y1;
+            dpu1Pressable = !dpu1;
+            dpd1Pressable = !dpd1;
+            dpl1Pressable = !dpl1;
+            dpr1Pressable = !dpr1;
 
 //            telemetry.addData("Heading", angles.firstAngle);
 //            telemetry.addData("Roll", angles.secondAngle);
@@ -312,9 +267,9 @@ public class DriveBotSecondIteration extends LinearOpMode {
 //            telemetry.addLine("Conveyor motor pow: " + wBot.conveyerMotor.getPower());
             telemetry.addLine("Flipper Motor Pos: " + flipperPos);
             telemetry.addLine("Flipper Motor Targ Pos: " + wBot.flipperMotor.getTargetPosition());
-            telemetry.addLine("ly2 is: " + ly2);
-            telemetry.addLine("rx2 is: " + rx2);
-            telemetry.addLine("ry2 is: " + ry2);
+            telemetry.addLine("ly2 is: " + ly1);
+            telemetry.addLine("rx2 is: " + rx1);
+            telemetry.addLine("ry2 is: " + ry1);
             telemetry.addLine("Corrector Servo pos is " + wBot.correctorServo.getPosition());
             telemetry.addData("Pull Up Servo Pos ", wBot.pullUpServoLeft.getPosition());
 

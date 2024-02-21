@@ -59,7 +59,11 @@ public class ActionRunnerCenterStageAuton {
                 wBot.fullyExtendSlides();
                 break;
             case "extendSlidesPlaceFirstPixel":
-                wBot.encodedSlipperySlides(MonkeyMap.slidesFirstPlacePosBeacons13, MonkeyMap.slidePowerEncoder);
+                wBot.encodedSlipperySlides(MonkeyMap.slidesFirstPlacePos, MonkeyMap.slidePowerEncoder);
+                wBot.setAutoRotator(wBot.flipperMotor.getTargetPosition());
+                break;
+            case "extendSlidesPlaceFirstPixelOtherAlliance":
+                wBot.encodedSlipperySlides(MonkeyMap.slidesFirstPlacePosOtherAlliance, MonkeyMap.slidePowerEncoder);
                 wBot.setAutoRotator(wBot.flipperMotor.getTargetPosition());
                 break;
             case "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace":
@@ -139,6 +143,9 @@ public class ActionRunnerCenterStageAuton {
                 break;
             case"flipUpFirstPlace":
                 wBot.flipUpFirstPlace();
+                break;
+            case"flipUpFirstPlaceOtherAlliance":
+                wBot.setFlipperPos(MonkeyMap.flipperPosFirstPlaceOtherAlliance, MonkeyMap.flipperPower);
                 break;
             case "extendSlidesFirstPlacementBeforeBeacon2":
                 wBot.flipUpFirstPlace();

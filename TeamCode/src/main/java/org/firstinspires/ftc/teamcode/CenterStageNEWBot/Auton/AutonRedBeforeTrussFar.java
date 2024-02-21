@@ -74,17 +74,17 @@ public class AutonRedBeforeTrussFar extends LinearOpMode {
             if(zoneDetected == 3){
                 purplePixelPlacement = wBot.goAcrossForBeforeTrussPurplePixelCloseTrussBeacon;
                 firstPlacement = wBot.firstPlacementBeacon1After;
-                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePosBeacons13;
+                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
             }
             else if(zoneDetected == 2){
                 purplePixelPlacement = wBot.goAcrossForBeforeTrussPurplePixelCloseMidBeacon;
                 firstPlacement = wBot.firstPlacementBeacon2After;
-                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePosBeacon2;
+                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
             }
             else{
                 purplePixelPlacement = wBot.goAcrossForBeforeTrussPurplePixelCloseWallBeacon;
                 firstPlacement = wBot.firstPlacementBeacon3After;
-                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePosBeacons13;
+                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
             }
 
             telemetry.addLine("zoneDetected: " + zoneDetected);
@@ -139,7 +139,7 @@ public class AutonRedBeforeTrussFar extends LinearOpMode {
 
             posesToGoTo.clear();
             posesToGoTo.add(new PosesAndActions(wBot.lineUpForPlaceFar, "flipUpFirstPlace"));
-            posesToGoTo.add(new PosesAndActions(wBot.turnAfterPickUpPixelFar, ""));
+//            posesToGoTo.add(new PosesAndActions(wBot.turnAfterPickUpPixelFar, ""));
             posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "extendSlidesPlaceFirstPixel"));
 //            posesToGoTo.add(new PosesAndActions(wBot.turnForFirstPlacementAfter, ""));
             posesToGoTo.add(new PosesAndActions(firstPlacement, ""));

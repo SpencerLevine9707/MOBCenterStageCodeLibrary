@@ -24,7 +24,7 @@ public class PointFollower {
     public ElapsedTime runtime = new ElapsedTime();
     public ElapsedTime velTime = new ElapsedTime();
     public static double isBuggingRuntimeToStop;
-    public static double isBuggingRuntimeToStopError = 2;
+    public static double isBuggingRuntimeToStopError = 6;
     int endOfPointCounter = 0;
     ArrayList <PosesAndActions> posesToGoTo = new ArrayList<>();
     ArrayList<PointType> pointTypes = new ArrayList<>();
@@ -35,11 +35,11 @@ public class PointFollower {
     Pose2d startOfNewGo = new Pose2d(), prevPoseForVel = new Pose2d();
     public double currVelocity = 0;
     public double currPower;
-    public static double maxVel = 40, testVel = 20, slowestVel = 4;
+    public static double maxVel = 50, testVel = 20, slowestVel = 4;
     public static double decceleration = 40;
     public double targetVelocity = maxVel;
     public static double accelerationConst = 200;
-    public static PIDCoefficients PIDVals = new PIDCoefficients(0.15, 0, 0.5);
+    public static PIDCoefficients PIDVals = new PIDCoefficients(0.2, 0, 0.5);
     public int isBuggingCounter = 0;
 
     public PointFollower(LinearOpMode opmode, ActionRunnerCenterStageAuton actionRunner) {
