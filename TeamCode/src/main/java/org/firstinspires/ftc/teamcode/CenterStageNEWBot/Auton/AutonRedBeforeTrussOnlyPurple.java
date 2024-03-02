@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "Center Stage")
-public class AutonRedBeforeTrussFarParkTriangle extends LinearOpMode {
+public class AutonRedBeforeTrussOnlyPurple extends LinearOpMode {
     OpenCvCamera webcam;
     static OpenCVDetectTeamProp colorPipe;
     static OpenCVGreatestColorTest pipeline;
@@ -136,27 +136,6 @@ public class AutonRedBeforeTrussFarParkTriangle extends LinearOpMode {
             wBot.resetSlides();
 
             sleep(sleepTimeWaitForFriends);
-
-            posesToGoTo.clear();
-            posesToGoTo.add(new PosesAndActions(wBot.lineUpForPlaceFar, "flipUpFirstPlace"));
-//            posesToGoTo.add(new PosesAndActions(wBot.turnAfterPickUpPixelFar, ""));
-            posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "extendSlidesPlaceFirstPixel"));
-//            posesToGoTo.add(new PosesAndActions(wBot.turnForFirstPlacementAfter, ""));
-            posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
-            follower.reinit(posesToGoTo);
-            follower.goToPoints(true);
-
-            sleep(MonkeyMap.sleepTimeWaitToPlaceFirstPlacement);
-            wBot.openGrabber();
-            sleep(MonkeyMap.sleepTimeYellowPixel);
-            wBot.resetArm();
-//            sleep(MonkeyMap.sleepTimeWaitToResetAuton);
-
-            posesToGoTo.clear();
-            posesToGoTo.add(new PosesAndActions(wBot.lineUpParkTriangle, "closeGrabber"));
-            posesToGoTo.add(new PosesAndActions(wBot.parkTriangle, ""));
-            follower.reinit(posesToGoTo);
-            follower.goToPoints(true);
 
             telemetry.addData("Time for auton ", timeForAuton);
             telemetry.update();

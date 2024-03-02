@@ -31,7 +31,7 @@ import java.util.ArrayList;
 //        Scalar lowerRed2 = new Scalar(150, 150, 40); // HSV lower threshold for red (high range)
 //        Scalar upperRed2 = new Scalar(180, 255, 255); // HSV high threshold for red (high range)
 
-        public static int[] lowerBlue = {90, 20, 20};
+        public static int[] lowerBlue = {90, 70, 50};
         public static int[] upperBlue = {170, 255, 255};
 
         public static int[] lowerRed = {150, 100, 40};

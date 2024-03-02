@@ -74,7 +74,7 @@ public class SampleMecanumDrive extends MecanumDrive {
     public static double yError = 0.125;
     public static double angError = 0.1;
 
-    public static boolean isFLoat = true;
+    public static boolean isFLoat = false;
 
     private TrajectorySequenceRunner trajectorySequenceRunner;
 
@@ -116,8 +116,8 @@ public class SampleMecanumDrive extends MecanumDrive {
 //        imu.initialize(parameters);
         imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
-                RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
+                RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
+                RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
         imu.initialize(parameters);
         imu.resetYaw();
 

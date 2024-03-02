@@ -22,6 +22,7 @@ public class OpenCVDetectTeamProp extends OpenCvPipeline {
     public static final Scalar pink = new Scalar(255, 0, 142);
     public static final Scalar white = new Scalar(255, 255, 255);
     public static double webcamSplitDist = 160;
+    public static int heightNoProp = 0;
     public static boolean isDetected = false;
     public static double minArea = 50;
     public static double minWidth = 45;
@@ -104,9 +105,11 @@ public class OpenCVDetectTeamProp extends OpenCvPipeline {
         for (MatOfPoint contour : contours) {
             double area = Imgproc.contourArea(contour);
             Rect boundingBox = Imgproc.boundingRect(contour);
+            int x = boundingBox.x;
+            int y = boundingBox.y;
             int w = boundingBox.width;
             int h = boundingBox.height;
-            if (area > maxArea && area >= minArea && w >= minWidth && h >= minHeight) {
+            if (area > maxArea && area >= minArea && w >= minWidth && h >= minHeight && y > heightNoProp) {
                 maxArea = area;
                 maxContour = contour;
             }
@@ -121,6 +124,7 @@ public class OpenCVDetectTeamProp extends OpenCvPipeline {
             int y = boundingBox.y;
             int w = boundingBox.width;
             int h = boundingBox.height;
+            telemetry.addData("x", x + "y: " + y);
 
             rectArea = w*h;
 
@@ -138,6 +142,7 @@ public class OpenCVDetectTeamProp extends OpenCvPipeline {
             if(xDist > 0){
                 thetaX *= -1;
             }
+            telemetry.addData("Center X: ", center_x + " Center Y: " + center_y);
 
 //            int circRad;
 //            if(Math.abs(x-(x+w)) > Math.abs(y-(y+h))){
@@ -154,7 +159,6 @@ public class OpenCVDetectTeamProp extends OpenCvPipeline {
             Imgproc.line(hsv, new Point(x, Math.abs(y + h)), new Point(Math.abs(x + w), y), blue, 1);
 
 //                Imgproc.putText(hsv, "(" + center_x + ", " + center_y + ")", new Point(frame.width(), frame.height() - 10), Imgproc.FONT_HERSHEY_SIMPLEX, 0.5, new Scalar(0, 255, 0), 2);
-                telemetry.addData("Center X: ", center_x + " Center Y: " + center_y);
         }
         else{
             isDetected = false;

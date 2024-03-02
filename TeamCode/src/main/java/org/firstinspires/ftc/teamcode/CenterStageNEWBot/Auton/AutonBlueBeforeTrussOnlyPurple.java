@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 @Config
 @Autonomous(group = "Center Stage")
-public class AutonRedBeforeTrussFarParkTriangle extends LinearOpMode {
+public class AutonBlueBeforeTrussOnlyPurple extends LinearOpMode {
     OpenCvCamera webcam;
     static OpenCVDetectTeamProp colorPipe;
     static OpenCVGreatestColorTest pipeline;
@@ -33,11 +33,11 @@ public class AutonRedBeforeTrussFarParkTriangle extends LinearOpMode {
     public static boolean isTest = false;
     public static boolean isParkFinal = true;
     public ElapsedTime timeForAuton = new ElapsedTime();
-    public static int sleepTimeWaitForFriends = 0; //6500 usually works
+    public static int sleepTimeWaitForFriends = 0; //6500 usually works pretty well
     @Override
     public void runOpMode() throws InterruptedException {
         wBot.init();
-        wBot.initForAuton("redBeforeTruss");
+        wBot.initForAuton("blueBeforeTruss");
         wBot.resetSlides();
         ArrayList<PosesAndActions> posesToGoTo = new ArrayList<>();
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -45,7 +45,7 @@ public class AutonRedBeforeTrussFarParkTriangle extends LinearOpMode {
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         pipeline = new OpenCVGreatestColorTest(telemetry);
-        colorPipe = new OpenCVDetectTeamProp(telemetry, OpenCVGreatestColorTest.lowerRed, OpenCVGreatestColorTest.upperRed);
+        colorPipe = new OpenCVDetectTeamProp(telemetry, OpenCVGreatestColorTest.lowerBlue, OpenCVGreatestColorTest.upperBlue);
         webcam.setPipeline(colorPipe);
         FtcDashboard.getInstance().startCameraStream(webcam, 0);
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
@@ -68,12 +68,12 @@ public class AutonRedBeforeTrussFarParkTriangle extends LinearOpMode {
         Pose2d purplePixelPlacement = new Pose2d();
         int firstPlaceSlidesPos = 0;
 
-        while (opModeInInit()) {
+        while(opModeInInit()){
             zoneDetected = wBot.TeamPropDetectionReading();
 
-            if(zoneDetected == 3){
-                purplePixelPlacement = wBot.goAcrossForBeforeTrussPurplePixelCloseTrussBeacon;
-                firstPlacement = wBot.firstPlacementBeacon1After;
+            if(zoneDetected == 1){
+                purplePixelPlacement = wBot.goAcrossForBeforeTrussPurplePixelCloseWallBeacon;
+                firstPlacement = wBot.firstPlacementBeacon3After;
                 firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
             }
             else if(zoneDetected == 2){
@@ -82,8 +82,8 @@ public class AutonRedBeforeTrussFarParkTriangle extends LinearOpMode {
                 firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
             }
             else{
-                purplePixelPlacement = wBot.goAcrossForBeforeTrussPurplePixelCloseWallBeacon;
-                firstPlacement = wBot.firstPlacementBeacon3After;
+                purplePixelPlacement = wBot.goAcrossForBeforeTrussPurplePixelCloseTrussBeacon;
+                firstPlacement = wBot.firstPlacementBeacon1After;
                 firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
             }
 
@@ -91,7 +91,7 @@ public class AutonRedBeforeTrussFarParkTriangle extends LinearOpMode {
             telemetry.update();
         }
 
-        while (opModeIsActive()) {
+        while(opModeIsActive()){
             timeForAuton.reset();
             wBot.closeGrabber();
             wBot.flipDownPurplePixel();
@@ -102,18 +102,18 @@ public class AutonRedBeforeTrussFarParkTriangle extends LinearOpMode {
             follower.init(posesToGoTo, isTest, true);
             follower.goToPoints(true);
 
-            if (zoneDetected == 1) {
+            if(zoneDetected == 1) {
                 wBot.extendSlidesWallBeaconBefore();
-                wBot.correctorServo.setPosition(MonkeyMap.correctorServoBeacon2BeforePos);
             }
-            if (zoneDetected == 2) {
-                wBot.extendSlidesMidBeaconBefore();
+            if(zoneDetected == 2){
+                wBot.encodedSlipperySlides(MonkeyMap.slidesBeacon2PreloadBeforeBlue, MonkeyMap.slidePowerEncoder);
             }
-            if (zoneDetected == 3) {
+            if(zoneDetected == 3){
                 wBot.extendSlidesTrussBeaconBefore();
+                wBot.correctorServo.setPosition(MonkeyMap.correctorServoBeacon2AfterPos);
             }
             sleep(MonkeyMap.sleepTimeExtendSlides);
-            wBot.openRightGrabber();
+            wBot.openLeftGrabber();
             sleep(MonkeyMap.sleepTimePlacePurplePixel);
             wBot.resetSlides();
             wBot.setCorrectorMid();
@@ -136,27 +136,6 @@ public class AutonRedBeforeTrussFarParkTriangle extends LinearOpMode {
             wBot.resetSlides();
 
             sleep(sleepTimeWaitForFriends);
-
-            posesToGoTo.clear();
-            posesToGoTo.add(new PosesAndActions(wBot.lineUpForPlaceFar, "flipUpFirstPlace"));
-//            posesToGoTo.add(new PosesAndActions(wBot.turnAfterPickUpPixelFar, ""));
-            posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "extendSlidesPlaceFirstPixel"));
-//            posesToGoTo.add(new PosesAndActions(wBot.turnForFirstPlacementAfter, ""));
-            posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
-            follower.reinit(posesToGoTo);
-            follower.goToPoints(true);
-
-            sleep(MonkeyMap.sleepTimeWaitToPlaceFirstPlacement);
-            wBot.openGrabber();
-            sleep(MonkeyMap.sleepTimeYellowPixel);
-            wBot.resetArm();
-//            sleep(MonkeyMap.sleepTimeWaitToResetAuton);
-
-            posesToGoTo.clear();
-            posesToGoTo.add(new PosesAndActions(wBot.lineUpParkTriangle, "closeGrabber"));
-            posesToGoTo.add(new PosesAndActions(wBot.parkTriangle, ""));
-            follower.reinit(posesToGoTo);
-            follower.goToPoints(true);
 
             telemetry.addData("Time for auton ", timeForAuton);
             telemetry.update();

@@ -64,25 +64,25 @@ public class AutonBlueAfterTrussParkTriangle extends LinearOpMode {
 
         Pose2d firstPlacement = new Pose2d();
         Pose2d purplePixelPlacement = new Pose2d();
-        int firstPlaceSlidesPos = 0;
+        Pose2d purplePixelLineUp = new Pose2d();
 
         while(opModeInInit()){
             zoneDetected = wBot.TeamPropDetectionReading();
 
-            if(zoneDetected == 1){
+            if(zoneDetected == 3){
                 purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon23;
+                purplePixelLineUp = wBot.lineUpPurplePixelAfterTrussBeacon23;
                 firstPlacement = wBot.firstPlacementBeacon3After;
-                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
             }
-            else if(zoneDetected == 2){
+            else if(zoneDetected == 1){
                 purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon23;
+                purplePixelLineUp = wBot.lineUpPurplePixelAfterTrussBeacon23;
                 firstPlacement = wBot.firstPlacementBeacon2After;
-                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
             }
             else{
                 purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon1;
+                purplePixelLineUp = wBot.lineUpPurplePixelAfterTrussBeacon1;
                 firstPlacement = wBot.firstPlacementBeacon1After;
-                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
             }
 
             telemetry.addLine("zoneDetected: " + zoneDetected);
@@ -95,18 +95,19 @@ public class AutonBlueAfterTrussParkTriangle extends LinearOpMode {
             wBot.flipDownPurplePixel();
 
             posesToGoTo.add(new PosesAndActions(wBot.startingPosition, ""));
+            posesToGoTo.add(new PosesAndActions(purplePixelLineUp, ""));
             posesToGoTo.add(new PosesAndActions(purplePixelPlacement, ""));
             follower.init(posesToGoTo, isTest, true);
             follower.goToPoints(true);
 
-            if(zoneDetected == 1) {
+            if(zoneDetected == 3) {
                 wBot.extendSlidesFarBeaconAfter();
             }
-            if(zoneDetected == 2){
+            if(zoneDetected == 1){
                 wBot.extendSlidesMidBeaconAfter();
                 wBot.correctorServo.setPosition(MonkeyMap.correctorServoBeacon2AfterPos);
             }
-            if(zoneDetected == 3){
+            if(zoneDetected == 2){
                 wBot.extendSlidesCloseBeaconAfter();
             }
             sleep(MonkeyMap.sleepTimeExtendSlides);
@@ -123,14 +124,10 @@ public class AutonBlueAfterTrussParkTriangle extends LinearOpMode {
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
 
-//            wBot.setAutoRotator(wBot.flipperMotor.getCurrentPosition());
-//            sleep(MonkeyMap.sleepTimeWaitForFlipFirstPlace);
-//            wBot.encodedSlipperySlides(firstPlaceSlidesPos, MonkeyMap.slidePowerEncoder);
-//            sleep(MonkeyMap.sleepTimeExtendSlides);
+            sleep(MonkeyMap.sleepTimeWaitToPlaceFirstPlacement);
             wBot.openRightGrabber();
             sleep(MonkeyMap.sleepTimeYellowPixel);
             wBot.resetArm();
-//            sleep(MonkeyMap.sleepTimeWaitToResetAuton);
 
             posesToGoTo.clear();
             posesToGoTo.add(new PosesAndActions(wBot.lineUpParkTriangle, "closeGrabber"));

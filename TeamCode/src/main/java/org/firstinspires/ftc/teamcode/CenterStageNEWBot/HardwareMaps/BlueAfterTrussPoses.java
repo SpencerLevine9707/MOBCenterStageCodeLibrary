@@ -6,13 +6,13 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 @Config
 public class BlueAfterTrussPoses {
     //Starting pos
-    public static double xPosStartingPos = 10, yPosStartingPos = 58;
+    public static double xPosStartingPos = 18.5, yPosStartingPos = 58;
 
     //After only poses
-    public static double xPosPurplePixelPlacementAfterBeacon1 = 35, yPosPurplePixelPlacementAfterBeacon1 = 30;
-    public static double xPosPurplePixelPlacementAfterBeacon23 = 29, yPosPurplePixelPlacementAfterBeacon23 = 27;
-    public static double xPosStartExtendFirstPlacementAfter = 45, yPosStartExtendFirstPlacementAfter = 28;
-    public static double xPosFirstPlacementAfter = 46, yPosFirstPlacementAfterBeacon1 = 34.5, yPosFirstPlacementAfterBeacon2 = 28, yPosFirstPlacementAfterBeacon3 = 21;
+    public static double xPosPurplePixelPlacementAfterBeacon1 = 40, yPosPurplePixelPlacementAfterBeacon1 = 25;
+    public static double xPosPurplePixelPlacementAfterBeacon23 = 31, yPosPurplePixelPlacementAfterBeacon23 = 25;
+    public static double xPosStartExtendFirstPlacementAfter = 45, yPosStartExtendFirstPlacementAfter = 29.5;
+    public static double xPosFirstPlacementAfter = 52, yPosFirstPlacementAfterBeacon1 = 36, yPosFirstPlacementAfterBeacon2 = 29.5, yPosFirstPlacementAfterBeacon3 = 21;
 
     //Before only poses
     public static double xPosGoAcrossForBeforeTrussPurplePixelFar = -36, yPosGoAcrossForBeforeTrussPurplePixelFar = -5;
@@ -21,12 +21,12 @@ public class BlueAfterTrussPoses {
 
     //Far poses
     public static double xPosLineUpForPickUpFar = 40, yPosLineUpForPickUpFar = 8;
-    public static double xPosLineUpForPlaceFar = 15, yPosLineUpForPlaceFar = 8;
+    public static double xPosLineUpForPlaceFar = 15, yPosLineUpForPlaceFar = 3;//This one
     public static double xPosStartArmExtendPickUpFar = -21, yPosStartArmExtendPickUpFar = 8;
-    public static double xPosPickUpPixelFar = -41.5, yPosPickUpPixelFar = 10;
-    public static double xPosPlacePixelFar = 47, yPosPlacePixelFar = 23;
+    public static double xPosPickUpPixelFar = -33, yPosPickUpPixelFar = 5;
+    public static double xPosPlacePixelFar = 49, yPosPlacePixelFar = 30;
     public static double xPosFlipAfterPlaceFar = 24, yPosFlipAfterPlaceFar = -16;
-    public static double xPosStartArmExtendPlaceFar = 35, yPosStartArmExtendPlaceFar = 8;
+    public static double xPosStartArmExtendPlaceFar = 35, yPosStartArmExtendPlaceFar = 3;//This one
 
     //Close poses
     public static double xPosLineUpForPickUpClose = 13, yPosLineUpForPickUpClose = 54.5;
@@ -47,7 +47,7 @@ public class BlueAfterTrussPoses {
 
     public static double headingMidStackPickUpFar = Math.toRadians(150), headingMidStackPickUpClose = Math.toRadians(230);
     public static double headingStartingPositionAndBeacon = -Math.toRadians(90), headingPickUpClose = Math.toRadians(215);
-    public static double headingPlaceFar = Math.toRadians(200), headingPlaceClose = Math.toRadians(160);
+    public static double headingPlaceFar = Math.toRadians(0), headingPlaceClose = Math.toRadians(160);
     public static double headingWallBeaconBefore = Math.toRadians(55), headingTrussBeaconBefore = Math.toRadians(125), headingTiltedBeaconsAfter = Math.toRadians(60);
     public static double headingMidBeaconBefore = Math.toRadians(100), headingBeacon1PlacementAfter = Math.toRadians(195), headingBeacon3PlacementAfter = Math.toRadians(161);
     public static double headingBeacon1PlacementBeforeClose = Math.toRadians(60), headingBeacon2PlacementBeforeClose = Math.toRadians(40), headingBeacon3PlacementBeforeClose = Math.toRadians(20);

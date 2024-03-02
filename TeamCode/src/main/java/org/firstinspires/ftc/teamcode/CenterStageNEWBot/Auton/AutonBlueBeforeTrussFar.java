@@ -135,16 +135,12 @@ public class AutonBlueBeforeTrussFar extends LinearOpMode {
 
             posesToGoTo.clear();
             posesToGoTo.add(new PosesAndActions(wBot.lineUpForPlaceFar, "flipUpFirstPlace"));
-//            posesToGoTo.add(new PosesAndActions(wBot.turnAfterPickUpPixelFar, ""));
             posesToGoTo.add(new PosesAndActions(wBot.startArmExtendPlaceFar, "extendSlidesPlaceFirstPixel"));
-//            posesToGoTo.add(new PosesAndActions(wBot.turnForFirstPlacementAfter, ""));
             posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
-//            wBot.setAutoRotator(wBot.flipperMotor.getCurrentPosition());
-//            sleep(MonkeyMap.sleepTimeWaitForFlipFirstPlace);
-//            wBot.encodedSlipperySlides(firstPlaceSlidesPos, MonkeyMap.slidePowerEncoder);
-//            sleep(MonkeyMap.sleepTimeExtendSlides);
+
+            sleep(MonkeyMap.sleepTimeWaitToPlaceFirstPlacement);
             wBot.openGrabber();
             sleep(MonkeyMap.sleepTimeYellowPixel);
             wBot.resetArm();

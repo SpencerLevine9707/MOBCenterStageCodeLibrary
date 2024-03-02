@@ -33,7 +33,7 @@ public class AutonBlueBeforeTrussFarOTHERALLIANCE extends LinearOpMode {
     public static boolean isTest = false;
     public static boolean isParkFinal = true;
     public ElapsedTime timeForAuton = new ElapsedTime();
-    public static int sleepTimeWaitForFriends = 0; //6500 usually works pretty well
+    public static int sleepTimeWaitForFriends = 6000; //6500 usually works pretty well
     @Override
     public void runOpMode() throws InterruptedException {
         wBot.init();
@@ -141,10 +141,8 @@ public class AutonBlueBeforeTrussFarOTHERALLIANCE extends LinearOpMode {
             posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
-//            wBot.setAutoRotator(wBot.flipperMotor.getCurrentPosition());
-//            sleep(MonkeyMap.sleepTimeWaitForFlipFirstPlace);
-//            wBot.encodedSlipperySlides(firstPlaceSlidesPos, MonkeyMap.slidePowerEncoder);
-//            sleep(MonkeyMap.sleepTimeExtendSlides);
+
+            sleep(MonkeyMap.sleepTimeWaitToPlaceFirstPlacement);
             wBot.openGrabber();
             sleep(MonkeyMap.sleepTimeYellowPixel);
             wBot.resetArm();

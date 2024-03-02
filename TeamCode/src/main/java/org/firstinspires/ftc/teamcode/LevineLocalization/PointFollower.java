@@ -24,7 +24,8 @@ public class PointFollower {
     public ElapsedTime runtime = new ElapsedTime();
     public ElapsedTime velTime = new ElapsedTime();
     public static double isBuggingRuntimeToStop;
-    public static double isBuggingRuntimeToStopError = 6;
+    public static double isBuggingRuntimeToStopError = 4;
+    public static double upperAngleToWrapAngError = 355, lowerAngleToWrapAngError = 5;
     int endOfPointCounter = 0;
     ArrayList <PosesAndActions> posesToGoTo = new ArrayList<>();
     ArrayList<PointType> pointTypes = new ArrayList<>();
@@ -39,7 +40,7 @@ public class PointFollower {
     public static double decceleration = 40;
     public double targetVelocity = maxVel;
     public static double accelerationConst = 200;
-    public static PIDCoefficients PIDVals = new PIDCoefficients(0.2, 0, 0.5);
+    public static PIDCoefficients PIDVals = new PIDCoefficients(0.15, 0, 0.75);
     public int isBuggingCounter = 0;
 
     public PointFollower(LinearOpMode opmode, ActionRunnerCenterStageAuton actionRunner) {
@@ -176,9 +177,18 @@ public class PointFollower {
 
                 angDone = !pointTypesInBetween.get(0).type.equals("final");
 
+                double angleForAngDist = currPose.getHeading();
+
+                if(Math.toRadians(targetPose.getHeading()) > Math.toRadians(upperAngleToWrapAngError) && angleForAngDist < Math.toRadians(lowerAngleToWrapAngError)){
+                    angleForAngDist += Math.toRadians(360);
+                }
+                else if(Math.toRadians(targetPose.getHeading()) < Math.toRadians(lowerAngleToWrapAngError) && angleForAngDist > Math.toRadians(upperAngleToWrapAngError)){
+                    angleForAngDist -= Math.toRadians(360);
+                }
+
                 double xDist = targetPose.getX() - currPose.getX();
                 double yDist = targetPose.getY() - currPose.getY();
-                double angDist = targetPose.getHeading() - currPose.getHeading();
+                double angDist = targetPose.getHeading() - angleForAngDist;
 
                 double distToTarget = Math.hypot(xDist, yDist);
                 double theta = MathsAndStuff.AngleWrap(Math.atan2(xDist, yDist) + wMap.startingPose.getHeading());
@@ -264,6 +274,7 @@ public class PointFollower {
                 telemetry.addData("targetVelocity ", targetVelocity);
                 telemetry.addData("New Max Vel ", newMaxVel);
                 telemetry.addData("Tot dist to target ", totDistToTarget);
+                telemetry.addData("Ang Dist ", angDist);
 //                telemetry.addData("Dist needed for decel ", distNeededToStartDecel);
                 telemetry.addData("posesToGoTo ", posesToGoTo);
 //                telemetry.addLine("Target Pose: " + targetPose);

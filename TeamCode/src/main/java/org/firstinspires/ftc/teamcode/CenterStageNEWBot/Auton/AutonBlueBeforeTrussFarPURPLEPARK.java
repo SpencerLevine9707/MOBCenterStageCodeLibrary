@@ -145,10 +145,8 @@ public class AutonBlueBeforeTrussFarPURPLEPARK extends LinearOpMode {
             posesToGoTo.add(new PosesAndActions(wBot.parkTriangle, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
-//            wBot.setAutoRotator(wBot.flipperMotor.getCurrentPosition());
-//            sleep(MonkeyMap.sleepTimeWaitForFlipFirstPlace);
-//            wBot.encodedSlipperySlides(firstPlaceSlidesPos, MonkeyMap.slidePowerEncoder);
-//            sleep(MonkeyMap.sleepTimeExtendSlides);
+
+            sleep(MonkeyMap.sleepTimeWaitToPlaceFirstPlacement);
             wBot.openGrabber();
             sleep(MonkeyMap.sleepTimeYellowPixel);
             wBot.resetArm();

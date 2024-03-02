@@ -61,9 +61,14 @@ public class ActionRunnerCenterStageAuton {
             case "extendSlidesPlaceFirstPixel":
                 wBot.encodedSlipperySlides(MonkeyMap.slidesFirstPlacePos, MonkeyMap.slidePowerEncoder);
                 wBot.setAutoRotator(wBot.flipperMotor.getTargetPosition());
+                wBot.closeGrabber();
                 break;
             case "extendSlidesPlaceFirstPixelOtherAlliance":
                 wBot.encodedSlipperySlides(MonkeyMap.slidesFirstPlacePosOtherAlliance, MonkeyMap.slidePowerEncoder);
+                wBot.setAutoRotator(wBot.flipperMotor.getTargetPosition());
+                break;
+            case "extendSlidesPlaceAuton":
+                wBot.encodedSlipperySlides(MonkeyMap.slidesPlaceInAuton, MonkeyMap.slidePowerEncoder);
                 wBot.setAutoRotator(wBot.flipperMotor.getTargetPosition());
                 break;
             case "fullyExtendSlides and setCorrectorPlaceFar and rotateForPlace":
@@ -144,6 +149,9 @@ public class ActionRunnerCenterStageAuton {
             case"flipUpFirstPlace":
                 wBot.flipUpFirstPlace();
                 break;
+            case"flipUpPlaceInAuton":
+                wBot.setFlipperPos(MonkeyMap.flipperPosUpPlaceInAuton, MonkeyMap.flipperPower);
+                break;
             case"flipUpFirstPlaceOtherAlliance":
                 wBot.setFlipperPos(MonkeyMap.flipperPosFirstPlaceOtherAlliance, MonkeyMap.flipperPower);
                 break;
@@ -158,6 +166,12 @@ public class ActionRunnerCenterStageAuton {
             case "fullyExtendSlides and openGrabber":
                 wBot.openGrabber();
                 wBot.fullyExtendSlides();
+                break;
+            case "fullyExtendSlides and openGrabber and setCorrectorMid and setRotatorFlush":
+                wBot.openGrabber();
+                wBot.fullyExtendSlides();
+                wBot.setCorrectorMid();
+                wBot.setRotatorFlush();
                 break;
             case "fullyExtendSlides and openGrabber and setCorrectorPickUpClose":
                 wBot.openGrabber();

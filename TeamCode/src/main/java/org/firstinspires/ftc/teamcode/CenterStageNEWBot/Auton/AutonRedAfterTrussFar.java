@@ -65,37 +65,39 @@ public class AutonRedAfterTrussFar extends LinearOpMode {
 
         Pose2d firstPlacement = new Pose2d();
         Pose2d purplePixelPlacement = new Pose2d();
-        int firstPlaceSlidesPos = 0;
+        Pose2d purplePixelLineUp = new Pose2d();
 
         while(opModeInInit()){
             zoneDetected = wBot.TeamPropDetectionReading();
 
             if(zoneDetected == 3){
                 purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon23;
+                purplePixelLineUp = wBot.lineUpPurplePixelAfterTrussBeacon23;
                 firstPlacement = wBot.firstPlacementBeacon1After;
-                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
             }
             else if(zoneDetected == 2){
                 purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon23;
+                purplePixelLineUp = wBot.lineUpPurplePixelAfterTrussBeacon23;
                 firstPlacement = wBot.firstPlacementBeacon2After;
-                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
             }
             else{
                 purplePixelPlacement = wBot.purplePixelPlacementAfterFarAndCloseBeacon1;
+                purplePixelLineUp = wBot.lineUpPurplePixelAfterTrussBeacon1;
                 firstPlacement = wBot.firstPlacementBeacon3After;
-                firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
             }
             telemetry.addLine("zoneDetected: " + zoneDetected);
             telemetry.update();
         }
 
         while(opModeIsActive()){
+//            sleep(sleepTimeToInitGraph);
             timeForAuton.reset();
             wBot.closeGrabber();
             wBot.flipDownPurplePixel();
             wBot.setRotatorFlush();
 
             posesToGoTo.add(new PosesAndActions(wBot.startingPosition, ""));
+            posesToGoTo.add(new PosesAndActions(purplePixelLineUp, ""));
             posesToGoTo.add(new PosesAndActions(purplePixelPlacement, ""));
             follower.init(posesToGoTo, isTest, true);
             follower.goToPoints(true);
@@ -119,17 +121,18 @@ public class AutonRedAfterTrussFar extends LinearOpMode {
 
             posesToGoTo.clear();
             posesToGoTo.add(new PosesAndActions(wBot.startExtendFirstPlacementAfter, ""));
-            posesToGoTo.add(new PosesAndActions(wBot.turnForFirstPlacementAfter, ""));
-            posesToGoTo.add(new PosesAndActions(firstPlacement, "extendSlidesPlaceFirstPixel"));
+            posesToGoTo.add(new PosesAndActions(wBot.turnForFirstPlacementAfter, "extendSlidesPlaceFirstPixel"));
+            posesToGoTo.add(new PosesAndActions(firstPlacement, ""));
             follower.reinit(posesToGoTo);
             follower.goToPoints(true);
-            wBot.setAutoRotator(wBot.flipperMotor.getCurrentPosition());
-            sleep(MonkeyMap.sleepTimeWaitForFlipFirstPlace);
-            wBot.encodedSlipperySlides(firstPlaceSlidesPos, MonkeyMap.slidePowerEncoder);
-            sleep(MonkeyMap.sleepTimeExtendSlides);
+
+            sleep(MonkeyMap.sleepTimeWaitToPlaceFirstPlacement);
             wBot.openLeftGrabber();
             sleep(MonkeyMap.sleepTimeYellowPixel);
             wBot.resetArm();
+            wBot.pickUpInAutonFar(follower, posesToGoTo, 1, false, false);
+            wBot.placeInAutonFar(follower, posesToGoTo, true);
+            
             sleep(MonkeyMap.sleepTimeWaitToResetAuton);
 
             telemetry.addData("Time for auton ", timeForAuton);
