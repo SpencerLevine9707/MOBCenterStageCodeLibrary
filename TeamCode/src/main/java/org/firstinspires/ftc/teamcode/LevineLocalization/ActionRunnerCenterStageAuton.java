@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.CenterStageNEWBot.Auton;
+package org.firstinspires.ftc.teamcode.LevineLocalization;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -151,6 +151,11 @@ public class ActionRunnerCenterStageAuton {
                 break;
             case"flipUpPlaceInAuton":
                 wBot.setFlipperPos(MonkeyMap.flipperPosUpPlaceInAuton, MonkeyMap.flipperPower);
+                break;
+            case"flipUpPlaceInAuton and extendSlidesPlaceAuton":
+                wBot.setFlipperPos(MonkeyMap.flipperPosUpPlaceInAuton, MonkeyMap.flipperPower);
+                wBot.encodedSlipperySlides(MonkeyMap.slidesPlaceInAuton, MonkeyMap.slidePowerEncoder);
+                wBot.setAutoRotator(wBot.flipperMotor.getTargetPosition());
                 break;
             case"flipUpFirstPlaceOtherAlliance":
                 wBot.setFlipperPos(MonkeyMap.flipperPosFirstPlaceOtherAlliance, MonkeyMap.flipperPower);

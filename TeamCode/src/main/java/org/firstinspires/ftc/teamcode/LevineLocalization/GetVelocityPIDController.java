@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.LevineLocalization;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+//This is used for the velocity control of the robot, allowing the wheel powers to be set to coorospond to the velocity
 public class GetVelocityPIDController {
     private double kp; // Proportional gain
     private double ki; // Integral gain

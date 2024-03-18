@@ -11,7 +11,7 @@ public class RedBeforeTrussPoses {
     public static double xPosPurplePixelPlacementAfterBeacon1 = 30.4, yPosPurplePixelPlacementAfterBeacon1 = -30;
     public static double xPosPurplePixelPlacementAfterBeacon23 = 22.4, yPosPurplePixelPlacementAfterBeacon23 = -30;
     public static double xPosStartExtendFirstPlacementAfter = 40, yPosStartExtendFirstPlacementAfter = -25;
-    public static double xPosFirstPlacementAfter = 49, yPosFirstPlacementAfterBeacon1 = -22, yPosFirstPlacementAfterBeacon2 = -28, yPosFirstPlacementAfterBeacon3 = -34;
+    public static double xPosFirstPlacementAfter = 50, yPosFirstPlacementAfterBeacon1 = -22.5, yPosFirstPlacementAfterBeacon2 = -30, yPosFirstPlacementAfterBeacon3 = -36.5;
 
     //Before only poses
     public static double xPosGoAcrossForBeforeTrussPurplePixelFar = -30, yPosGoAcrossForBeforeTrussPurplePixelFar = -8;
@@ -20,12 +20,12 @@ public class RedBeforeTrussPoses {
 
     //Far poses
     public static double xPosLineUpForPickUpFar = 40, yPosLineUpForPickUpFar = -5;
-    public static double xPosLineUpForPlaceFar = 15, yPosLineUpForPlaceFar = -2;
+    public static double xPosLineUpForPlaceFar = 15, yPosLineUpForPlaceFar = -4;
     public static double xPosStartArmExtendPickUpFar = -21, yPosStartArmExtendPickUpFar = -5;
     public static double xPosPickUpPixelFar = -36, yPosPickUpPixelFar = -5;
     public static double xPosPlacePixelFar = 47, yPosPlacePixelFar = -20;
     public static double xPosFlipAfterPlaceFar = 24, yPosFlipAfterPlaceFar = -16;
-    public static double xPosStartArmExtendPlaceFar = 40, yPosStartArmExtendPlaceFar = -2;
+    public static double xPosStartArmExtendPlaceFar = 40, yPosStartArmExtendPlaceFar = -4;
 
     //Close poses
     public static double xPosLineUpForPickUpClose = 13, yPosLineUpForPickUpClose = -54.5;

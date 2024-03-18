@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.CenterStageNEWBot.HardwareMaps.MonkeyMap;
+import org.firstinspires.ftc.teamcode.LevineLocalization.ActionRunnerCenterStageAuton;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PointFollower;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PosesAndActions;
 import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVDetectTeamProp;
@@ -90,6 +91,7 @@ public class AutonBlueAfterTrussFar extends LinearOpMode {
         }
 
         while(opModeIsActive()){
+            webcam.setPipeline(pipeline);
             timeForAuton.reset();
             wBot.closeGrabber();
             wBot.flipDownPurplePixel();
@@ -131,6 +133,8 @@ public class AutonBlueAfterTrussFar extends LinearOpMode {
 
             wBot.pickUpInAutonFar(follower, posesToGoTo, 1, false, false);
             wBot.placeInAutonFar(follower, posesToGoTo, true);
+//            wBot.pickUpInAutonFar(follower, posesToGoTo, 2, false, false);
+//            wBot.placeInAutonFar(follower, posesToGoTo, true);
             sleep(MonkeyMap.sleepTimeWaitToResetAuton);
 
             telemetry.addData("Time for auton ", timeForAuton);

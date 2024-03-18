@@ -115,9 +115,16 @@ public class SampleMecanumDrive extends MecanumDrive {
 //                RevHubOrientationOnRobot.UsbFacingDirection.LEFT));
 //        imu.initialize(parameters);
         imu = hardwareMap.get(IMU.class, "imu");
+
+        //Normal bot
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
                 RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD));
+
+        //Freight Bot
+//        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+//                RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
+//                RevHubOrientationOnRobot.UsbFacingDirection.UP));
         imu.initialize(parameters);
         imu.resetYaw();
 

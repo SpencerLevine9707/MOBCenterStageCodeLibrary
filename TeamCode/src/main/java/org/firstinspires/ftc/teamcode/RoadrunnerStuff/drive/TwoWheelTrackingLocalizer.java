@@ -40,11 +40,19 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
     public static double WHEEL_RADIUS = 0.68897; // in
     public static double GEAR_RATIO = 1; // output (wheel) speed / input (encoder) speed
 
+    //Normal Bot
     public static double PARALLEL_X = 2.25; // X is the up and down direction
     public static double PARALLEL_Y = 5.5; // Y is the strafe direction
 
     public static double PERPENDICULAR_X = -5.4;
     public static double PERPENDICULAR_Y = 0.75;
+
+    //Freight Bot
+//    public static double PARALLEL_X = -0.25; // X is the up and down direction
+//    public static double PARALLEL_Y = -3; // Y is the strafe direction
+////
+//    public static double PERPENDICULAR_X = -4.25;
+//    public static double PERPENDICULAR_Y = 0.5;
 
 //    Multiplier for normal field
     public static double X_MULTIPLIER = 1.1045; // Multiplier in the X direction
@@ -58,7 +66,7 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
     // Parallel/Perpendicular to the forward axis
     // Parallel wheel is parallel to the forward axis
     // Perpendicular is perpendicular to the forward axis
-    private Encoder parallelEncoder, perpendicularEncoder;
+    public Encoder parallelEncoder, perpendicularEncoder;
 
     private SampleMecanumDrive drive;
 
@@ -70,11 +78,22 @@ public class TwoWheelTrackingLocalizer extends TwoTrackingWheelLocalizer {
 
         this.drive = drive;
 
+        //Normal bot
+
         parallelEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "frontLeft"));
         perpendicularEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "backLeft"));
 
+        //Freight bot
+//        parallelEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "parEncoder"));
+//        perpendicularEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "perpEncoder"));
+
         // TODO: reverse any encoders using Encoder.setDirection(Encoder.Direction.REVERSE)
+
+        //Normal Bot
         perpendicularEncoder.setDirection(Encoder.Direction.REVERSE);
+
+        //Freight bot
+//        parallelEncoder.setDirection(Encoder.Direction.REVERSE);
     }
 
     public static double encoderTicksToInches(double ticks) {

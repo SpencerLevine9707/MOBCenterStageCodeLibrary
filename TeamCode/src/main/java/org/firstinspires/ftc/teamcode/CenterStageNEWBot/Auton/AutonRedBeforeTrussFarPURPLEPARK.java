@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.CenterStageNEWBot.HardwareMaps.MonkeyMap;
+import org.firstinspires.ftc.teamcode.LevineLocalization.ActionRunnerCenterStageAuton;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PointFollower;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PosesAndActions;
 import org.firstinspires.ftc.teamcode.VisionTesting.OpenCVDetectTeamProp;
@@ -71,12 +72,12 @@ public class AutonRedBeforeTrussFarPURPLEPARK extends LinearOpMode {
         while (opModeInInit()) {
             zoneDetected = wBot.TeamPropDetectionReading();
 
-            if(zoneDetected == 3){
+            if(zoneDetected == 2){
                 purplePixelPlacement = wBot.goAcrossForBeforeTrussPurplePixelCloseTrussBeacon;
                 firstPlacement = wBot.firstPlacementBeacon1After;
                 firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
             }
-            else if(zoneDetected == 2){
+            else if(zoneDetected == 1){
                 purplePixelPlacement = wBot.goAcrossForBeforeTrussPurplePixelCloseMidBeacon;
                 firstPlacement = wBot.firstPlacementBeacon2After;
                 firstPlaceSlidesPos = MonkeyMap.slidesFirstPlacePos;
@@ -102,14 +103,14 @@ public class AutonRedBeforeTrussFarPURPLEPARK extends LinearOpMode {
             follower.init(posesToGoTo, isTest, true);
             follower.goToPoints(true);
 
-            if (zoneDetected == 1) {
+            if (zoneDetected == 3) {
                 wBot.extendSlidesWallBeaconBefore();
                 wBot.correctorServo.setPosition(MonkeyMap.correctorServoBeacon2BeforePos);
             }
-            if (zoneDetected == 2) {
+            if (zoneDetected == 1) {
                 wBot.extendSlidesMidBeaconBefore();
             }
-            if (zoneDetected == 3) {
+            if (zoneDetected == 2) {
                 wBot.extendSlidesTrussBeaconBefore();
             }
             sleep(MonkeyMap.sleepTimeExtendSlides);
@@ -120,7 +121,7 @@ public class AutonRedBeforeTrussFarPURPLEPARK extends LinearOpMode {
             wBot.flipAndRotateDown6Pixels();
 
             posesToGoTo.clear();
-            if (zoneDetected == 2) {
+            if (zoneDetected == 1) {
                 posesToGoTo.add(new PosesAndActions(wBot.goAroundPurplePixelBeacon2, ""));
             }
             else{

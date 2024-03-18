@@ -9,9 +9,9 @@ public class RedAfterTrussPoses {
 
     //After only poses
     public static double xPosPurplePixelPlacementAfterBeacon1 = 38, yPosPurplePixelPlacementAfterBeacon1 = -30;
-    public static double xPosPurplePixelPlacementAfterBeacon23 = 30, yPosPurplePixelPlacementAfterBeacon23 = -26;
+    public static double xPosPurplePixelPlacementAfterBeacon23 = 30, yPosPurplePixelPlacementAfterBeacon23 = -27.5;
     public static double xPosStartExtendFirstPlacementAfter = 45, yPosStartExtendFirstPlacementAfter = -32;
-    public static double xPosFirstPlacementAfter = 48.5, yPosFirstPlacementAfterBeacon1 = -24, yPosFirstPlacementAfterBeacon2 = -32, yPosFirstPlacementAfterBeacon3 = -38;
+    public static double xPosFirstPlacementAfter = 49.25, yPosFirstPlacementAfterBeacon1 = -24, yPosFirstPlacementAfterBeacon2 = -32, yPosFirstPlacementAfterBeacon3 = -38;
 
     //Before only poses
     public static double xPosGoAcrossForBeforeTrussPurplePixelFar = -36, yPosGoAcrossForBeforeTrussPurplePixelFar = -5;
