@@ -15,7 +15,7 @@ public class LevineLocalizationMap {
     //Define all variables
 
     //Error of the robots position * 2
-    public static double poseError = 1;
+    public static double poseError = 1.5;
 
     //Angular error of the robot
     public static double angError = Math.toRadians(1);

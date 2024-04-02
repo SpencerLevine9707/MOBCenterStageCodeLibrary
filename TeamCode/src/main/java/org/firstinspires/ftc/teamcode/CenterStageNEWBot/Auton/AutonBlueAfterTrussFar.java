@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.CenterStageNEWBot.HardwareMaps.BlueAfterTrussPoses;
 import org.firstinspires.ftc.teamcode.CenterStageNEWBot.HardwareMaps.MonkeyMap;
 import org.firstinspires.ftc.teamcode.LevineLocalization.ActionRunnerCenterStageAuton;
 import org.firstinspires.ftc.teamcode.LevineLocalization.PointFollower;
@@ -33,6 +35,7 @@ public class AutonBlueAfterTrussFar extends LinearOpMode {
     PointFollower follower = new PointFollower(this, actionRunner);
     public static boolean isTest = false;
     public static boolean isParkFinal = true;
+    public double newXPos, newYPos;
     public ElapsedTime timeForAuton = new ElapsedTime();
     @Override
     public void runOpMode() throws InterruptedException {
@@ -132,9 +135,36 @@ public class AutonBlueAfterTrussFar extends LinearOpMode {
             wBot.resetArm();
 
             wBot.pickUpInAutonFar(follower, posesToGoTo, 1, false, false);
+//            if(wBot.detectionRightGrabber.getDistance(DistanceUnit.INCH) > MonkeyMap.distForPickUpDetect && wBot.detectionLeftGrabber.getDistance(DistanceUnit.INCH) > MonkeyMap.distForPickUpDetect){
+//                newXPos = follower.drive.getPoseEstimate().getX();
+//                newYPos = follower.drive.getPoseEstimate().getY();
+//            }
+//            follower.drive.setPoseEstimate(new Pose2d(newXPos, newYPos, MonkeyMap.headingPickUp));
             wBot.placeInAutonFar(follower, posesToGoTo, true);
-//            wBot.pickUpInAutonFar(follower, posesToGoTo, 2, false, false);
+//            wBot.pickUpInAutonFar(follower, posesToGoTo, 1, false, false);
+//            follower.drive.setPoseEstimate(new Pose2d(newXPos, newYPos, MonkeyMap.headingPickUp));
 //            wBot.placeInAutonFar(follower, posesToGoTo, true);
+//            wBot.pickUpInAutonFar(follower, posesToGoTo, 1, false, false);
+//            follower.drive.setPoseEstimate(new Pose2d(newXPos, newYPos, MonkeyMap.headingPickUp));
+//            wBot.placeInAutonFar(follower, posesToGoTo, true);
+//            wBot.pickUpInAutonFar(follower, posesToGoTo, 1, false, false);
+//            follower.drive.setPoseEstimate(new Pose2d(newXPos, newYPos, MonkeyMap.headingPickUp));
+//            wBot.placeInAutonFar(follower, posesToGoTo, true);
+//            wBot.pickUpInAutonFar(follower, posesToGoTo, 1, false, false);
+//            follower.drive.setPoseEstimate(new Pose2d(newXPos, newYPos, MonkeyMap.headingPickUp));
+//            wBot.placeInAutonFar(follower, posesToGoTo, true);
+//            wBot.pickUpInAutonFar(follower, posesToGoTo, 1, false, false);
+//            follower.drive.setPoseEstimate(new Pose2d(newXPos, newYPos, MonkeyMap.headingPickUp));
+//            wBot.placeInAutonFar(follower, posesToGoTo, true);
+//            wBot.pickUpInAutonFar(follower, posesToGoTo, 1, false, false);
+//            follower.drive.setPoseEstimate(new Pose2d(newXPos, newYPos, MonkeyMap.headingPickUp));
+//            wBot.placeInAutonFar(follower, posesToGoTo, true);
+//            wBot.pickUpInAutonFar(follower, posesToGoTo, 1, false, false);
+//            follower.drive.setPoseEstimate(new Pose2d(newXPos, newYPos, MonkeyMap.headingPickUp));
+//            wBot.placeInAutonFar(follower, posesToGoTo, true);
+            sleep(MonkeyMap.sleepTimeWaitToResetAuton);
+            wBot.setRotatorFlush();
+            wBot.encodedSlipperySlides(MonkeyMap.slidesParkPos, MonkeyMap.slidePowerEncoder);
             sleep(MonkeyMap.sleepTimeWaitToResetAuton);
 
             telemetry.addData("Time for auton ", timeForAuton);

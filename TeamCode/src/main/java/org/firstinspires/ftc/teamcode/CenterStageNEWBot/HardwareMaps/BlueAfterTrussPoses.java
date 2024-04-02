@@ -7,27 +7,32 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 public class BlueAfterTrussPoses {
     //Starting pos
     public static double xPosStartingPos = 18.5, yPosStartingPos = 58;
+    public static double xPosPickUpStackAnchorPoint = -38.968203472377176, yPosPickUpStackAnchorPoint = 5.396277482900213;
+    public static int  slidesPosPickUpStackAnchorPoint = -617;
+    //Supposed to be 5.5, -35
 
     //After only poses
     public static double xPosPurplePixelPlacementAfterBeacon1 = 40, yPosPurplePixelPlacementAfterBeacon1 = 25;
-    public static double xPosPurplePixelPlacementAfterBeacon23 = 31, yPosPurplePixelPlacementAfterBeacon23 = 23;
-    public static double xPosStartExtendFirstPlacementAfter = 42, yPosStartExtendFirstPlacementAfter = 29.5;
-    public static double xPosFirstPlacementAfter = 51, yPosFirstPlacementAfterBeacon1 = 36, yPosFirstPlacementAfterBeacon2 = 29.5, yPosFirstPlacementAfterBeacon3 = 23;
+    public static double xPosPurplePixelPlacementAfterBeacon23 = 31, yPosPurplePixelPlacementAfterBeacon23 = 25;
+    public static double xPosStartExtendFirstPlacementAfter = 45, yPosStartExtendFirstPlacementAfter = 29.5;
+    public static double xPosFirstPlacementAfter = 50.75, yPosFirstPlacementAfterBeacon1 = 36, yPosFirstPlacementAfterBeacon2 = 29.5, yPosFirstPlacementAfterBeacon3 = 22;
 
     //Before only poses
     public static double xPosGoAcrossForBeforeTrussPurplePixelFar = -36, yPosGoAcrossForBeforeTrussPurplePixelFar = -5;
     public static double xPosGoAroundPurplePixelBeacon2 = -38, yPosGoAroundPurplePixelBeacon2 = -15;
     public static double xPosGoAcrossForBeforeTrussPurplePixelClose = -36, yPosGoAcrossForBeforeTrussPurplePixelClose = -56;
-    public static double xPosAfterPlaceFar = 40, yPosAfterPlaceFar = 30;
+    public static double xPosAfterPlaceFar = 39, yPosAfterPlaceFar = 30;
 
     //Far poses
     public static double xPosLineUpForPickUpFar = 40, yPosLineUpForPickUpFar = 8;
-    public static double xPosLineUpForPlaceFar = 15, yPosLineUpForPlaceFar = 7;//This one
+    public static double xPosLineUpForPlaceFar = 15, yPosLineUpForPlaceFar = 5;//This one
     public static double xPosStartArmExtendPickUpFar = -21, yPosStartArmExtendPickUpFar = 8;
-    public static double xPosPickUpPixelFar = -30, yPosPickUpPixelFar = 3;
-    public static double xPosPlacePixelFar = 48, yPosPlacePixelFar = 30;
+    public static double xPosPickUpPixelFar = -31, yPosPickUpPixelFar = 1;
+//    public static double xPosPickUpPixelFar = -34, yPosPickUpPixelFar = 5.5;
+    public static double xPosPlacePixelFar = 47, yPosPlacePixelFar = 30;
+//    public static double xPosPlacePixelFar = 46.5, yPosPlacePixelFar = 27.2;
     public static double xPosFlipAfterPlaceFar = 24, yPosFlipAfterPlaceFar = -16;
-    public static double xPosStartArmExtendPlaceFar = 35, yPosStartArmExtendPlaceFar = 7;//This one
+    public static double xPosStartArmExtendPlaceFar = 35, yPosStartArmExtendPlaceFar = 5;//This one
 
     //Close poses
     public static double xPosLineUpForPickUpClose = 13, yPosLineUpForPickUpClose = 54.5;

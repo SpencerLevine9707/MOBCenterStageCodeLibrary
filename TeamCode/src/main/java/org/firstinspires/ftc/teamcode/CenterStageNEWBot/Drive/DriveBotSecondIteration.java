@@ -6,6 +6,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -34,6 +35,7 @@ public class DriveBotSecondIteration extends LinearOpMode {
     public static double divisorForSpinPower = 1;
     public static double timeForCloseWait = 0.75;
     public static int roomForErrorSlidePos = -8;
+    public static int pickUpPosArm = -25;
     public static int rCloseGrabber = 255, gCloseGrabber = 0, bCloseGrabber = 0;
     public static int rOpenGrabber = 0, gOpenGrabber = 255, bOpenGrabber = 0;
     public static int durationToKeepColor = 100000;
@@ -88,6 +90,7 @@ public class DriveBotSecondIteration extends LinearOpMode {
         wBot.flipUp();
         wBot.pullUpDown();
         driver.setPoseEstimate(new Pose2d(0, 0, Math.toRadians(0)));
+        wBot.stackSetter.setPosition(MonkeyMap.stackSetterUpPos);
 
         waitForStart();
 
@@ -237,13 +240,20 @@ public class DriveBotSecondIteration extends LinearOpMode {
                 if(armPos < roomForErrorSlidePos){
                     wBot.setAutoRotatorGrabber(armPos);
                 }
+                if(armPos < pickUpPosArm){
+                    wBot.stackSetter.setPosition(MonkeyMap.stackSetterPickUpTeleopPos);
+                }
+                else{
+                    wBot.stackSetter.setPosition(MonkeyMap.stackSetterUpPos);
+                }
             }
             else{
                 wBot.setAutoRotator(flipperPos);
                 armCameDown = true;
                 retractSlidesForFlipping = false;
                 if(autoCorrectorAdjust){
-                    wBot.setAutoCorrector(heading);
+//                    wBot.setAutoCorrector(heading);
+                    wBot.setAutoCorrectorOtherWay(heading);
                 }
                 if (dpl2 && dpl2Pressable){
                     autoCorrectorAdjust = !autoCorrectorAdjust;
@@ -361,8 +371,9 @@ public class DriveBotSecondIteration extends LinearOpMode {
             telemetry.addLine("slidesPos (left): " + wBot.armMotorLeft.getCurrentPosition());
             telemetry.addLine("Rotator Pos: " + wBot.rotatorServo.getPosition());
 //            telemetry.addLine("relocalizerDistance: " + wBot.relocalizer.getDistance(DistanceUnit.INCH));
-            telemetry.addLine("Flipper Motor Pos: " + flipperPos);
-            telemetry.addLine("Flipper Motor Targ Pos: " + wBot.flipperMotor.getTargetPosition());
+            telemetry.addData("Flipper Motor Pos: ", flipperPos2);
+            telemetry.addData("FlipperMotorPID", wBot.flipperMotor.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION));
+            telemetry.addData("Flipper Motor Targ Pos: ", flipperPos);
             telemetry.addLine("ly2 is: " + ly2);
             telemetry.addLine("rx2 is: " + rx2);
             telemetry.addLine("ry2 is: " + ry2);

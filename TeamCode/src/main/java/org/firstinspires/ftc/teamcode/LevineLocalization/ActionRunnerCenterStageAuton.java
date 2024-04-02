@@ -153,7 +153,8 @@ public class ActionRunnerCenterStageAuton {
                 wBot.setFlipperPos(MonkeyMap.flipperPosUpPlaceInAuton, MonkeyMap.flipperPower);
                 break;
             case"flipUpPlaceInAuton and extendSlidesPlaceAuton":
-                wBot.setFlipperPos(MonkeyMap.flipperPosUpPlaceInAuton, MonkeyMap.flipperPower);
+                wBot.setFlipperPos(MonkeyMap.flipperPosUpPlaceInAuton, MonkeyMap.flipperPowerAuton);
+                wBot.setAutoCorrectorOtherWay(Math.toDegrees(wBot.placePixelFar.getHeading()));
                 wBot.encodedSlipperySlides(MonkeyMap.slidesPlaceInAuton, MonkeyMap.slidePowerEncoder);
                 wBot.setAutoRotator(wBot.flipperMotor.getTargetPosition());
                 break;

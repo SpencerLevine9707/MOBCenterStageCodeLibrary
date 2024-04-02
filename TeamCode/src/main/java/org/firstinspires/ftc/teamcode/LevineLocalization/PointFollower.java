@@ -35,7 +35,7 @@ public class PointFollower {
     public ElapsedTime runtime = new ElapsedTime();
     public ElapsedTime velTime = new ElapsedTime();
     public static double isBuggingRuntimeToStop;
-    public static double isBuggingRuntimeToStopError = 4;
+    public static double isBuggingRuntimeToStopError = 2;
     public static double upperAngleToWrapAngError = 355, lowerAngleToWrapAngError = 5;
     int endOfPointCounter = 0;
     ArrayList <PosesAndActions> posesToGoTo = new ArrayList<>();

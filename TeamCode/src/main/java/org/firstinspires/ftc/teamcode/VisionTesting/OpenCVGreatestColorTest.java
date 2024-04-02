@@ -41,7 +41,7 @@ import java.util.ArrayList;
         public static int[] upperYellow = {50, 255, 255};
 
         public static int[] lowerWhite = {0, 0, 200};
-        public static int[] upperWhite = {180, 30, 255};
+        public static int[] upperWhite = {255, 30, 255};
 
         public static int[] lowerGray = {0, 0, 30};
         public static int[] upperGray = {180, 30, 200};
@@ -143,9 +143,9 @@ import java.util.ArrayList;
                 xDist = center_x - (frame.width()/2);
                 yDist = center_y - (frame.height()/2);
                 thetaX = (double)((Math.abs(xDist)-160)/4)+30;
-                if(xDist > 0){
-                    thetaX *= -1;
-                }
+//                if(xDist > 0){
+//                    thetaX *= -1;
+//                }
 
                 int circRad;
                 if(Math.abs(x-(x+w)) > Math.abs(y-(y+h))){

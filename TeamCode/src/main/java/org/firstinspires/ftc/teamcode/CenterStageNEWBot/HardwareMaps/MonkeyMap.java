@@ -4,12 +4,14 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cRangeSensor;
 import com.qualcomm.hardware.rev.Rev2mDistanceSensor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.ColorRangeSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -35,31 +37,38 @@ public class MonkeyMap {
 
     //Define all hardware
     public DcMotorEx frontLeft, frontRight, backLeft, backRight, pullUpMotorLeft, pullUpMotorRight, armMotorLeft, flipperMotor;
-    public static double currentAlertArmMotor = 6;
+    public static double currentAlertArmMotor = 6.25;
 
-    public Servo spencerLikesKids, grabberServoLeft, grabberServoRight, rotatorServo, airplaneServo, correctorServo, pullUpServoLeft, pullUpServoRight;
+    public Servo stackSetter, grabberServoLeft, grabberServoRight, rotatorServo, airplaneServo, correctorServo, pullUpServoLeft, pullUpServoRight;
     public VoltageSensor batteryVoltageSensor;
 //    public DistanceSensor lineUpSensor;
     public ColorRangeSensor detectionLeftGrabber, detectionRightGrabber;
-//    public Rev2mDistanceSensor relocalizer;
-    public static double distForPickUpDetect = 0.4;
+//    public ModernRoboticsI2cRangeSensor relocalizer;
+    public static double distForPickUpDetect = 0.35;
 
     //Servo Positions
     public static double grabberServoScalerDown = 0.1, grabberServoScalerUp = 0.7, offsetForGrabberScalar = 0.025;
     public static double grabberClosed = 0.72, grabberOpen = 0, grabberOpenTele = 0.3;
-    public static double grabberOpenFlipperUp = 0.45;
-    public static int flipperPosDown = 1, flipperPosDown2Pixels = 1, flipperPosDown3Pixels = 160, flipperPosDown4Pixels = 1, flipperPosDown5Pixels = 197, flipperPosDown6Pixels = 300, flipperPosUp = 100, flipperPosUpPurplePixels = 100, flipperPosUpFirstPlace = 285, flipperPosUpPlaceInAuton = 400, flipperPosFirstPlaceOtherAlliance = 350, flipperPosDownForAuton = 100, flipperMotorPickUpTeleop = 0;
-    public static double rotatorServoUpPos = 0.23, rotatorFlushWithSlides = 0.54, rotatorPickUpAndPlace = 0.45, rotator6Pixels = 0.52, rotator5Pixels = 0.52, rotator4Pixels = 0.52, rotator3Pixels = 0.52, rotator2Pixels = 0.52, rotatorServoFirstPlace = 0.6, rotatorServoPlaceInAuton = 0.58;
+    public static double grabberOpenFlipperUp = 0.4;
+    public static double stackSetterUpPos = 0.55, stackSetterPickUpTeleopPos = 0.51, stackSetter5PixelsPos = 0.35;
+
+    //5Pixels 180 at 2cm, 172 at 3 cm
+    public static int flipperPosDown = 1, flipperPosDown2Pixels = 1, flipperPosDown3Pixels = 160, flipperPosDown4Pixels = 1, flipperPosDown5Pixels = 170, flipperPosDown6Pixels = 300, flipperPosUp = 100, flipperPosUpPurplePixels = 100, flipperPosUpFirstPlace = 285, flipperPosUpFirstPlaceAuton = 1700, flipperPosUpPlaceInAuton = 400, flipperPosFirstPlaceOtherAlliance = 350, flipperPosDownForAuton = 100, flipperMotorPickUpTeleop = 35;
+    public static double rotatorServoUpPos = 0.26, rotatorFlushWithSlides = 0.54, rotatorPickUpAndPlace = 0.45, rotator6Pixels = 0.52, rotator5Pixels = 0.52, rotator4Pixels = 0.52, rotator3Pixels = 0.52, rotator2Pixels = 0.52, rotatorServoFirstPlace = 0.6, rotatorServoPlaceInAuton = 0.58;
     public static double airplaneServoLoadedPos = 0.29, airplaneServoGoPos = 0.05, airplaneAngle = 0.495;
     public static double correctorServoMidPos = 0.47, correctorServoPlaceFarPos = 0.38, correctorServoPlaceClosePos = 0.62, correctorServoBeacon2AfterPos = 0.04, correctorServoBeacon2BeforePos = 0.9, correctorServoBeacon1PreloadPlace = 0.45, correctorServoBeacon3PreloadPlace = 0.55, correctorServoPickUpClose = 0.58, correctorServoPickUpMidFar = 0.38, correctorServoPickUpMidClose = 0.78;
     public static double correctorServoSpeed = 0.03, rotatorServoSpeed = 0.03;
     public static int flipperMotorSpeed = 250, slideSpeed = -300;
+    public static int flipperMotorTolerance = 1000, armMotorTolerance = 100;
+
+    //OG: 10, 0.05, 0, 0
+    public static PIDFCoefficients PIDFFlipperMotor = new PIDFCoefficients(10, 0.05, 0, 0);
     public ArrayList<String> rotatorAndFlipperAutonPosesListOddPixels = new ArrayList<>(Arrays.asList("flipDown and rotateDown 5Pixels", "flipDown and rotateDown 3Pixels"));
     public ArrayList<String> rotatorAndFlipperAutonPosesListEvenPixels = new ArrayList<>(Arrays.asList("flipDown and rotateDown 4Pixels", "flipDown and rotateDown 2Pixels"));
 
     //Auto adjust place and stuff
-    public static double maxRotatorPosUp = 0.644, maxRotatorPosDown = 0.37;
-//    public static double maxRotatorPosUp = 0.674, maxRotatorPosDown = 0.4;
+//    public static double maxRotatorPosUp = 0.644, maxRotatorPosDown = 0.37;
+    public static double maxRotatorPosUp = 0.62, maxRotatorPosDown = 0.4;
     public static double minRotatorPosPickUp = 0.52, maxRotatorPosPickUp = 0.54;
     public static int lowestFlipperPosDown = 200, highestFlipperPos = 1400;
     public static double correctorServoMinPosition = 0.04, correctorServoMaxPosition = 0.9;
@@ -71,19 +80,21 @@ public class MonkeyMap {
     public static double pullUpServoDownPos = 0.69, pullUpServoUpPos = 0.29;
 
     //Motor powers and pos
-    public static int resetSlidesPos = 0, slidesFullyExtendedPos = -660, extendTeleopPos = 0, slidesPlaceInAuton = -400;
+    public static int resetSlidesPos = 0, slidesFullyExtendedPos = -660, slidesParkPos = -50, extendTeleopPos = 0, slidesPlaceInAuton = -400;
+    public static double inchesPerSlideEncoderTic = 23.5/660;
     public static int slidesBeacon1PreloadAfter = 0, slidesBeacon2PreloadAfter = -250, slidesBeacon3PreloadAfter = -430;
     public static int slidesBeacon1PreloadBefore = -310, slidesBeacon2PreloadBefore = -350, slidesBeacon3PreloadBefore = -350, slidesBeacon2PreloadBeforeBlue = -310;
     public static int slidesFirstPlacePos = -160, slidesFirstPlacePosOtherAlliance = -200;
 
-    public static double holdPowerForSlides = 0, slidePowerEncoder = 1, flipperPower = 1;
+    public static double holdPowerForSlides = 0, slidePowerEncoder = 1, flipperPower = 1, flipperPowerAuton = 1;
+    public int slidesPosWhenPickUp = 0;
 
 
     //Poses
     public Pose2d startingPosition, afterPlacePixelFar;
     public Pose2d purplePixelPlacementAfterFarAndCloseBeacon1, purplePixelPlacementAfterFarAndCloseBeacon23, lineUpPurplePixelAfterTrussBeacon23, lineUpPurplePixelAfterTrussBeacon1, firstPlacementBeacon1After, firstPlacementBeacon2After, firstPlacementBeacon3After, startExtendFirstPlacementAfter, turnForFirstPlacementAfter;
     public Pose2d firstPlacementBeacon1BeforeClose, firstPlacementBeacon2BeforeClose, firstPlacementBeacon3BeforeClose, firstPlacementBeacon1BeforeFar, firstPlacementBeacon2BeforeFar, firstPlacementBeacon3BeforeFar;
-    public Pose2d lineUpForPickUpFar, lineUpForPlaceFar, startArmExtendPickUpFar, pickUpPixelFar, turnAfterPickUpPixelFar,  placePixelFar, flipAfterPlaceFar, startArmExtendPlaceFar, turnAfterPlacePixel;
+    public Pose2d lineUpForPickUpFar, lineUpForPlaceFar, startArmExtendPickUpFar, pickUpPixelFar, turnAfterPickUpPixelFar,  placePixelFar, flipAfterPlaceFar, startArmExtendPlaceFar, turnAfterPlacePixel, lineUpTurnAfterPlacePixel;
     public Pose2d lineUpForPickUpClose, startArmExtendPickUpClose, pickUpPixelClose, startArmExtendPlaceClose, placePixelClose, flipAfterPlaceClose, goStraightThroughTrussClose;
     public Pose2d goAcrossForBeforeTrussPurplePixelFar, goAcrossForBeforeTrussPurplePixelCloseMidBeacon, goAcrossForBeforeTrussPurplePixelCloseWallBeacon, goAcrossForBeforeTrussPurplePixelCloseTrussBeacon;
     public Pose2d midStackPickUpFar, midStackPickUpClose, goAroundPurplePixelBeacon2;
@@ -91,7 +102,7 @@ public class MonkeyMap {
     public static double headingPickUp = Math.toRadians(180);
     public static double headingPlace = Math.toRadians(0);
     public static double maxVelPlacePixel = 5;
-    public static double distToGoForwardPickUpVision = -4;
+    public static double distToGoForwardPickUpVision = -5;
 
     public static int sleepTimePlacePurplePixel = 100, sleepTimePickUpPixel = 500, sleepTimePlacePixel = 200, sleepTimeYellowPixel = 100, sleepTimeFirstPlace = 200, sleepTimeBetweenFirstAndSecondPlace = 400, sleepTimeExtendSlides = 500, sleepTimeWaitForFlipFirstPlace = 0, sleepTimeCorrectServo = 200, sleepTimeWaitToPlaceFirstPlacement = 500, sleepTimeWaitToResetAuton = 500;
     public boolean grabberIsOpen = true, rightGrabberOpen = true, leftGrabberOpen = true, flipperDown = true, airplaneLoaded = true, pullUpDown = true;
@@ -100,14 +111,14 @@ public class MonkeyMap {
     public int matchStart, wIntro, endgameStart, yabbaDabbaDo, driversPickUp, funnyFunny, teleStart;
 //    public BNO055IMU gyro;
     public static int testZone = 1;
-    public static double lineDist = 1, offsetForPickUp = 0;
+    public static double lineDist = 0.05, offsetForPickUp = -3.5;
 
     public MonkeyMap (LinearOpMode opmode) {
         myOpMode = opmode;
     }
 
     public void init(){
-        rotatorRange = MonkeyMap.maxRotatorPosUp - MonkeyMap.maxRotatorPosDown;
+        rotatorRange = maxRotatorPosUp - maxRotatorPosDown;
         correctorRange = MonkeyMap.correctorServoMaxPosition - MonkeyMap.correctorServoMinPosition;
 
         grabberServoLeft = myOpMode.hardwareMap.get(Servo.class, "grabberServoLeft");
@@ -117,6 +128,7 @@ public class MonkeyMap {
         correctorServo = myOpMode.hardwareMap.get(Servo.class, "correctorServo");
         pullUpServoLeft = myOpMode.hardwareMap.get(Servo.class, "pullUpServoLeft");
         pullUpServoRight = myOpMode.hardwareMap.get(Servo.class, "pullUpServoRight");
+        stackSetter = myOpMode.hardwareMap.get(Servo.class, "stackSetter");
 
         grabberServoRight.setDirection(Servo.Direction.REVERSE);
         pullUpServoRight.setDirection(Servo.Direction.REVERSE);
@@ -136,6 +148,11 @@ public class MonkeyMap {
         flipperMotor = myOpMode.hardwareMap.get(DcMotorEx.class, "flipperMotor");
 
         armMotorLeft.setCurrentAlert(currentAlertArmMotor, CurrentUnit.AMPS);
+
+//        flipperMotor.setTargetPositionTolerance(flipperMotorTolerance);
+//        armMotorLeft.setTargetPositionTolerance(armMotorTolerance);
+
+//        flipperMotor.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, PIDFFlipperMotor);
 
 //        gyro = myOpMode.hardwareMap.get(BNO055IMU.class, "imu");
 
@@ -157,7 +174,7 @@ public class MonkeyMap {
         armMotorLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         flipperMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-//        relocalizer = myOpMode.hardwareMap.get(Rev2mDistanceSensor.class, "relocalizer");
+//        relocalizer = myOpMode.hardwareMap.get(ModernRoboticsI2cRangeSensor.class, "relocalizer");
         detectionLeftGrabber = myOpMode.hardwareMap.get(ColorRangeSensor.class, "detectionLeftGrabber");
         detectionRightGrabber = myOpMode.hardwareMap.get(ColorRangeSensor.class, "detectionRightGrabber");
 
@@ -268,9 +285,9 @@ public class MonkeyMap {
                 purplePixelPlacementAfterFarAndCloseBeacon1 = new Pose2d(BlueBeforeTrussPoses.xPosPurplePixelPlacementAfterBeacon1, BlueBeforeTrussPoses.yPosPurplePixelPlacementAfterBeacon1, headingPickUp);
                 purplePixelPlacementAfterFarAndCloseBeacon23 = new Pose2d(BlueBeforeTrussPoses.xPosPurplePixelPlacementAfterBeacon23, BlueBeforeTrussPoses.yPosPurplePixelPlacementAfterBeacon23, headingPickUp);
 
-                firstPlacementBeacon1After = new Pose2d(BlueBeforeTrussPoses.xPosFirstPlacementAfter, BlueBeforeTrussPoses.yPosFirstPlacementAfterBeacon1, headingPlace);
+                firstPlacementBeacon1After = new Pose2d(BlueBeforeTrussPoses.xPosFirstPlacementAfter, BlueBeforeTrussPoses.yPosFirstPlacementAfterBeacon1, headingPickUp);
                 firstPlacementBeacon2After = new Pose2d(BlueBeforeTrussPoses.xPosFirstPlacementAfter, BlueBeforeTrussPoses.yPosFirstPlacementAfterBeacon2, headingPlace);
-                firstPlacementBeacon3After = new Pose2d(BlueBeforeTrussPoses.xPosFirstPlacementAfter, BlueBeforeTrussPoses.yPosFirstPlacementAfterBeacon3, headingPlace);
+                firstPlacementBeacon3After = new Pose2d(BlueBeforeTrussPoses.xPosFirstPlacementAfter, BlueBeforeTrussPoses.yPosFirstPlacementAfterBeacon3, headingPickUp);
 
                 firstPlacementBeacon1BeforeClose = new Pose2d(BlueBeforeTrussPoses.xPosPlacePixelClose, BlueBeforeTrussPoses.yPosPlacePixelClose, BlueBeforeTrussPoses.headingBeacon1PlacementBeforeClose);
                 firstPlacementBeacon2BeforeClose = new Pose2d(BlueBeforeTrussPoses.xPosPlacePixelClose, BlueBeforeTrussPoses.yPosPlacePixelClose, BlueBeforeTrussPoses.headingBeacon2PlacementBeforeClose);
@@ -290,7 +307,7 @@ public class MonkeyMap {
 
                 placePixelFar = new Pose2d(BlueBeforeTrussPoses.xPosPlacePixelFar, BlueBeforeTrussPoses.yPosPlacePixelFar, BlueBeforeTrussPoses.headingPlaceFar);
                 flipAfterPlaceFar = new Pose2d(BlueBeforeTrussPoses.xPosFlipAfterPlaceFar, BlueBeforeTrussPoses.yPosFlipAfterPlaceFar, headingPickUp);
-                startArmExtendPlaceFar = new Pose2d(BlueBeforeTrussPoses.xPosStartArmExtendPlaceFar, BlueBeforeTrussPoses.yPosStartArmExtendPlaceFar, headingPlace);
+                startArmExtendPlaceFar = new Pose2d(BlueBeforeTrussPoses.xPosStartArmExtendPlaceFar, BlueBeforeTrussPoses.yPosStartArmExtendPlaceFar, headingPickUp);
                 lineUpForPickUpClose = new Pose2d(BlueBeforeTrussPoses.xPosLineUpForPickUpClose, BlueBeforeTrussPoses.yPosLineUpForPickUpClose, headingPickUp);
                 startArmExtendPickUpClose = new Pose2d(BlueBeforeTrussPoses.xPosStartArmExtendPickUpClose, BlueBeforeTrussPoses.yPosStartArmExtendPickUpClose, headingPickUp);
                 pickUpPixelClose = new Pose2d(BlueBeforeTrussPoses.xPosPickUpPixelClose, BlueBeforeTrussPoses.yPosPickUpPixelClose, BlueBeforeTrussPoses.headingPickUpClose);
@@ -344,7 +361,7 @@ public class MonkeyMap {
 
                 placePixelFar = new Pose2d(RedAfterTrussPoses.xPosPlacePixelFar, RedAfterTrussPoses.yPosPlacePixelFar, RedAfterTrussPoses.headingPlaceFar);
                 flipAfterPlaceFar = new Pose2d(RedAfterTrussPoses.xPosFlipAfterPlaceFar, RedAfterTrussPoses.yPosFlipAfterPlaceFar, headingPickUp);
-                startArmExtendPlaceFar = new Pose2d(RedAfterTrussPoses.xPosStartArmExtendPlaceFar, RedAfterTrussPoses.yPosStartArmExtendPlaceFar, headingPlace);
+                startArmExtendPlaceFar = new Pose2d(RedAfterTrussPoses.xPosStartArmExtendPlaceFar, RedAfterTrussPoses.yPosStartArmExtendPlaceFar, headingPickUp);
                 lineUpForPickUpClose = new Pose2d(RedAfterTrussPoses.xPosLineUpForPickUpClose, RedAfterTrussPoses.yPosLineUpForPickUpClose, headingPickUp);
                 startArmExtendPickUpClose = new Pose2d(RedAfterTrussPoses.xPosStartArmExtendPickUpClose, RedAfterTrussPoses.yPosStartArmExtendPickUpClose, headingPickUp);
                 pickUpPixelClose = new Pose2d(RedAfterTrussPoses.xPosPickUpPixelClose, RedAfterTrussPoses.yPosPickUpPixelClose, RedAfterTrussPoses.headingPickUpClose);
@@ -398,7 +415,7 @@ public class MonkeyMap {
 
                 placePixelFar = new Pose2d(RedBeforeTrussPoses.xPosPlacePixelFar, RedBeforeTrussPoses.yPosPlacePixelFar, RedBeforeTrussPoses.headingPlaceFar);
                 flipAfterPlaceFar = new Pose2d(RedBeforeTrussPoses.xPosFlipAfterPlaceFar, RedBeforeTrussPoses.yPosFlipAfterPlaceFar, headingPickUp);
-                startArmExtendPlaceFar = new Pose2d(RedBeforeTrussPoses.xPosStartArmExtendPlaceFar, RedBeforeTrussPoses.yPosStartArmExtendPlaceFar, headingPlace);
+                startArmExtendPlaceFar = new Pose2d(RedBeforeTrussPoses.xPosStartArmExtendPlaceFar, RedBeforeTrussPoses.yPosStartArmExtendPlaceFar, headingPickUp);
                 lineUpForPickUpClose = new Pose2d(RedBeforeTrussPoses.xPosLineUpForPickUpClose, RedBeforeTrussPoses.yPosLineUpForPickUpClose, headingPickUp);
                 startArmExtendPickUpClose = new Pose2d(RedBeforeTrussPoses.xPosStartArmExtendPickUpClose, RedBeforeTrussPoses.yPosStartArmExtendPickUpClose, headingPickUp);
                 pickUpPixelClose = new Pose2d(RedBeforeTrussPoses.xPosPickUpPixelClose, RedBeforeTrussPoses.yPosPickUpPixelClose, RedBeforeTrussPoses.headingPickUpClose);
@@ -577,6 +594,7 @@ public class MonkeyMap {
     }
     public void flipAndRotateDown5Pixels(){
         setFlipperPos(flipperPosDown5Pixels, flipperPower);
+        stackSetter.setPosition(stackSetter5PixelsPos);
 //        rotatorServo.setPosition(rotator5Pixels);
     }
     public void flipAndRotateDown4Pixels(){
@@ -597,6 +615,9 @@ public class MonkeyMap {
     }
     public void flipUpFirstPlace(){
         setFlipperPos(flipperPosUpFirstPlace, flipperPower);
+    }
+    public void flipUpFirstPlaceAuton(){
+        setFlipperPos(flipperPosUpFirstPlaceAuton, flipperPowerAuton);
     }
     public void extendOutPickUp(int slidesPos){
         encodedSlipperySlides(extendTeleopPos, slidePowerEncoder);
@@ -716,25 +737,23 @@ public class MonkeyMap {
         encodedSlipperySlides(slidesBeacon1PreloadBefore, slidePowerEncoder);
     }
     public void placeInAutonFar(PointFollower follower, ArrayList<PosesAndActions> posesToGoTo, boolean isBlue){
+        stackSetter.setPosition(stackSetterUpPos);
         posesToGoTo.clear();
+        posesToGoTo.add(new PosesAndActions(turnAfterPlacePixel, ""));
         posesToGoTo.add(new PosesAndActions(startArmExtendPlaceFar, "flipUpPlaceInAuton and extendSlidesPlaceAuton"));
+        follower.reinit(posesToGoTo);
+        follower.goToPoints(true);
+        posesToGoTo.clear();
         posesToGoTo.add(new PosesAndActions(placePixelFar, ""));
         follower.reinit(posesToGoTo);
         follower.goToPoints(true);
-        setAutoCorrector(Math.toDegrees(placePixelFar.getHeading()));
+
         openGrabber();
-//        myOpMode.sleep(MonkeyMap.sleepTimeFirstPlace);
-//        closeGrabber();
-//        myOpMode.sleep(MonkeyMap.sleepTimeBetweenFirstAndSecondPlace);
-//        openGrabber();
-//        myOpMode.sleep(sleepTimePlacePixel);
         posesToGoTo.clear();
         posesToGoTo.add(new PosesAndActions(afterPlacePixelFar, ""));
         follower.reinit(posesToGoTo);
         follower.goToPoints(true, maxVelPlacePixel);
         resetArm();
-        myOpMode.sleep(sleepTimeWaitToResetAuton);
-        setRotatorFlush();
     }
     public void pickUpInAutonFar(PointFollower follower, ArrayList<PosesAndActions> posesToGoTo, int pixelType, boolean isOddPixels, boolean goToMid){
         if(pixelType == 1){
@@ -762,7 +781,7 @@ public class MonkeyMap {
         posesToGoTo.add(new PosesAndActions(pickUpPixelFar, ""));
         follower.reinit(posesToGoTo);
         follower.goToPoints(true);
-        double yPosAfterSeeing = ((lineDist * Math.sin(Math.toRadians(OpenCVGreatestColorTest.thetaX)))) + pickUpPixelFar.getY() + offsetForPickUp;
+        double yPosAfterSeeing = (lineDist * OpenCVGreatestColorTest.xDist) + pickUpPixelFar.getY() + offsetForPickUp;
 //        fullyExtendSlides();
         posesToGoTo.clear();
         posesToGoTo.add(new PosesAndActions(new Pose2d(pickUpPixelFar.getX() + distToGoForwardPickUpVision, yPosAfterSeeing, headingPickUp), ""));
@@ -771,6 +790,7 @@ public class MonkeyMap {
         while(!armMotorLeft.isOverCurrent()){
             encodedSlipperySlides(armMotorLeft.getCurrentPosition() + slideSpeed, slidePowerEncoder);
         }
+        slidesPosWhenPickUp = armMotorLeft.getCurrentPosition();
         closeGrabber();
         myOpMode.sleep(sleepTimePickUpPixel);
         resetArm();
@@ -872,6 +892,11 @@ public class MonkeyMap {
     public void setAutoCorrector(double heading){
         double correctorScalar = angleWrap(heading)/180;
         double newCorrectorPos = correctorServoMinPosition + (correctorScalar*correctorRange);
+        correctorServo.setPosition(newCorrectorPos);
+    }
+    public void setAutoCorrectorOtherWay(double heading){
+        double correctorScalar = angleWrap(heading)/180;
+        double newCorrectorPos = correctorServoMaxPosition - (correctorScalar*correctorRange);
         correctorServo.setPosition(newCorrectorPos);
     }
     public void setAutoRotator(double flipperPos){
